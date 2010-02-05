@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpidl", "Xpidl\Xpidl.csproj", "{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldParser", "GoldParser\GoldParser.csproj", "{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

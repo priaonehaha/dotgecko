@@ -1,0 +1,279 @@
+! GOLD Parser Builder
+! Version 3.4.4
+
+"Name"           = 'XPIDL'
+"Author"         = 'Yuriy Kushnir'
+"Version"        = '1.0'
+"About"          = 'XPIDL is an Interface Description Language used to specify XPCOM interface classes'
+
+"Case Sensitive" = 'True'
+"Start Symbol"   = <xpidl>
+
+! ================================================= Sets =====
+
+{any-char}           = {All Valid}
+{any-char-but-LF}    = {any-char} - {LF}
+{hex-char}           = {Number} + [abcdefABCDEF]
+{filename-char}      = {AlphaNumeric} + [_]
+{xpidl-id-char}      = {AlphaNumeric} + [_]
+{xpidl-id-char-head} = {Letter}
+
+! ================================================= Terminals =====
+
+! ------------------------------------------------- Comments ---
+Comment Line   =  '//'
+Comment Start  =  '/*' | '%{'{Whitespace}*'C++'     ! inline-c-headers treated as comments
+Comment End    =  '*/' | '%}'({Whitespace}*'C++')?  ! inline-c-headers treated as comments
+
+! ------------------------------------------------- Literals ---
+dec-literal      = {Number}+
+hex-literal      = '0x'{hex-char}+
+uuid-literal     = {hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}'-'{hex-char}{hex-char}{hex-char}{hex-char}'-'{hex-char}{hex-char}{hex-char}{hex-char}'-'{hex-char}{hex-char}{hex-char}{hex-char}'-'{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}{hex-char}
+filename-literal = {filename-char}+'.'{Letter}({Letter}{Letter}?)?
+
+! ------------------------------------------------- XPIDL Tokens ---
+xpidl-id = {xpidl-id-char-head}{xpidl-id-char}*
+
+! ================================================= Rules =====
+
+! ------------------------------------------------- XPIDL File Items ---
+<xpidl>
+	::= <xpidl-items>
+
+<xpidl-items>
+	::= <xpidl-items> <xpidl-item>
+	| <xpidl-item>
+
+<xpidl-item>
+	::= <xpidl-typedef>
+	| <xpidl-include>
+	| <xpidl-forward-declaration>
+	| <xpidl-native-type>
+	| <xpidl-interface>
+
+! ------------------------------------------------- XPIDL TypeDef Item ---
+<xpidl-typedef>
+	::= 'typedef' <xpidl-type> xpidl-id ';'
+
+! ------------------------------------------------- XPIDL Include Item ---
+<xpidl-include>
+	::= '#include' '"' filename-literal '"'
+
+! ------------------------------------------------- XPIDL Forward Declaration Item ---
+<xpidl-forward-declaration>
+	::= 'interface' xpidl-id ';'
+
+! ------------------------------------------------- XPIDL Native Type Item ---
+<xpidl-native-type>
+	::= 'native' xpidl-id '(' <xpidl-native-type-list> ')' ';'
+	| <xpidl-native-type-modifiers-decl> 'native' xpidl-id '(' <xpidl-native-type-list> ')' ';'
+
+<xpidl-native-type-list>
+	::= <xpidl-native-type-list> <xpidl-native-type-decl>
+	| <xpidl-native-type-decl>
+
+<xpidl-native-type-decl>
+	::= <xpidl-native-type-name>
+	| <xpidl-native-type-name> '<' xpidl-id '>'
+	| <xpidl-native-type-name> '&'
+	| <xpidl-native-type-name> '*'
+	| <xpidl-native-type-name> '*' '*'
+
+<xpidl-native-type-name>
+	::= 'void'
+	| 'const'
+	| 'struct'
+	| 'union'
+	| 'unsigned'
+	| 'char'
+	| xpidl-id
+
+<xpidl-native-type-modifiers-decl>
+	::= '[' <xpidl-native-type-modifiers-list> ']'
+
+<xpidl-native-type-modifiers-list>
+	::= <xpidl-native-type-modifiers-list> ',' <xpidl-native-type-modifier>
+	| <xpidl-native-type-modifier>
+
+<xpidl-native-type-modifier>
+	::= 'ref' | 'ptr' | 'nsid' | 'domstring' | 'utf8string' | 'cstring' | 'astring'
+
+! ------------------------------------------------- XPIDL Interface Item ---
+<xpidl-interface>
+	::= <xpidl-interface-modifiers-decl> 'interface' xpidl-id ':' xpidl-id '{' <xpidl-interface-members> '}' ';'
+	| <xpidl-interface-modifiers-decl> 'interface' xpidl-id ':' xpidl-id '{' '}' ';'
+	| <xpidl-interface-modifiers-decl> 'interface' xpidl-id '{' <xpidl-interface-members> '}' ';'
+	| <xpidl-interface-modifiers-decl> 'interface' xpidl-id '{' '}' ';'
+
+<xpidl-interface-modifiers-decl>
+	::= '[' <xpidl-interface-modifiers-list> ',' <xpidl-interface-uuid> ']'
+	| '[' <xpidl-interface-uuid> ']'
+
+<xpidl-interface-modifiers-list>
+	::= <xpidl-interface-modifiers-list> ',' <xpidl-interface-modifier>
+	| <xpidl-interface-modifier>
+
+<xpidl-interface-modifier>
+	::= 'scriptable'
+	| 'function'
+	| 'object'
+	| 'notxpcom'
+	| 'noscript'
+
+<xpidl-interface-uuid>
+	::= 'uuid' '(' uuid-literal ')'
+
+! ------------------------------------------------- XPIDL Interface Members ---
+<xpidl-interface-members>
+	::= <xpidl-interface-members> <xpidl-interface-member>
+	| <xpidl-interface-member>
+
+<xpidl-interface-member>
+	::= <xpidl-constant>
+	| <xpidl-attribute>
+	| <xpidl-method>
+
+! ------------------------------------------------- XPIDL Interface Constant ---
+<xpidl-constant>
+	::= 'const' <xpidl-type> xpidl-id '=' <xpidl-expression> ';'
+
+<xpidl-expression>
+	::= <xpidl-expression-or>
+
+<xpidl-expression-or>
+	::= <xpidl-expression-or> '|' <xpidl-expression-xor>
+	| <xpidl-expression-xor>
+
+<xpidl-expression-xor>
+	::= <xpidl-expression-xor> '^' <xpidl-expression-and>
+	| <xpidl-expression-and>
+
+<xpidl-expression-and>
+	::= <xpidl-expression-and> '&' <xpidl-expression-shift>
+	| <xpidl-expression-shift>
+
+<xpidl-expression-shift>
+	::= <xpidl-expression-shift> '<<' <xpidl-expression-add>
+	| <xpidl-expression-shift> '>>' <xpidl-expression-add>
+	| <xpidl-expression-add>
+
+<xpidl-expression-add>
+	::= <xpidl-expression-add> '+' <xpidl-expression-mult>
+	| <xpidl-expression-add> '-' <xpidl-expression-mult>
+	| <xpidl-expression-mult>
+
+<xpidl-expression-mult>
+	::= <xpidl-expression-mult> '*' <xpidl-expression-unary>
+	| <xpidl-expression-mult> '/' <xpidl-expression-unary>
+	| <xpidl-expression-unary>
+
+<xpidl-expression-unary>
+	::= '-' <xpidl-expression-operand>
+	| '~' <xpidl-expression-operand>
+	| <xpidl-expression-operand>
+
+<xpidl-expression-operand>
+	::= dec-literal
+	| hex-literal
+	| xpidl-id
+	| '(' <xpidl-expression> ')'
+
+! ------------------------------------------------- XPIDL Interface Attribute ---
+<xpidl-attribute>
+	::= 'attribute' <xpidl-type> <attribute-name> ';'
+	| 'readonly' 'attribute' <xpidl-type> <attribute-name> ';'
+	| <xpidl-method-modifiers-decl> 'attribute' <xpidl-type> <attribute-name> ';'
+	| <xpidl-method-modifiers-decl> 'readonly' 'attribute' <xpidl-type> <attribute-name> ';'
+
+<attribute-name>
+	::= 'ref'
+	| 'object'
+	| xpidl-id
+
+! ------------------------------------------------- XPIDL Interface Method ---
+<xpidl-method>
+	::= <xpidl-type> xpidl-id '(' <xpidl-params-list> ')' ';'
+	| <xpidl-type> xpidl-id '(' ')' ';'
+	| <xpidl-method-modifiers-decl> <xpidl-type> xpidl-id '(' <xpidl-params-list> ')' ';'
+	| <xpidl-method-modifiers-decl> <xpidl-type> xpidl-id '(' ')' ';'
+	| <xpidl-type> xpidl-id '(' <xpidl-params-list> ')' <xpidl-method-raises> ';'
+	| <xpidl-type> xpidl-id '(' ')' <xpidl-method-raises> ';'
+	| <xpidl-method-modifiers-decl> <xpidl-type> xpidl-id '(' <xpidl-params-list> ')' <xpidl-method-raises> ';'
+	| <xpidl-method-modifiers-decl> <xpidl-type> xpidl-id '(' ')' <xpidl-method-raises> ';'
+
+<xpidl-method-modifiers-decl>
+	::= '[' <xpidl-method-modifiers-list> ']'
+
+<xpidl-method-modifiers-list>
+	::= <xpidl-method-modifiers-list> ',' <xpidl-method-modifier>
+	| <xpidl-method-modifier>
+
+<xpidl-method-modifier>
+	::= 'noscript'
+	| 'notxpcom'
+	| 'binaryname' '(' xpidl-id ')'
+
+<xpidl-method-raises>
+	::= 'raises' '(' <xpidl-method-exceptions-list> ')'
+
+<xpidl-method-exceptions-list>
+	::= <xpidl-method-exceptions-list> ',' xpidl-id
+	| xpidl-id
+
+<xpidl-params-list>
+	::= <xpidl-params-list> ',' <xpidl-param>
+	| <xpidl-param>
+
+<xpidl-param>
+	::= <xpidl-param-type> <xpidl-type> <xpidl-param-name>
+	| <xpidl-param-modifiers-decl> <xpidl-param-type> <xpidl-type> <xpidl-param-name>
+
+<xpidl-param-modifiers-decl>
+	::= '[' <xpidl-param-modifiers-list> ']'
+
+<xpidl-param-modifiers-list>
+	::= <xpidl-param-modifiers-list> ',' <xpidl-param-modifier>
+	| <xpidl-param-modifier>
+
+<xpidl-param-modifier>
+	::= 'array'
+	| 'size_is' '(' <xpidl-param-name> ')'
+	| 'iid_is' '(' <xpidl-param-name> ')'
+	| 'retval'
+	| 'const'
+	| 'shared'
+	| 'optional'
+
+<xpidl-param-type>
+	::= 'in' | 'out' | 'inout'
+
+<xpidl-param-name>
+	::= 'ptr'
+	| 'uuid'
+	| 'array'
+	| 'object'
+	| 'retval'
+	| xpidl-id
+
+! ------------------------------------------------- XPIDL Common Rules ---
+<xpidl-type>
+	::= 'boolean'
+	| 'void'
+	| 'string'
+	| 'octet'
+	| 'short'
+	| 'long'
+	| 'long long'
+	| 'unsigned short'
+	| 'unsigned long'
+	| 'unsigned long long'
+	| 'float'
+	| 'double'
+	| 'char'
+	| 'wchar'
+	| 'wstring'
+	| 'AString'
+	| 'ACString'
+	| 'AUTF8String'
+	| 'DOMString'
+	| xpidl-id
