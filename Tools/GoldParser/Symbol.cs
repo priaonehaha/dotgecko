@@ -1,26 +1,6 @@
-#region Copyright
-
-//----------------------------------------------------------------------
-// Gold Parser engine.
-// See more details on http://www.devincook.com/goldparser/
-// 
-// Original code is written in VB by Devin Cook (GOLDParser@DevinCook.com)
-//
-// This translation is done by Vladimir Morozov (vmoroz@hotmail.com)
-// 
-// The translation is based on the other engine translations:
-// Delphi engine by Alexandre Rai (riccio@gmx.at)
-// C# engine by Marcus Klimstra (klimstra@home.nl)
-//----------------------------------------------------------------------
-
-#endregion
-
-#region Using directives
-
 using System;
+using System.Collections.Generic;
 using System.Text;
-
-#endregion
 
 namespace GoldParser
 {
@@ -37,49 +17,42 @@ namespace GoldParser
 	/// </remarks>
 	public class Symbol
 	{
-		internal int       m_index;      // symbol index in symbol table
-		private string     m_name;       // name of the symbol
-		internal SymbolType m_symbolType; // type of the symbol
-		private string     m_text;       // printable representation of symbol
-
-		private const string m_quotedChars = "|-+*?()[]{}<>!";
-
 		/// <summary>
 		/// Creates a new instance of <c>Symbol</c> class.
 		/// </summary>
 		/// <param name="index">Symbol index in symbol table.</param>
 		/// <param name="name">Name of the symbol.</param>
 		/// <param name="symbolType">Type of the symbol.</param>
-		public Symbol(int index, string name, SymbolType symbolType)
+		public Symbol(Int32 index, String name, SymbolType symbolType)
 		{
-			m_index = index;
-			m_name = name;
-			m_symbolType = symbolType;
+			m_Index = index;
+			m_Name = name;
+			m_SymbolType = symbolType;
 		}
 
 		/// <summary>
 		/// Returns the index of the symbol in the GOLDParser object's Symbol Table.
 		/// </summary>
-		public int Index 
+		public Int32 Index
 		{
-			get { return m_index; }
+			get { return m_Index; }
 		}
 
 		/// <summary>
 		/// Returns the name of the symbol.
 		/// </summary>
-		public string Name
+		public String Name
 		{
-			get { return m_name; }
+			get { return m_Name; }
 		}
 
 		/// <summary>
 		/// Returns an enumerated data type that denotes
 		/// the class of symbols that the object belongs to.
 		/// </summary>
-		public SymbolType SymbolType 
+		public SymbolType SymbolType
 		{
-			get { return m_symbolType; }
+			get { return m_SymbolType; }
 		}
 
 		/// <summary>
@@ -90,41 +63,40 @@ namespace GoldParser
 		/// (if special characters are present).
 		/// </summary>
 		/// <returns>String representation of symbol.</returns>
-		public override string ToString()
+		public override String ToString()
 		{
-			if (m_text == null)
+			if (m_Text == null)
 			{
 				switch (SymbolType)
 				{
-					case SymbolType.NonTerminal:  
-						m_text = '<' + Name + '>';
+					case SymbolType.NonTerminal:
+						m_Text = '<' + Name + '>';
 						break;
 
-					case SymbolType.Terminal: 
-						m_text = FormatTerminalSymbol(Name);
+					case SymbolType.Terminal:
+						m_Text = FormatTerminalSymbol(Name);
 						break;
-				
+
 					default:
-						m_text = '(' + Name + ')';
+						m_Text = '(' + Name + ')';
 						break;
 				}
 			}
-			return m_text;
+			return m_Text;
 		}
 
-		private static string FormatTerminalSymbol(string source)
+		private static String FormatTerminalSymbol(IEnumerable<Char> source)
 		{
-			StringBuilder result = new StringBuilder();
-			for (int i = 0; i < source.Length; i++)
+			var result = new StringBuilder();
+			foreach (Char ch in source)
 			{
-				char ch = source[i]; 
 				if (ch == '\'')
 				{
 					result.Append("''");
 				}
 				else if (IsQuotedChar(ch) || (ch == '"'))
 				{
-					result.Append(new Char[] {'\'', ch, '\''});
+					result.Append(new[] { '\'', ch, '\'' });
 				}
 				else
 				{
@@ -134,9 +106,15 @@ namespace GoldParser
 			return result.ToString();
 		}
 
-		private static bool IsQuotedChar(char value) 
+		private static Boolean IsQuotedChar(Char value)
 		{
-			return (m_quotedChars.IndexOf(value) >= 0);
+			const String quotedChars = "|-+*?()[]{}<>!";
+			return (quotedChars.IndexOf(value) >= 0);
 		}
+
+		private readonly Int32 m_Index; // symbol index in symbol table
+		private readonly String m_Name; // name of the symbol
+		private readonly SymbolType m_SymbolType; // type of the symbol
+		private String m_Text; // printable representation of symbol
 	}
 }

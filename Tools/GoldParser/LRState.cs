@@ -1,25 +1,4 @@
-#region Copyright
-
-//----------------------------------------------------------------------
-// Gold Parser engine.
-// See more details on http://www.devincook.com/goldparser/
-// 
-// Original code is written in VB by Devin Cook (GOLDParser@DevinCook.com)
-//
-// This translation is done by Vladimir Morozov (vmoroz@hotmail.com)
-// 
-// The translation is based on the other engine translations:
-// Delphi engine by Alexandre Rai (riccio@gmx.at)
-// C# engine by Marcus Klimstra (klimstra@home.nl)
-//----------------------------------------------------------------------
-
-#endregion
-
-#region Using directives
-
 using System;
-
-#endregion
 
 namespace GoldParser
 {
@@ -28,37 +7,33 @@ namespace GoldParser
 	/// </summary>
 	public class LRState
 	{
-		private int m_index;
-		private LRStateAction[] m_actions;
-		internal LRStateAction[] m_transitionVector;
-
 		/// <summary>
 		/// Creates a new instance of the <c>LRState</c> class
 		/// </summary>
 		/// <param name="index">Index of the LR state in the LR state table.</param>
 		/// <param name="actions">List of all available LR actions in this state.</param>
 		/// <param name="transitionVector">Transition vector which has symbol index as an index.</param>
-		public LRState(int index, LRStateAction[] actions, LRStateAction[] transitionVector)
+		public LRState(Int32 index, LRStateAction[] actions, LRStateAction[] transitionVector)
 		{
-			m_index = index;
-			m_actions = actions;
-			m_transitionVector = transitionVector;
+			m_Index = index;
+			m_Actions = actions;
+			m_TransitionVector = transitionVector;
 		}
 
 		/// <summary>
 		/// Gets index of the LR state in LR state table.
 		/// </summary>
-		public int Index 
+		public Int32 Index
 		{
-			get { return m_index; }
+			get { return m_Index; }
 		}
 
 		/// <summary>
 		/// Gets LR state action count.
 		/// </summary>
-		public int ActionCount 
+		public Int32 ActionCount
 		{
-			get { return m_actions.Length; }
+			get { return m_Actions.Length; }
 		}
 
 		/// <summary>
@@ -66,9 +41,9 @@ namespace GoldParser
 		/// </summary>
 		/// <param name="index">State action index.</param>
 		/// <returns>LR state action for the given index.</returns>
-		public LRStateAction GetAction(int index)
+		public LRStateAction GetAction(Int32 index)
 		{
-			return m_actions[index];
+			return m_Actions[index];
 		}
 
 		/// <summary>
@@ -76,9 +51,13 @@ namespace GoldParser
 		/// </summary>
 		/// <param name="symbolIndex">Symbol Index to search for.</param>
 		/// <returns>LR state action object.</returns>
-		public LRStateAction GetActionBySymbolIndex(int symbolIndex)
+		public LRStateAction GetActionBySymbolIndex(Int32 symbolIndex)
 		{
-			return m_transitionVector[symbolIndex];
+			return m_TransitionVector[symbolIndex];
 		}
+
+		private readonly Int32 m_Index;
+		private readonly LRStateAction[] m_Actions;
+		private readonly LRStateAction[] m_TransitionVector;
 	}
 }

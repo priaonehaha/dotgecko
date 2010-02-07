@@ -1,25 +1,4 @@
-#region Copyright
-
-//----------------------------------------------------------------------
-// Gold Parser engine.
-// See more details on http://www.devincook.com/goldparser/
-// 
-// Original code is written in VB by Devin Cook (GOLDParser@DevinCook.com)
-//
-// This translation is done by Vladimir Morozov (vmoroz@hotmail.com)
-// 
-// The translation is based on the other engine translations:
-// Delphi engine by Alexandre Rai (riccio@gmx.at)
-// C# engine by Marcus Klimstra (klimstra@home.nl)
-//----------------------------------------------------------------------
-
-#endregion
-
-#region Using directives
-
 using System;
-
-#endregion
 
 namespace GoldParser
 {
@@ -28,54 +7,34 @@ namespace GoldParser
 	/// </summary>
 	public class ObjectMap
 	{
-		#region Fields
-
-		private bool m_readonly;
-		private MapProvider m_mapProvider;
-
-		private const int MAXINDEX = 255;
-		private const int GROWTH = 32;
-		private const int MINSIZE = 32;
-		private const int MAXARRAYCOUNT = 12;
-
-		private const int INVALIDKEY = Int32.MaxValue;
-
-		#endregion
-
-		#region Constructors
-
 		/// <summary>
 		/// Creates new instance of <see cref="ObjectMap"/> class.
 		/// </summary>
-		public ObjectMap()
+		internal ObjectMap()
 		{
-			m_mapProvider = new SortedMapProvider(MINSIZE);
+			m_MapProvider = new SortedMapProvider(MINSIZE);
 		}
-
-		#endregion
-
-		#region Public members.
 
 		/// <summary>
 		/// Gets number of entries in the map.
 		/// </summary>
-		public int Count
+		public Int32 Count
 		{
-			get	{ return m_mapProvider.m_count; }
+			get { return m_MapProvider.Count; }
 		}
 
 		/// <summary>
 		/// Gets or sets read only flag.
 		/// </summary>
-		public bool ReadOnly 
+		public Boolean ReadOnly
 		{
-			get { return m_readonly; }
-			set 
-			{ 
-				if (m_readonly != value)
+			get { return m_Readonly; }
+			set
+			{
+				if (m_Readonly != value)
 				{
 					SetMapProvider(value);
-					m_readonly = value; 
+					m_Readonly = value;
 				}
 			}
 		}
@@ -83,10 +42,10 @@ namespace GoldParser
 		/// <summary>
 		/// Gets or sets value by key.
 		/// </summary>
-		public object this[int key]
+		public Object this[Int32 key]
 		{
-			get { return m_mapProvider[key]; }
-			set { m_mapProvider.Add(key, value); }
+			get { return m_MapProvider[key]; }
+			set { m_MapProvider.Add(key, value); }
 		}
 
 		/// <summary>
@@ -94,18 +53,18 @@ namespace GoldParser
 		/// </summary>
 		/// <param name="index">Zero based index of the requested key.</param>
 		/// <returns>Returns key for the given index.</returns>
-		public int GetKey(int index)
+		public Int32 GetKey(Int32 index)
 		{
-			return m_mapProvider.GetEntry(index).Key;
+			return m_MapProvider.GetEntry(index).Key;
 		}
 
 		/// <summary>
 		/// Removes entry by its key.
 		/// </summary>
 		/// <param name="key"></param>
-		public void Remove(int key)
+		public void Remove(Int32 key)
 		{
-			m_mapProvider.Remove(key);
+			m_MapProvider.Remove(key);
 		}
 
 		/// <summary>
@@ -114,109 +73,105 @@ namespace GoldParser
 		/// </summary>
 		/// <param name="key">New key to add.</param>
 		/// <param name="value">Value for the key.</param>
-		public void Add(int key, object value)
+		public void Add(Int32 key, Object value)
 		{
-			m_mapProvider.Add(key, value);
+			m_MapProvider.Add(key, value);
 		}
 
-		#endregion
-
-		#region Private members
-
-		private void SetMapProvider(bool readOnly)
+		private void SetMapProvider(Boolean readOnly)
 		{
-			int count = m_mapProvider.m_count;
-			MapProvider provider = m_mapProvider;
+			Int32 count = m_MapProvider.Count;
+			MapProvider provider = m_MapProvider;
 			if (readOnly)
 			{
-				SortedMapProvider pr = m_mapProvider as SortedMapProvider;
-				if (pr.m_lastKey <= MAXINDEX)
+				var pr = (SortedMapProvider)m_MapProvider;
+				if (pr.LastKey <= MAXINDEX)
 				{
 					provider = new IndexMapProvider();
 				}
 				else if (count <= MAXARRAYCOUNT)
 				{
-					provider = new ArrayMapProvider(m_mapProvider.m_count);
+					provider = new ArrayMapProvider(m_MapProvider.Count);
 				}
 			}
 			else
 			{
-				if (! (provider is SortedMapProvider))
+				if (!(provider is SortedMapProvider))
 				{
-					provider = new SortedMapProvider(m_mapProvider.m_count);
+					provider = new SortedMapProvider(m_MapProvider.Count);
 				}
 			}
-			if (provider != m_mapProvider)
+			if (provider != m_MapProvider)
 			{
-				for (int i = 0; i < count; i++)
+				for (Int32 i = 0; i < count; i++)
 				{
-					Entry entry = m_mapProvider.GetEntry(i);
+					Entry entry = m_MapProvider.GetEntry(i);
 					provider.Add(entry.Key, entry.Value);
 				}
-				m_mapProvider = provider;
+				m_MapProvider = provider;
 			}
 		}
 
-		#endregion
-
-		#region Entry struct definition
-
 		private struct Entry
 		{
-			internal int Key;
-			internal object Value;
-
-			internal Entry(int key, object value)
+			internal Entry(Int32 key, Object value)
 			{
 				Key = key;
 				Value = value;
 			}
+
+			internal Int32 Key;
+			internal Object Value;
 		}
 
-		#endregion
-
-		private abstract class MapProvider 
+		private abstract class MapProvider
 		{
-			internal int m_count;        // Entry count in the collection.
+			internal Int32 Count
+			{
+				get { return m_Count; }
+			}
 
-			internal abstract object this[int key]
+			internal abstract Object this[Int32 key]
 			{
 				get;
 			}
 
-			internal abstract Entry GetEntry(int index);
+			internal abstract Entry GetEntry(Int32 index);
 
-			internal abstract void Add(int key, object value);
+			internal abstract void Add(Int32 key, Object value);
 
-			internal virtual void Remove(int key)
+			internal virtual void Remove(Int32 key)
 			{
 				throw new InvalidOperationException();
 			}
+
+			protected Int32 m_Count;        // Entry count in the collection.
 		}
 
 		private class SortedMapProvider : MapProvider
 		{
-			internal Entry[] m_entries; // Array of entries.
-
-			internal int m_lastKey;      // Bigest key number.
-
-			internal SortedMapProvider(int capacity)
+			internal SortedMapProvider(Int32 capacity)
 			{
-				m_entries = new Entry[capacity];
+				m_Entries = new Entry[capacity];
 			}
 
-			internal override object this[int key]
+			internal Int32 LastKey
 			{
-				get 
+				get { return m_LastKey; }
+			}
+
+			internal override Object this[Int32 key]
+			{
+				get
 				{
-					int minIndex = 0;
-					int maxIndex = m_count - 1;
-					if (maxIndex >= 0 && key <= m_lastKey)
+					Int32 minIndex = 0;
+					Int32 maxIndex = m_Count - 1;
+					if (maxIndex >= 0 && key <= m_LastKey)
 					{
 						do
 						{
-							int midIndex = (maxIndex + minIndex) / 2;
-							if (key <= m_entries[midIndex].Key)
+							Int32 midIndex = (maxIndex + minIndex) / 2;
+							if (key <= m_Entries[midIndex].Key)
 							{
 								maxIndex = midIndex;
 							}
@@ -225,82 +180,82 @@ namespace GoldParser
 								minIndex = midIndex + 1;
 							}
 						} while (minIndex < maxIndex);
-						if (key == m_entries[minIndex].Key)
+						if (key == m_Entries[minIndex].Key)
 						{
-							return m_entries[minIndex].Value;
+							return m_Entries[minIndex].Value;
 						}
 					}
 					return null;
 				}
 			}
 
-			internal override Entry GetEntry(int index)
+			internal override Entry GetEntry(Int32 index)
 			{
-				return m_entries[index];
+				return m_Entries[index];
 			}
 
-			internal override void Add(int key, object value)
+			internal override void Add(Int32 key, Object value)
 			{
-				bool found;
-				int index = FindInsertIndex(key, out found);
+				Boolean found;
+				Int32 index = FindInsertIndex(key, out found);
 				if (found)
 				{
-					m_entries[index].Value = value;
+					m_Entries[index].Value = value;
 					return;
 				}
-				if (m_count >= m_entries.Length)
+				if (m_Count >= m_Entries.Length)
 				{
-					Entry[] entries = new Entry[m_entries.Length + GROWTH];
-					Array.Copy(m_entries, 0, entries, 0, m_entries.Length);
-					m_entries = entries;
+					var entries = new Entry[m_Entries.Length + GROWTH];
+					Array.Copy(m_Entries, 0, entries, 0, m_Entries.Length);
+					m_Entries = entries;
 				}
-				if (index < m_count)
+				if (index < m_Count)
 				{
-					Array.Copy(m_entries, index, m_entries, index + 1, m_count - index);
+					Array.Copy(m_Entries, index, m_Entries, index + 1, m_Count - index);
 				}
 				else
 				{
-					m_lastKey = key;
+					m_LastKey = key;
 				}
-				m_entries[index].Key = key;
-				m_entries[index].Value = value;
-				m_count++;
+				m_Entries[index].Key = key;
+				m_Entries[index].Value = value;
+				m_Count++;
 			}
 
-			internal override void Remove(int key)
+			internal override void Remove(Int32 key)
 			{
-				int index = FindIndex(key);
+				Int32 index = FindIndex(key);
 				if (index >= 0)
 				{
-					int tailSize = (m_count - 1) - index;
+					Int32 tailSize = (m_Count - 1) - index;
 					if (tailSize > 0)
 					{
-						Array.Copy(m_entries, index + 1, m_entries, index, tailSize);
+						Array.Copy(m_Entries, index + 1, m_Entries, index, tailSize);
 					}
-					else if (m_count > 1)
+					else if (m_Count > 1)
 					{
-						m_lastKey = m_entries[m_count - 2].Key;
+						m_LastKey = m_Entries[m_Count - 2].Key;
 					}
 					else
 					{
-						m_lastKey = INVALIDKEY;
+						m_LastKey = INVALIDKEY;
 					}
-					m_count--;
-					m_entries[m_count].Key = INVALIDKEY;
-					m_entries[m_count].Value = null;
+					m_Count--;
+					m_Entries[m_Count].Key = INVALIDKEY;
+					m_Entries[m_Count].Value = null;
 				}
 			}
 
-			private int FindIndex(int key)
+			private Int32 FindIndex(Int32 key)
 			{
-				int minIndex = 0;
-				if (m_count > 0 && key <= m_lastKey)
+				Int32 minIndex = 0;
+				if (m_Count > 0 && key <= m_LastKey)
 				{
-					int maxIndex = m_count - 1;
+					Int32 maxIndex = m_Count - 1;
 					do
 					{
-						int midIndex = (maxIndex + minIndex) / 2;
-						if (key <= m_entries[midIndex].Key)
+						Int32 midIndex = (maxIndex + minIndex) / 2;
+						if (key <= m_Entries[midIndex].Key)
 						{
 							maxIndex = midIndex;
 						}
@@ -309,7 +264,7 @@ namespace GoldParser
 							minIndex = midIndex + 1;
 						}
 					} while (minIndex < maxIndex);
-					if (key == m_entries[minIndex].Key)
+					if (key == m_Entries[minIndex].Key)
 					{
 						return minIndex;
 					}
@@ -317,16 +272,16 @@ namespace GoldParser
 				return -1;
 			}
 
-			private int FindInsertIndex(int key, out bool found)
+			private Int32 FindInsertIndex(Int32 key, out Boolean found)
 			{
-				int minIndex = 0;
-				if (m_count > 0 && key <= m_lastKey)
+				Int32 minIndex = 0;
+				if (m_Count > 0 && key <= m_LastKey)
 				{
-					int maxIndex = m_count - 1;
+					Int32 maxIndex = m_Count - 1;
 					do
 					{
-						int midIndex = (maxIndex + minIndex) / 2;
-						if (key <= m_entries[midIndex].Key)
+						Int32 midIndex = (maxIndex + minIndex) / 2;
+						if (key <= m_Entries[midIndex].Key)
 						{
 							maxIndex = midIndex;
 						}
@@ -335,45 +290,46 @@ namespace GoldParser
 							minIndex = midIndex + 1;
 						}
 					} while (minIndex < maxIndex);
-					found = (key == m_entries[minIndex].Key);
+					found = (key == m_Entries[minIndex].Key);
 					return minIndex;
 				}
 				found = false;
-				return m_count;
+				return m_Count;
 			}
+
+			private Entry[] m_Entries; // Array of entries.
+			private Int32 m_LastKey;      // Bigest key number.
 		}
 
 		private class IndexMapProvider : MapProvider
 		{
-			private object[] m_array; // Array of entries.			
-
 			internal IndexMapProvider()
 			{
-				m_array = new object[MAXINDEX + 1];
-				for (int i = m_array.Length; --i >= 0; )
+				m_Array = new Object[MAXINDEX + 1];
+				for (Int32 i = m_Array.Length; --i >= 0; )
 				{
-					m_array[i] = Unassigned.Value;
+					m_Array[i] = Unassigned.Value;
 				}
 			}
 
-			internal override object this[int key]
+			internal override Object this[Int32 key]
 			{
-				get 
-				{ 
-					if (key >= m_array.Length || key < 0)
+				get
+				{
+					if (key >= m_Array.Length || key < 0)
 					{
 						return null;
 					}
-					return m_array[key]; 
+					return m_Array[key];
 				}
 			}
 
-			internal override Entry GetEntry(int index)
+			internal override Entry GetEntry(Int32 index)
 			{
-				int idx = -1;
-				for (int i = 0; i < m_array.Length; i++)
+				Int32 idx = -1;
+				for (Int32 i = 0; i < m_Array.Length; i++)
 				{
-					object value = m_array[i];
+					Object value = m_Array[i];
 					if (value != Unassigned.Value)
 					{
 						idx++;
@@ -386,63 +342,80 @@ namespace GoldParser
 				return new Entry();
 			}
 
-			internal override void Add(int key, object value)
+			internal override void Add(Int32 key, Object value)
 			{
-				m_array[key] = value;
-				m_count++;
+				m_Array[key] = value;
+				m_Count++;
 			}
+
+			private readonly Object[] m_Array; // Array of entries.			
 		}
-		
+
 		private class ArrayMapProvider : MapProvider
 		{
-			private Entry[] m_entries; // Array of entries.			
-
-			internal ArrayMapProvider(int capacity)
+			internal ArrayMapProvider(Int32 capacity)
 			{
-				m_entries = new Entry[capacity];
+				m_Entries = new Entry[capacity];
 			}
 
-			internal override object this[int key]
+			internal override Object this[Int32 key]
 			{
-				get 
-				{ 
-					for (int i = m_count; --i >= 0;)
+				get
+				{
+					for (Int32 i = m_Count; --i >= 0; )
 					{
-						Entry entry = m_entries[i];
-						int entryKey = entry.Key;
+						Entry entry = m_Entries[i];
+						Int32 entryKey = entry.Key;
+
 						if (entryKey > key)
 						{
 							continue;
 						}
-						else if (entryKey == key)
+
+						if (entryKey == key)
 						{
 							return entry.Value;
 						}
-						else if (entryKey < key)
+
+						if (entryKey < key)
 						{
 							return null;
 						}
 					}
-					return null; 
+					return null;
 				}
 			}
 
-			internal override Entry GetEntry(int index)
+			internal override Entry GetEntry(Int32 index)
 			{
-				return m_entries[index];
+				return m_Entries[index];
 			}
 
-			internal override void Add(int key, object value)
+			internal override void Add(Int32 key, Object value)
 			{
-				m_entries[m_count].Key = key;
-				m_entries[m_count].Value = value;
-				m_count++;
+				m_Entries[m_Count].Key = key;
+				m_Entries[m_Count].Value = value;
+				m_Count++;
 			}
+
+			private readonly Entry[] m_Entries; // Array of entries.
 		}
 
-		private class Unassigned
+		private sealed class Unassigned
 		{
-			internal static Unassigned Value = new Unassigned();
+			private Unassigned()
+			{ }
+
+			internal readonly static Unassigned Value = new Unassigned();
 		}
+
+		private const Int32 MAXINDEX = 255;
+		private const Int32 GROWTH = 32;
+		private const Int32 MINSIZE = 32;
+		private const Int32 MAXARRAYCOUNT = 12;
+		private const Int32 INVALIDKEY = Int32.MaxValue;
+
+		private Boolean m_Readonly;
+		private MapProvider m_MapProvider;
 	}
 }

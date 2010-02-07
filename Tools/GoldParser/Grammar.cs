@@ -1,74 +1,34 @@
-#region Copyright
-
-//----------------------------------------------------------------------
-// Gold Parser engine.
-// See more details on http://www.devincook.com/goldparser/
-// 
-// Original code is written in VB by Devin Cook (GOLDParser@DevinCook.com)
-//
-// This translation is done by Vladimir Morozov (vmoroz@hotmail.com)
-// 
-// The translation is based on the other engine translations:
-// Delphi engine by Alexandre Rai (riccio@gmx.at)
-// C# engine by Marcus Klimstra (klimstra@home.nl)
-//----------------------------------------------------------------------
-
-#endregion
-
-#region Using directives
-
 using System;
 using System.IO;
 using System.Text;
-using System.Collections;
 using GoldParser.Properties;
-
-#endregion
 
 namespace GoldParser
 {
+	internal static class BinaryReaderExtensions
+	{
+		public static String ReadUnicodeString(this BinaryReader binaryReader)
+		{
+			var result = new StringBuilder();
+			var unicodeChar = (Char)binaryReader.ReadUInt16();
+			while (unicodeChar != (Char)0)
+			{
+				result.Append(unicodeChar);
+				unicodeChar = (Char)binaryReader.ReadUInt16();
+			}
+			return result.ToString();
+		}
+	}
+
 	/// <summary>
 	/// Contains grammar tables required for parsing.
 	/// </summary>
-	public class Grammar
+	public sealed class Grammar
 	{
-		#region Fields and constants
-
 		/// <summary>
 		/// Identifies Gold parser grammar file.
 		/// </summary>
-		public const string FileHeader = "GOLD Parser Tables/v1.0";
-
-		// Grammar header information
-		private string m_name;                // Name of the grammar
-		private string m_version;             // Version of the grammar
-		private string m_author;              // Author of the grammar
-		private string m_about;               // Grammar description
-		private int    m_startSymbolIndex;    // Start symbol index
-		private bool   m_caseSensitive;       // Grammar is case sensitive or not
-
-		// Tables read from the binary grammar file
-		private  Symbol[]    m_symbolTable;    // Symbol table
-		private  String[]    m_charSetTable;   // Charset table
-		internal Rule[]      m_ruleTable;      // Rule table
-		internal DfaState[]  m_dfaStateTable;  // DFA state table
-		internal LRState[]   m_lrStateTable;   // LR state table
-
-		// Initial states
-		internal int m_dfaInitialStateIndex;   // DFA initial state index
-		internal DfaState m_dfaInitialState;   // DFA initial state 
-		internal int m_lrInitialState;         // LR initial state
-
-		// Internal state of grammar parser
-		private BinaryReader m_reader;         // Source of the grammar    
-		private int m_entryCount;              // Number of entries left
-
-		internal Symbol m_errorSymbol;
-		internal Symbol m_endSymbol;
-
-		#endregion
-
-		#region Constructors
+		public const String FileHeader = "GOLD Parser Tables/v1.0";
 
 		/// <summary>
 		/// Creates a new instance of <c>Grammar</c> class
@@ -80,61 +40,55 @@ namespace GoldParser
 			{
 				throw new ArgumentNullException("reader");
 			}
-
-			m_reader = reader;
-			Load();
+			Load(reader);
 		}
-
-		#endregion
-
-		#region Public members
 
 		/// <summary>
 		/// Gets grammar name.
 		/// </summary>
-		public string Name
+		public String Name
 		{
-			get { return m_name; }
+			get { return m_Name; }
 		}
 
 		/// <summary>
 		/// Gets grammar version.
 		/// </summary>
-		public string Version
+		public String Version
 		{
-			get { return m_version; }
+			get { return m_Version; }
 		}
 
 		/// <summary>
 		/// Gets grammar author.
 		/// </summary>
-		public string Author
+		public String Author
 		{
-			get { return m_author; }
+			get { return m_Author; }
 		}
 
 		/// <summary>
 		/// Gets grammar description.
 		/// </summary>
-		public string About
+		public String About
 		{
-			get { return m_about; }
+			get { return m_About; }
 		}
 
 		/// <summary>
 		/// Gets the start symbol for the grammar.
 		/// </summary>
-		public Symbol StartSymbol 
+		public Symbol StartSymbol
 		{
-			get { return m_symbolTable[m_startSymbolIndex]; }
+			get { return m_SymbolTable[m_StartSymbolIndex]; }
 		}
 
 		/// <summary>
 		/// Gets the value indicating if the grammar is case sensitive.
 		/// </summary>
-		public bool CaseSensitive
+		public Boolean CaseSensitive
 		{
-			get { return m_caseSensitive; }
+			get { return m_CaseSensitive; }
 		}
 
 		/// <summary>
@@ -142,7 +96,7 @@ namespace GoldParser
 		/// </summary>
 		public DfaState DfaInitialState
 		{
-			get { return m_dfaInitialState; }
+			get { return m_DfaInitialState; }
 		}
 
 		/// <summary>
@@ -150,72 +104,99 @@ namespace GoldParser
 		/// </summary>
 		public LRState InitialLRState
 		{
-			get { return m_lrStateTable[m_lrInitialState]; }
+			get { return m_LRStateTable[m_LRInitialState]; }
 		}
 
 		/// <summary>
 		/// Gets a special symbol to designate last token in the input stream.
 		/// </summary>
-		public Symbol EndSymbol 
+		public Symbol EndSymbol
 		{
-			get { return m_endSymbol; }
+			get { return m_EndSymbol; }
 		}
 
-		#endregion
+		internal Rule[] RuleTable
+		{
+			get { return m_RuleTable; }
+		}
 
-		#region Private members
+		internal DfaState[] DfaStateTable
+		{
+			get { return m_DfaStateTable; }
+		}
+
+		internal LRState[] LrStateTable
+		{
+			get { return m_LRStateTable; }
+		}
+
+		internal Int32 DfaInitialStateIndex
+		{
+			get { return m_DfaInitialStateIndex; }
+		}
+
+		internal Int32 LrInitialState
+		{
+			get { return m_LRInitialState; }
+		}
+
+		internal Symbol ErrorSymbol
+		{
+			get { return m_ErrorSymbol; }
+		}
 
 		/// <summary>
 		/// Loads grammar from the binary reader.
 		/// </summary>
-		private void Load()
+		private void Load(BinaryReader reader)
 		{
-			if (FileHeader != ReadString())
+			if (reader.ReadUnicodeString() != FileHeader)
 			{
 				throw new FileLoadException(Resources.Grammar_WrongFileHeader);
 			}
-			while (m_reader.PeekChar() != -1)
+
+			while (reader.PeekChar() != -1)
 			{
-				RecordType recordType = ReadNextRecord();
-				switch (recordType)
+				RecordDataType recordDataType = ReadNextRecord(reader);
+				switch (recordDataType)
 				{
-					case RecordType.Parameters: 
-						ReadHeader();
+					case RecordDataType.Parameters:
+						ReadParameters(reader);
 						break;
 
-					case RecordType.TableCounts: 
-						ReadTableCounts();
+					case RecordDataType.TableCounts:
+						ReadTableCounts(reader);
 						break;
 
-					case RecordType.Initial: 
-						ReadInitialStates();
+					case RecordDataType.Initial:
+						ReadInitialStates(reader);
 						break;
 
-					case RecordType.Symbols: 
-						ReadSymbols();
+					case RecordDataType.Symbols:
+						ReadSymbols(reader);
 						break;
 
-					case RecordType.CharSets: 
-						ReadCharSets();
+					case RecordDataType.CharSets:
+						ReadCharSets(reader);
 						break;
 
-					case RecordType.Rules: 
-						ReadRules();
+					case RecordDataType.Rules:
+						ReadRules(reader);
 						break;
 
-					case RecordType.DfaStates: 
-						ReadDfaStates();
+					case RecordDataType.DfaStates:
+						ReadDfaStates(reader);
 						break;
 
-					case RecordType.LRStates: 
-						ReadLRStates();
+					case RecordDataType.LRStates:
+						ReadLRStates(reader);
 						break;
-    
+
 					default:
 						throw new FileLoadException(Resources.Grammar_InvalidRecordType);
 				}
 			}
-			m_dfaInitialState = m_dfaStateTable[m_dfaInitialStateIndex];
+			m_DfaInitialState = m_DfaStateTable[m_DfaInitialStateIndex];
 			OptimizeDfaTransitionVectors();
 		}
 
@@ -223,16 +204,16 @@ namespace GoldParser
 		/// Reads the next record in the binary grammar file.
 		/// </summary>
 		/// <returns>Read record type.</returns>
-		private RecordType ReadNextRecord()
+		private RecordDataType ReadNextRecord(BinaryReader reader)
 		{
-			char recordType = (char) ReadByte();
+			var recordType = (RecordType)reader.ReadByte();
 			//Structure below is ready for future expansion
 			switch (recordType)
 			{
-				case 'M': 
+				case RecordType.Multitype:
 					//Read the number of entry's
-					m_entryCount = ReadInt16();
-					return (RecordType) ReadByteEntry();
+					m_EntryCount = reader.ReadUInt16();
+					return (RecordDataType)ReadByteEntry(reader);
 
 				default:
 					throw new FileLoadException(Resources.Grammar_InvalidRecordHeader);
@@ -242,151 +223,141 @@ namespace GoldParser
 		/// <summary>
 		/// Reads grammar header information.
 		/// </summary>
-		private void ReadHeader()
+		private void ReadParameters(BinaryReader reader)
 		{
-			m_name             = ReadStringEntry();
-			m_version          = ReadStringEntry();
-			m_author           = ReadStringEntry();
-			m_about            = ReadStringEntry(); 
-			m_caseSensitive    = ReadBoolEntry(); 
-			m_startSymbolIndex = ReadInt16Entry(); 
+			m_Name = ReadStringEntry(reader);
+			m_Version = ReadStringEntry(reader);
+			m_Author = ReadStringEntry(reader);
+			m_About = ReadStringEntry(reader);
+			m_CaseSensitive = ReadBoolEntry(reader);
+			m_StartSymbolIndex = ReadInt16Entry(reader);
 		}
 
 		/// <summary>
 		/// Reads table record counts and initializes tables.
 		/// </summary>
-		private void ReadTableCounts()
+		private void ReadTableCounts(BinaryReader reader)
 		{
 			// Initialize tables
-			m_symbolTable    = new Symbol   [ReadInt16Entry()];
-			m_charSetTable   = new String   [ReadInt16Entry()];
-			m_ruleTable      = new Rule     [ReadInt16Entry()];
-			m_dfaStateTable  = new DfaState [ReadInt16Entry()];
-			m_lrStateTable   = new LRState  [ReadInt16Entry()];
+			m_SymbolTable = new Symbol[ReadInt16Entry(reader)];
+			m_CharSetTable = new String[ReadInt16Entry(reader)];
+			m_RuleTable = new Rule[ReadInt16Entry(reader)];
+			m_DfaStateTable = new DfaState[ReadInt16Entry(reader)];
+			m_LRStateTable = new LRState[ReadInt16Entry(reader)];
 		}
 
 		/// <summary>
 		/// Read initial DFA and LR states.
 		/// </summary>
-		private void ReadInitialStates()
+		private void ReadInitialStates(BinaryReader reader)
 		{
-			m_dfaInitialStateIndex = ReadInt16Entry();
-			m_lrInitialState       = ReadInt16Entry();
+			m_DfaInitialStateIndex = ReadInt16Entry(reader);
+			m_LRInitialState = ReadInt16Entry(reader);
 		}
 
 		/// <summary>
 		/// Read symbol information.
 		/// </summary>
-		private void ReadSymbols()
+		private void ReadSymbols(BinaryReader reader)
 		{
-			int index             = ReadInt16Entry();
-			string name           = ReadStringEntry();
-			SymbolType symbolType = (SymbolType) ReadInt16Entry();
-			
-			Symbol symbol = new Symbol(index, name, symbolType);
+			Int32 index = ReadInt16Entry(reader);
+			String name = ReadStringEntry(reader);
+			var symbolType = (SymbolType)ReadInt16Entry(reader);
+
+			var symbol = new Symbol(index, name, symbolType);
 			switch (symbolType)
 			{
 				case SymbolType.Error:
-					m_errorSymbol = symbol;
+					m_ErrorSymbol = symbol;
 					break;
 
 				case SymbolType.End:
-					m_endSymbol = symbol;
+					m_EndSymbol = symbol;
 					break;
 			}
-			m_symbolTable[index] = symbol;
+			m_SymbolTable[index] = symbol;
 		}
 
 		/// <summary>
-		/// Read char set information.
+		/// Read Char set information.
 		/// </summary>
-		private void ReadCharSets()
+		private void ReadCharSets(BinaryReader reader)
 		{
-			m_charSetTable[ReadInt16Entry()] = ReadStringEntry();
+			m_CharSetTable[ReadInt16Entry(reader)] = ReadStringEntry(reader);
 		}
 
 		/// <summary>
 		/// Read rule information.
 		/// </summary>
-		private void ReadRules()
+		private void ReadRules(BinaryReader reader)
 		{
-			int index = ReadInt16Entry();
-			Symbol nonTerminal = m_symbolTable[ReadInt16Entry()];
-			ReadEmptyEntry();
-			Symbol[] symbols = new Symbol[m_entryCount];
-			for (int i = 0 ; i < symbols.Length; i++)
+			Int32 index = ReadInt16Entry(reader);
+			Symbol nonTerminal = m_SymbolTable[ReadInt16Entry(reader)];
+			ReadEmptyEntry(reader);
+			var symbols = new Symbol[m_EntryCount];
+			for (Int32 i = 0; i < symbols.Length; i++)
 			{
-				symbols[i] = m_symbolTable[ReadInt16Entry()];
+				symbols[i] = m_SymbolTable[ReadInt16Entry(reader)];
 			}
-			Rule rule = new Rule(index, nonTerminal, symbols);
-			m_ruleTable[index] = rule;
+			var rule = new Rule(index, nonTerminal, symbols);
+			m_RuleTable[index] = rule;
 		}
 
 		/// <summary>
 		/// Read DFA state information.
 		/// </summary>
-		private void ReadDfaStates()
+		private void ReadDfaStates(BinaryReader reader)
 		{
-			int index = ReadInt16Entry();
-			Symbol acceptSymbol = null;
-			bool acceptState = ReadBoolEntry();
-			if (acceptState)
-			{
-				acceptSymbol = m_symbolTable[ReadInt16Entry()];
-			}
-			else
-			{
-				ReadInt16Entry();  // Skip the entry.
-			}
-			ReadEmptyEntry();
+			Int32 index = ReadInt16Entry(reader);
+			Boolean acceptState = ReadBoolEntry(reader);
+			Int16 acceptIndex = ReadInt16Entry(reader);
+			ReadEmptyEntry(reader);
 
 			// Read DFA edges
-			DfaEdge[] edges = new DfaEdge[m_entryCount / 3];
-			for (int i = 0; i < edges.Length; i++)
+			var edges = new DfaEdge[m_EntryCount / 3];
+			for (Int32 i = 0; i < edges.Length; i++)
 			{
-				edges[i].CharSetIndex = ReadInt16Entry();
-				edges[i].TargetIndex  = ReadInt16Entry();
-				ReadEmptyEntry();
+				edges[i] = new DfaEdge(ReadInt16Entry(reader), ReadInt16Entry(reader));
+				ReadEmptyEntry(reader);
 			}
-	
+
 			// Create DFA state and store it in DFA state table
-			ObjectMap transitionVector = CreateDfaTransitionVector(edges); 
-			DfaState dfaState = new DfaState(index, acceptSymbol, transitionVector);
-			m_dfaStateTable[index] = dfaState;
+			Symbol acceptSymbol = acceptState ? m_SymbolTable[acceptIndex] : null;
+			ObjectMap transitionVector = CreateDfaTransitionVector(edges);
+			var dfaState = new DfaState(index, acceptSymbol, transitionVector);
+			m_DfaStateTable[index] = dfaState;
 		}
 
 		/// <summary>
 		/// Read LR state information.
 		/// </summary>
-		private void ReadLRStates()
+		private void ReadLRStates(BinaryReader reader)
 		{
-			int index = ReadInt16Entry();
-			ReadEmptyEntry();
-			LRStateAction[] stateTable = new LRStateAction[m_entryCount / 4]; 
-			for (int i = 0; i < stateTable.Length; i++)
+			Int32 index = ReadInt16Entry(reader);
+			ReadEmptyEntry(reader);
+			var stateTable = new LRStateAction[m_EntryCount / 4];
+			for (Int32 i = 0; i < stateTable.Length; i++)
 			{
-				Symbol symbol     = m_symbolTable[ReadInt16Entry()];
-				LRAction action = (LRAction) ReadInt16Entry();
-				int targetIndex   = ReadInt16Entry();
-				ReadEmptyEntry();
+				Symbol symbol = m_SymbolTable[ReadInt16Entry(reader)];
+				var action = (LRAction)ReadInt16Entry(reader);
+				Int32 targetIndex = ReadInt16Entry(reader);
+				ReadEmptyEntry(reader);
 				stateTable[i] = new LRStateAction(i, symbol, action, targetIndex);
 			}
 
 			// Create the transition vector
-			LRStateAction[] transitionVector = new LRStateAction[m_symbolTable.Length]; 
-			for (int i = 0; i < transitionVector.Length; i++)
-			{
-				transitionVector[i] = null;
-			}
-			for (int i = 0; i < stateTable.Length; i++)
+			var transitionVector = new LRStateAction[m_SymbolTable.Length];
+			Array.Clear(transitionVector, 0, transitionVector.Length);
+			
+			for (Int32 i = 0; i < stateTable.Length; i++)
 			{
 				transitionVector[stateTable[i].Symbol.Index] = stateTable[i];
 			}
 
-			LRState lrState = new LRState(index, stateTable, transitionVector);
-			m_lrStateTable[index] = lrState;
+			var lrState = new LRState(index, stateTable, transitionVector);
+			m_LRStateTable[index] = lrState;
 		}
-	
+
 		/// <summary>
 		/// Creates the DFA state transition vector.
 		/// </summary>
@@ -394,13 +365,13 @@ namespace GoldParser
 		/// <returns>Hashtable with the transition information.</returns>
 		private ObjectMap CreateDfaTransitionVector(DfaEdge[] edges)
 		{
-			ObjectMap transitionVector = new ObjectMap(); 
-			for (int i = edges.Length; --i >= 0;) 
+			var transitionVector = new ObjectMap();
+			for (Int32 i = edges.Length - 1; i >= 0; i--)
 			{
-				string charSet = m_charSetTable[edges[i].CharSetIndex];
-				for (int j = 0; j < charSet.Length; j++)
+				String charSet = m_CharSetTable[edges[i].CharSetIndex];
+				foreach (Char ch in charSet)
 				{
-					transitionVector[charSet[j]] = edges[i].TargetIndex;
+					transitionVector[ch] = edges[i].TargetIndex;
 				}
 			}
 			return transitionVector;
@@ -409,195 +380,185 @@ namespace GoldParser
 		/// <summary>
 		/// Reads empty entry from the grammar file.
 		/// </summary>
-		private void ReadEmptyEntry()
+		private void ReadEmptyEntry(BinaryReader reader)
 		{
-			if (ReadEntryType() != EntryType.Empty)
+			if (ReadEntryDataType(reader) != EntryDataType.Empty)
 			{
 				throw new FileLoadException(Resources.Grammar_EmptyEntryExpected);
 			}
-			m_entryCount--;
+			m_EntryCount--;
 		}
 
 		/// <summary>
-		/// Reads string entry from the grammar file.
+		/// Reads String entry from the grammar file.
 		/// </summary>
 		/// <returns>String entry content.</returns>
-		private string ReadStringEntry()
+		private String ReadStringEntry(BinaryReader reader)
 		{
-			if (ReadEntryType() != EntryType.String)
+			if (ReadEntryDataType(reader) != EntryDataType.String)
 			{
 				throw new FileLoadException(Resources.Grammar_StringEntryExpected);
 			}
-			m_entryCount--;
-			return ReadString();
+			m_EntryCount--;
+			return reader.ReadUnicodeString();
 		}
 
 		/// <summary>
 		/// Reads Int16 entry from the grammar file.
 		/// </summary>
 		/// <returns>Int16 entry content.</returns>
-		private int ReadInt16Entry()
+		private Int16 ReadInt16Entry(BinaryReader reader)
 		{
-			if (ReadEntryType() != EntryType.Integer)
+			if (ReadEntryDataType(reader) != EntryDataType.Integer)
 			{
 				throw new FileLoadException(Resources.Grammar_IntegerEntryExpected);
 			}
-			m_entryCount--;
-			return ReadInt16();
+			m_EntryCount--;
+			return reader.ReadInt16();
 		}
 
 		/// <summary>
-		/// Reads byte entry from the grammar file.
+		/// Reads Byte entry from the grammar file.
 		/// </summary>
 		/// <returns>Byte entry content.</returns>
-		private byte ReadByteEntry()
+		private Byte ReadByteEntry(BinaryReader reader)
 		{
-			if (ReadEntryType() != EntryType.Byte)
+			if (ReadEntryDataType(reader) != EntryDataType.Byte)
 			{
 				throw new FileLoadException(Resources.Grammar_ByteEntryExpected);
 			}
-			m_entryCount--;
-			return ReadByte();
+			m_EntryCount--;
+			return reader.ReadByte();
 		}
 
 		/// <summary>
 		/// Reads boolean entry from the grammar file.
 		/// </summary>
 		/// <returns>Boolean entry content.</returns>
-		private bool ReadBoolEntry()
+		private Boolean ReadBoolEntry(BinaryReader reader)
 		{
-			if (ReadEntryType() != EntryType.Boolean)
+			if (ReadEntryDataType(reader) != EntryDataType.Boolean)
 			{
 				throw new FileLoadException(Resources.Grammar_BooleanEntryExpected);
 			}
-			m_entryCount--;
-			return ReadBool();
+			m_EntryCount--;
+			return reader.ReadBoolean();
 		}
 
 		/// <summary>
 		/// Reads entry type.
 		/// </summary>
 		/// <returns>Entry type.</returns>
-		private EntryType ReadEntryType()
+		private EntryDataType ReadEntryDataType(BinaryReader reader)
 		{
-			if (m_entryCount == 0)
+			if (m_EntryCount == 0)
 			{
 				throw new FileLoadException(Resources.Grammar_NoEntry);
-			}  
-			return (EntryType) ReadByte();
-		}
-
-		/// <summary>
-		/// Reads string from the grammar file.
-		/// </summary>
-		/// <returns>String value.</returns>
-		private string ReadString()
-		{  
-			StringBuilder result = new StringBuilder(); 
-			char unicodeChar = (char) ReadInt16();
-			while (unicodeChar != (char) 0)
-			{
-				result.Append(unicodeChar);
-				unicodeChar = (char) ReadInt16();
 			}
-			return result.ToString();
-		}
-
-		/// <summary>
-		/// Reads two byte integer Int16 from the grammar file.
-		/// </summary>
-		/// <returns>Int16 value.</returns>
-		private int ReadInt16()
-		{
-			return m_reader.ReadUInt16();
-		}
-
-		/// <summary>
-		/// Reads byte from the grammar file.
-		/// </summary>
-		/// <returns>Byte value.</returns>
-		private byte ReadByte()
-		{
-			return m_reader.ReadByte();
-		}
-
-		/// <summary>
-		/// Reads boolean from the grammar file.
-		/// </summary>
-		/// <returns>Boolean value.</returns>
-		private bool ReadBool()
-		{
-			return (ReadByte() == 1);
+			return (EntryDataType)reader.ReadByte();
 		}
 
 		private void OptimizeDfaTransitionVectors()
 		{
-			DfaState[] dfaStates = m_dfaStateTable;
-			foreach (DfaState state in dfaStates)
+			foreach (DfaState state in m_DfaStateTable)
 			{
-				ObjectMap transitions = state.m_transitionVector;
-				for (int i = transitions.Count; --i >= 0;)
+				ObjectMap transitions = state.TransitionVector;
+				for (Int32 i = transitions.Count - 1; i >= 0; i--)
 				{
-					int key = transitions.GetKey(i);
-					object transition = transitions[key];
+					Int32 key = transitions.GetKey(i);
+					Object transition = transitions[key];
 					if (transition != null)
 					{
-						int transitionIndex = (int) transition;
-						if (transitionIndex >= 0)
-						{
-							transitions[key] = dfaStates[transitionIndex];
-						}
-						else
-						{
-							transitions[key] = null;
-						}
+						var transitionIndex = (Int16)transition;
+						transitions[key] = transitionIndex >= 0 ? m_DfaStateTable[transitionIndex] : null;
 					}
 				}
 				transitions.ReadOnly = true;
 			}
 		}
 
-		#endregion
-
-		#region Private type definitions
-
-		/// <summary>
-		/// Record type byte in the binary grammar file.
-		/// </summary>
-		private enum RecordType
+		private enum RecordType : byte
 		{
-			Parameters  = (int) 'P', // 80
-			TableCounts = (int) 'T', // 84
-			Initial     = (int) 'I', // 73
-			Symbols     = (int) 'S', // 83
-			CharSets    = (int) 'C', // 67
-			Rules       = (int) 'R', // 82
-			DfaStates   = (int) 'D', // 68
-			LRStates    = (int) 'L', // 76
-			Comment     = (int) '!'  // 33
+			Multitype = (Byte)'M' // 77
 		}
 
 		/// <summary>
-		/// Entry type byte in the binary grammar file.
+		/// Record type Byte in the binary grammar file.
 		/// </summary>
-		private enum EntryType
+		private enum RecordDataType : byte
 		{
-			Empty		= (int) 'E', // 69
-			Integer		= (int) 'I', // 73
-			String		= (int) 'S', // 83
-			Boolean		= (int) 'B', // 66
-			Byte		= (int) 'b'  // 98
+			Parameters = (Byte)'P', // 80
+			TableCounts = (Byte)'T', // 84
+			Initial = (Byte)'I', // 73
+			Symbols = (Byte)'S', // 83
+			CharSets = (Byte)'C', // 67
+			Rules = (Byte)'R', // 82
+			DfaStates = (Byte)'D', // 68
+			LRStates = (Byte)'L' // 76
+			//Comment = (Byte)'!'  // 33
+		}
+
+		/// <summary>
+		/// Entry type Byte in the binary grammar file.
+		/// </summary>
+		private enum EntryDataType : byte
+		{
+			Empty = (Byte)'E', // 69
+			Integer = (Byte)'I', // 73
+			String = (Byte)'S', // 83
+			Boolean = (Byte)'B', // 66
+			Byte = (Byte)'b'  // 98
 		}
 
 		/// <summary>
 		/// Edge between DFA states.
 		/// </summary>
-		private struct DfaEdge 
+		private struct DfaEdge
 		{
-			public int CharSetIndex;
-			public int TargetIndex;
+			public DfaEdge(Int16 charSetIndex, Int16 targetIndex)
+			{
+				m_CharSetIndex = charSetIndex;
+				m_TargetIndex = targetIndex;
+			}
+
+			public Int16 CharSetIndex
+			{
+				get { return m_CharSetIndex; }
+			}
+
+			public Int16 TargetIndex
+			{
+				get { return m_TargetIndex; }
+			}
+
+			private readonly Int16 m_CharSetIndex;
+			private readonly Int16 m_TargetIndex;
 		}
 
-		#endregion
+		// Grammar header information
+		private String m_Name;               // Name of the grammar
+		private String m_Version;            // Version of the grammar
+		private String m_Author;             // Author of the grammar
+		private String m_About;              // Grammar description
+		private Boolean m_CaseSensitive;     // Grammar is case sensitive or not
+		private Int32 m_StartSymbolIndex;    // Start symbol index
+
+		// Tables read from the binary grammar file
+		private Symbol[] m_SymbolTable;      // Symbol table
+		private String[] m_CharSetTable;     // Charset table
+		private Rule[] m_RuleTable;          // Rule table
+		private DfaState[] m_DfaStateTable;  // DFA state table
+		private LRState[] m_LRStateTable;    // LR state table
+
+		// Initial states
+		private Int32 m_DfaInitialStateIndex;// DFA initial state index
+		private DfaState m_DfaInitialState;  // DFA initial state 
+		private Int32 m_LRInitialState;      // LR initial state
+
+		// Internal state of grammar parser
+		private UInt16 m_EntryCount;         // Number of entries left
+
+		private Symbol m_ErrorSymbol;
+		private Symbol m_EndSymbol;
 	}
 }

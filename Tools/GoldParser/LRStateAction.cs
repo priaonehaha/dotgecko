@@ -1,25 +1,4 @@
-#region Copyright
-
-//----------------------------------------------------------------------
-// Gold Parser engine.
-// See more details on http://www.devincook.com/goldparser/
-// 
-// Original code is written in VB by Devin Cook (GOLDParser@DevinCook.com)
-//
-// This translation is done by Vladimir Morozov (vmoroz@hotmail.com)
-// 
-// The translation is based on the other engine translations:
-// Delphi engine by Alexandre Rai (riccio@gmx.at)
-// C# engine by Marcus Klimstra (klimstra@home.nl)
-//----------------------------------------------------------------------
-
-#endregion
-
-#region Using directives
-
 using System;
-
-#endregion
 
 namespace GoldParser
 {
@@ -28,11 +7,6 @@ namespace GoldParser
 	/// </summary>
 	public class LRStateAction
 	{
-		private int m_index;
-		private Symbol m_symbol;
-		private LRAction m_action;
-		internal int m_value;
-
 		/// <summary>
 		/// Creats a new instance of the <c>LRStateAction</c> class.
 		/// </summary>
@@ -40,44 +14,49 @@ namespace GoldParser
 		/// <param name="symbol">Symbol associated with the action.</param>
 		/// <param name="action">Action type.</param>
 		/// <param name="value">Action value.</param>
-		public LRStateAction(int index, Symbol symbol, LRAction action, int value)
+		public LRStateAction(Int32 index, Symbol symbol, LRAction action, Int32 value)
 		{
-			m_index = index;
-			m_symbol = symbol;
-			m_action = action;
-			m_value = value;
+			m_Index = index;
+			m_Symbol = symbol;
+			m_Action = action;
+			m_Value = value;
 		}
 
 		/// <summary>
 		/// Gets index of the LR state action.
 		/// </summary>
-		public int Index 
+		public Int32 Index
 		{
-			get { return m_index; }
+			get { return m_Index; }
 		}
 
 		/// <summary>
 		/// Gets symbol associated with the LR state action.
 		/// </summary>
-		public Symbol Symbol 
+		public Symbol Symbol
 		{
-			get { return m_symbol; }
+			get { return m_Symbol; }
 		}
 
 		/// <summary>
 		/// Gets action type.
 		/// </summary>
-		public LRAction Action 
+		public LRAction Action
 		{
-			get { return m_action; }
+			get { return m_Action; }
 		}
 
 		/// <summary>
 		/// Gets the action value.
 		/// </summary>
-		public int Value 
+		public Int32 Value
 		{
-			get { return m_value; }
+			get { return m_Value; }
 		}
+
+		private readonly Int32 m_Index;
+		private readonly Symbol m_Symbol;
+		private readonly LRAction m_Action;
+		private readonly Int32 m_Value;
 	}
 }
