@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace XPIDL.Parser
+namespace Xpidl.Parser
 {
-	[Flags]
 	internal enum XpidlMethodModifier : byte
 	{
-		None = 0x00,
-		NoScript = 0x01,
-		NotXpcom = 0x02
+		NoScript,
+		NotXpcom,
+		BinaryName
 	}
 
 	internal sealed class XpidlMethod : XpidlNode
 	{
-		public XpidlMethod(String name, XpidlType type, XpidlMethodModifier modifier, IEnumerable<XpidlMethodParameter> parameters)
+		public XpidlMethod(String name, XpidlType type, XpidlModifiers<XpidlMethodModifier> modifiers, IEnumerable<XpidlMethodParameter> parameters)
 		{
 			m_Name = name;
 			m_Type = type;
-			m_Modifier = modifier;
-			m_ReadOnlyParameters = new List<XpidlMethodParameter>(parameters).AsReadOnly();
+			m_Modifiers = (modifiers ?? new XpidlModifiers<XpidlMethodModifier>()).AsReadOnly();
+			m_ReadOnlyParameters = (parameters != null ? new List<XpidlMethodParameter>(parameters) : new List<XpidlMethodParameter>(0)).AsReadOnly();
 		}
 
 		public String Name
@@ -32,9 +31,9 @@ namespace XPIDL.Parser
 			get { return m_Type; }
 		}
 
-		public XpidlMethodModifier Modifier
+		public XpidlModifiers<XpidlMethodModifier> Modifiers
 		{
-			get { return m_Modifier; }
+			get { return m_Modifiers; }
 		}
 
 		public IList<XpidlMethodParameter> Parameters
@@ -51,13 +50,12 @@ namespace XPIDL.Parser
 					return i;
 				}
 			}
-
 			return -1;
 		}
 
 		private readonly String m_Name;
 		private readonly XpidlType m_Type;
-		private readonly XpidlMethodModifier m_Modifier;
+		private readonly XpidlModifiers<XpidlMethodModifier> m_Modifiers;
 		private readonly ReadOnlyCollection<XpidlMethodParameter> m_ReadOnlyParameters;
 	}
 }

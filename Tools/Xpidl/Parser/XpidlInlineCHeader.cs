@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XPIDL.Parser
+namespace Xpidl.Parser
 {
 	internal sealed class XpidlInlineCHeader : XpidlNode
 	{

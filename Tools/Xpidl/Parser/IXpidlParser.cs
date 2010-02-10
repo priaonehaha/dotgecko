@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace XPIDL.Parser
+namespace Xpidl.Parser
 {
 	internal interface IXpidlParser
 	{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace XPIDL.Parser
+namespace Xpidl.Parser
 {
 	internal sealed class XpidlNativeType : XpidlNode
 	{

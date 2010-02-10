@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XPIDL.Parser
+namespace Xpidl.Parser
 {
 	internal sealed class XpidlForwardDeclaration : XpidlNode
 	{
@@ -12,6 +12,11 @@ namespace XPIDL.Parser
 		public String InterfaceName
 		{
 			get { return m_InterfaceName; }
+		}
+
+		public override String ToString()
+		{
+			return String.Format("interface {0};", InterfaceName);
 		}
 
 		private readonly String m_InterfaceName;

@@ -3,8 +3,8 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using XPIDL.Parser;
-using XPIDL.Parser.Gold;
+using Xpidl.Parser;
+using Xpidl.Parser.Gold;
 
 namespace Xpidl
 {

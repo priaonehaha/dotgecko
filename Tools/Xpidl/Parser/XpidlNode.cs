@@ -1,4 +1,4 @@
-﻿namespace XPIDL.Parser
+﻿namespace Xpidl.Parser
 {
 	internal abstract class XpidlNode
 	{ }

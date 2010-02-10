@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace XPIDL.Parser
+namespace Xpidl.Parser
 {
 	internal abstract class XpidlComplexNode : XpidlNode
 	{

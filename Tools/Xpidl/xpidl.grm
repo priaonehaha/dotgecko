@@ -11,8 +11,6 @@
 
 ! ================================================= Sets =====
 
-{any-char}           = {All Valid}
-{any-char-but-LF}    = {any-char} - {LF}
 {hex-char}           = {Number} + [abcdefABCDEF]
 {filename-char}      = {AlphaNumeric} + [_]
 {xpidl-id-char}      = {AlphaNumeric} + [_]

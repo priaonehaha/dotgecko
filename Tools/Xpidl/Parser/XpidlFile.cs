@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XPIDL.Parser
+namespace Xpidl.Parser
 {
 	internal sealed class XpidlFile : XpidlComplexNode
 	{
@@ -17,6 +17,11 @@ namespace XPIDL.Parser
 		public void AddNode(XpidlComment comment)
 		{
 			AddNodeImpl(comment);
+		}
+
+		public void AddNode(XpidlTypeDef typeDef)
+		{
+			AddNodeImpl(typeDef);
 		}
 
 		public void AddNode(XpidlInlineCHeader inlineCHeader)

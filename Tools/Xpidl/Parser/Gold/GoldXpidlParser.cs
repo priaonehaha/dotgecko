@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using GoldParser;
 
-namespace XPIDL.Parser.Gold
+namespace Xpidl.Parser.Gold
 {
 	internal sealed partial class GoldXpidlParser : IXpidlParser
 	{
@@ -16,7 +16,8 @@ namespace XPIDL.Parser.Gold
 		{
 			ComplexSyntaxNode rootSyntaxNode = ParseImpl(xpidlTextReader);
 			DisplaySyntaxTree(rootSyntaxNode);
-			return null;
+			XpidlFile xpidlFile = CreateXpidlFile("", rootSyntaxNode);
+			return xpidlFile;
 		}
 
 		private ComplexSyntaxNode ParseImpl(TextReader xpidlTextReader)
@@ -139,7 +140,6 @@ namespace XPIDL.Parser.Gold
 					Debug.Unindent();
 				}
 			}
-
 		}
 
 		private readonly Grammar m_Grammar;

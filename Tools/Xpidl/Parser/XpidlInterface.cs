@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XPIDL.Parser
+namespace Xpidl.Parser
 {
 	[Flags]
 	internal enum XpidlInterfaceModifier : byte

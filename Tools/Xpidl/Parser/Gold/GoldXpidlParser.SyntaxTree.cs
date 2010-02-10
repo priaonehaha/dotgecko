@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using GoldParser;
 
-namespace XPIDL.Parser.Gold
+namespace Xpidl.Parser.Gold
 {
 	internal sealed partial class GoldXpidlParser
 	{
@@ -13,12 +15,12 @@ namespace XPIDL.Parser.Gold
 				m_AttachedCommentNodes = new List<CommentSyntaxNode>();
 			}
 
-			public void AttachCommentNode(CommentSyntaxNode commentNode)
+			internal void AttachCommentNode(CommentSyntaxNode commentNode)
 			{
 				m_AttachedCommentNodes.Add(commentNode);
 			}
 
-			public void DetachCommentNodes(ComplexSyntaxNode newParentNode)
+			internal void DetachCommentNodes(ComplexSyntaxNode newParentNode)
 			{
 				if (newParentNode == null)
 				{
@@ -32,7 +34,7 @@ namespace XPIDL.Parser.Gold
 				m_AttachedCommentNodes.Clear();
 			}
 
-			public void ReattachCommentNodes(SyntaxNode oldParentNode)
+			internal void ReattachCommentNodes(SyntaxNode oldParentNode)
 			{
 				if (oldParentNode == null)
 				{
@@ -51,33 +53,40 @@ namespace XPIDL.Parser.Gold
 
 		private sealed class CommentSyntaxNode : SyntaxNode
 		{
-			public CommentSyntaxNode(String commentText)
+			internal CommentSyntaxNode(String commentText)
 			{
 				m_CommentText = commentText;
+				m_IsInlineCHeader = commentText.StartsWith("%{");
 			}
 
-			public String CommentText
+			internal String CommentText
 			{
 				get { return m_CommentText; }
 			}
 
+			internal Boolean IsInlineCHeader
+			{
+				get { return m_IsInlineCHeader; }
+			}
+
 			private readonly String m_CommentText;
+			private readonly Boolean m_IsInlineCHeader;
 		}
 
 		private sealed class SimpleSyntaxNode : SyntaxNode
 		{
-			public SimpleSyntaxNode(Symbol symbol, String text)
+			internal SimpleSyntaxNode(Symbol symbol, String text)
 			{
 				m_Symbol = symbol;
 				m_Text = text;
 			}
 
-			public Symbol Symbol
+			internal Symbol Symbol
 			{
 				get { return m_Symbol; }
 			}
 
-			public String Text
+			internal String Text
 			{
 				get { return m_Text; }
 			}
@@ -86,29 +95,30 @@ namespace XPIDL.Parser.Gold
 			private readonly String m_Text;
 		}
 
-		private sealed class ComplexSyntaxNode : SyntaxNode
+		private sealed class ComplexSyntaxNode : SyntaxNode, IEnumerable<SyntaxNode>
 		{
-			public ComplexSyntaxNode(Rule rule)
+			internal ComplexSyntaxNode(Rule rule)
 			{
 				m_Rule = rule;
+				m_ChildNodes = new List<SyntaxNode>();
 			}
 
-			public Rule Rule
+			internal Rule Rule
 			{
 				get { return m_Rule; }
 			}
 
-			public Int32 Count
+			internal Int32 Count
 			{
 				get { return m_ChildNodes.Count; }
 			}
 
-			public SyntaxNode this[Int32 index]
+			internal SyntaxNode this[Int32 index]
 			{
 				get { return m_ChildNodes[index]; }
 			}
 
-			public void AddChildNode(SyntaxNode childNode)
+			internal void AddChildNode(SyntaxNode childNode)
 			{
 				if (childNode == null)
 				{
@@ -118,8 +128,18 @@ namespace XPIDL.Parser.Gold
 				m_ChildNodes.Add(childNode);
 			}
 
+			public IEnumerator<SyntaxNode> GetEnumerator()
+			{
+				return m_ChildNodes.GetEnumerator();
+			}
+
+			IEnumerator IEnumerable.GetEnumerator()
+			{
+				return GetEnumerator();
+			}
+
 			private readonly Rule m_Rule;
-			private readonly List<SyntaxNode> m_ChildNodes = new List<SyntaxNode>();
+			private readonly List<SyntaxNode> m_ChildNodes;
 		}
 	}
 }

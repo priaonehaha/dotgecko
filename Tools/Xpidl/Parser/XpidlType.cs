@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace XPIDL.Parser
+namespace Xpidl.Parser
 {
 	internal class XpidlType
 	{
@@ -44,6 +44,11 @@ namespace XPIDL.Parser
 		public MarshalAsAttribute MarshalAs
 		{
 			get { return m_MarshalAs; }
+		}
+
+		public override String ToString()
+		{
+			return Name;
 		}
 
 		private static Type GetClrType(String xpidlType, out MarshalAsAttribute marshalAs)

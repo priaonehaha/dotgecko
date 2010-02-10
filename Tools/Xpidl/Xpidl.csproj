@@ -12,6 +12,7 @@
     <AssemblyName>Xpidl</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>Client</TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,8 +54,11 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Parser\BooleanFormatProvider.cs" />
+    <Compile Include="Parser\Gold\GoldXpidlParser.Constants.cs" />
     <Compile Include="Parser\Gold\GoldXpidlParser.cs" />
     <Compile Include="Parser\Gold\GoldXpidlParser.SyntaxTree.cs" />
+    <Compile Include="Parser\Gold\GoldXpidlParser.Transform.cs" />
     <Compile Include="Parser\XpidlAttribute.cs" />
     <Compile Include="Parser\XpidlComment.cs" />
     <Compile Include="Parser\XpidlComplexNode.cs" />
@@ -66,10 +70,12 @@
     <Compile Include="Parser\XpidlInterface.cs" />
     <Compile Include="Parser\XpidlMethod.cs" />
     <Compile Include="Parser\XpidlMethodParameter.cs" />
+    <Compile Include="Parser\XpidlModifiers.cs" />
     <Compile Include="Parser\XpidlNativeType.cs" />
     <Compile Include="Parser\XpidlNode.cs" />
     <Compile Include="Parser\IXpidlParser.cs" />
     <Compile Include="Parser\XpidlType.cs" />
+    <Compile Include="Parser\XpidlTypeDef.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
