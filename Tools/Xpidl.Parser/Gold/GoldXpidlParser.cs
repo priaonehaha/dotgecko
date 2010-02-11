@@ -5,7 +5,7 @@ using GoldParser;
 
 namespace Xpidl.Parser.Gold
 {
-	internal sealed partial class GoldXpidlParser : IXpidlParser
+	public sealed partial class GoldXpidlParser : IXpidlParser
 	{
 		public GoldXpidlParser(BinaryReader grammarBinaryReader)
 		{

@@ -4,16 +4,16 @@ using System.Collections.ObjectModel;
 
 namespace Xpidl.Parser
 {
-	internal enum XpidlMethodModifier : byte
+	public enum XpidlMethodModifier : byte
 	{
 		NoScript,
 		NotXpcom,
 		BinaryName
 	}
 
-	internal sealed class XpidlMethod : XpidlNode
+	public sealed class XpidlMethod : XpidlNode
 	{
-		public XpidlMethod(String name, XpidlType type, XpidlModifiers<XpidlMethodModifier> modifiers, IEnumerable<XpidlMethodParameter> parameters)
+		internal XpidlMethod(String name, XpidlType type, XpidlModifiers<XpidlMethodModifier> modifiers, IEnumerable<XpidlMethodParameter> parameters)
 		{
 			m_Name = name;
 			m_Type = type;

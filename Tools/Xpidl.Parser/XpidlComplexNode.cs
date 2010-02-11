@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Xpidl.Parser
 {
-	internal abstract class XpidlComplexNode : XpidlNode
+	public abstract class XpidlComplexNode : XpidlNode
 	{
 		protected XpidlComplexNode()
 		{

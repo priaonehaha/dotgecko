@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Xpidl.Parser
 {
-	internal class XpidlType
+	public class XpidlType
 	{
 		public const String Void = "void";
 		public const String Boolean = "boolean";
@@ -25,7 +25,7 @@ namespace Xpidl.Parser
 		public const String AUTF8String = "AUTF8String";
 		public const String DOMString = "DOMString";
 
-		public XpidlType(String typeName)
+		internal XpidlType(String typeName)
 		{
 			m_Name = typeName;
 			m_ClrType = GetClrType(m_Name, out m_MarshalAs);

@@ -2,9 +2,9 @@
 
 namespace Xpidl.Parser
 {
-	internal sealed class XpidlInclude : XpidlNode
+	public sealed class XpidlInclude : XpidlNode
 	{
-		public XpidlInclude(String fileName)
+		internal XpidlInclude(String fileName)
 		{
 			m_FileName = fileName;
 		}

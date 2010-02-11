@@ -2,9 +2,9 @@
 
 namespace Xpidl.Parser
 {
-	internal sealed class XpidlFile : XpidlComplexNode
+	public sealed class XpidlFile : XpidlComplexNode
 	{
-		public XpidlFile(String name)
+		internal XpidlFile(String name)
 		{
 			m_Name = name;
 		}
@@ -14,37 +14,37 @@ namespace Xpidl.Parser
 			get { return m_Name; }
 		}
 
-		public void AddNode(XpidlComment comment)
+		internal void AddNode(XpidlComment comment)
 		{
 			AddNodeImpl(comment);
 		}
 
-		public void AddNode(XpidlTypeDef typeDef)
+		internal void AddNode(XpidlTypeDef typeDef)
 		{
 			AddNodeImpl(typeDef);
 		}
 
-		public void AddNode(XpidlInlineCHeader inlineCHeader)
+		internal void AddNode(XpidlInlineCHeader inlineCHeader)
 		{
 			AddNodeImpl(inlineCHeader);
 		}
 
-		public void AddNode(XpidlInclude include)
+		internal void AddNode(XpidlInclude include)
 		{
 			AddNodeImpl(include);
 		}
 
-		public void AddNode(XpidlForwardDeclaration forwardDeclaration)
+		internal void AddNode(XpidlForwardDeclaration forwardDeclaration)
 		{
 			AddNodeImpl(forwardDeclaration);
 		}
 
-		public void AddNode(XpidlNativeType xpidlNativeType)
+		internal void AddNode(XpidlNativeType xpidlNativeType)
 		{
 			AddNodeImpl(xpidlNativeType);
 		}
 
-		public void AddNode(XpidlInterface xpidlInterface)
+		internal void AddNode(XpidlInterface xpidlInterface)
 		{
 			AddNodeImpl(xpidlInterface);
 		}

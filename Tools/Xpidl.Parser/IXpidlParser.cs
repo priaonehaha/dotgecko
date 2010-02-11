@@ -2,7 +2,7 @@
 
 namespace Xpidl.Parser
 {
-	internal interface IXpidlParser
+	public interface IXpidlParser
 	{
 		XpidlFile Parse(TextReader xpidlTextReader);
 	}

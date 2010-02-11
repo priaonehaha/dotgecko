@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace Xpidl.Parser.Gold
 {
-	internal sealed partial class GoldXpidlParser
+	public sealed partial class GoldXpidlParser
 	{
 		private static XpidlFile CreateXpidlFile(String xpidlFileName, ComplexSyntaxNode rootSyntaxNode)
 		{

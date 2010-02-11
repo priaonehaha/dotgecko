@@ -3,13 +3,13 @@
 namespace Xpidl.Parser
 {
 	[Flags]
-	internal enum XpidlParameterDirection : byte
+	public enum XpidlParameterDirection : byte
 	{
 		In = 0x01,
 		Out = 0x02
 	}
 
-	internal enum XpidlParamModifier : byte
+	public enum XpidlParamModifier : byte
 	{
 		Array,
 		SizeIs,
@@ -20,9 +20,9 @@ namespace Xpidl.Parser
 		Optional
 	}
 
-	internal sealed class XpidlMethodParameter
+	public sealed class XpidlMethodParameter
 	{
-		public XpidlMethodParameter(String name, XpidlType type, XpidlParameterDirection direction, XpidlModifiers<XpidlParamModifier> modifiers)
+		internal XpidlMethodParameter(String name, XpidlType type, XpidlParameterDirection direction, XpidlModifiers<XpidlParamModifier> modifiers)
 		{
 			m_Name = name;
 			m_Type = type;

@@ -3,7 +3,7 @@
 namespace Xpidl.Parser
 {
 	[Flags]
-	internal enum XpidlInterfaceModifier : byte
+	public enum XpidlInterfaceModifier : byte
 	{
 		None = 0x00,
 		Scriptable = 0x01,
@@ -13,9 +13,9 @@ namespace Xpidl.Parser
 		NoScript = 0x10
 	}
 
-	internal sealed class XpidlInterface : XpidlComplexNode
+	public sealed class XpidlInterface : XpidlComplexNode
 	{
-		public XpidlInterface(String name, Guid uuid, XpidlInterfaceModifier modifier, String baseName)
+		internal XpidlInterface(String name, Guid uuid, XpidlInterfaceModifier modifier, String baseName)
 		{
 			m_Name = name;
 			m_Uuid = uuid;
@@ -43,27 +43,27 @@ namespace Xpidl.Parser
 			get { return m_BaseName; }
 		}
 
-		public void AddNode(XpidlComment comment)
+		internal void AddNode(XpidlComment comment)
 		{
 			AddNodeImpl(comment);
 		}
 
-		public void AddNode(XpidlInlineCHeader inlineCHeader)
+		internal void AddNode(XpidlInlineCHeader inlineCHeader)
 		{
 			AddNodeImpl(inlineCHeader);
 		}
 
-		public void AddNode(XpidlConstant constant)
+		internal void AddNode(XpidlConstant constant)
 		{
 			AddNodeImpl(constant);
 		}
 
-		public void AddNode(XpidlAttribute attribute)
+		internal void AddNode(XpidlAttribute attribute)
 		{
 			AddNodeImpl(attribute);
 		}
 
-		public void AddNode(XpidlMethod method)
+		internal void AddNode(XpidlMethod method)
 		{
 			AddNodeImpl(method);
 		}

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using GoldParser;
 
 namespace Xpidl.Parser.Gold
 {
-	internal sealed partial class GoldXpidlParser
+	public sealed partial class GoldXpidlParser
 	{
 		private abstract class SyntaxNode
 		{

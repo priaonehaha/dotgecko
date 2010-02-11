@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{52638738-9620-449F-B374-3017501B7F10}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xpidl</RootNamespace>
-    <AssemblyName>Xpidl</AssemblyName>
+    <RootNamespace>Xpidl.Parser</RootNamespace>
+    <AssemblyName>Xpidl.Parser</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>Client</TargetFrameworkSubset>
@@ -42,48 +42,37 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="BooleanFormatProvider.cs" />
+    <Compile Include="Gold\GoldXpidlParser.Constants.cs" />
+    <Compile Include="Gold\GoldXpidlParser.cs" />
+    <Compile Include="Gold\GoldXpidlParser.SyntaxTree.cs" />
+    <Compile Include="Gold\GoldXpidlParser.Transform.cs" />
+    <Compile Include="IXpidlParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <EmbeddedResource Include="Properties\xpidl.cgt" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <Compile Include="XpidlAttribute.cs" />
+    <Compile Include="XpidlComment.cs" />
+    <Compile Include="XpidlComplexNode.cs" />
+    <Compile Include="XpidlConstant.cs" />
+    <Compile Include="XpidlFile.cs" />
+    <Compile Include="XpidlForwardDeclaration.cs" />
+    <Compile Include="XpidlInclude.cs" />
+    <Compile Include="XpidlInlineCHeader.cs" />
+    <Compile Include="XpidlInterface.cs" />
+    <Compile Include="XpidlMethod.cs" />
+    <Compile Include="XpidlMethodParameter.cs" />
+    <Compile Include="XpidlModifiers.cs" />
+    <Compile Include="XpidlNativeType.cs" />
+    <Compile Include="XpidlNode.cs" />
+    <Compile Include="XpidlType.cs" />
+    <Compile Include="XpidlTypeDef.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xpidl.Parser\Xpidl.Parser.csproj">
-      <Project>{52638738-9620-449F-B374-3017501B7F10}</Project>
-      <Name>Xpidl.Parser</Name>
+    <ProjectReference Include="..\GoldParser\GoldParser.csproj">
+      <Project>{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}</Project>
+      <Name>GoldParser</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

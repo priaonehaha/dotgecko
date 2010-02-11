@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Xpidl.Parser
 {
-	internal sealed class XpidlModifiers<T> where T : struct //enum
+	public sealed class XpidlModifiers<T> where T : struct //enum
 	{
 		internal XpidlModifiers()
 		{

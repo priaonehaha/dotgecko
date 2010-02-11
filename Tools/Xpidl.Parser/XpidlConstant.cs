@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace Xpidl.Parser
 {
-	internal sealed class XpidlTypeDef : XpidlNode
+	public sealed class XpidlConstant : XpidlNode
 	{
-		public XpidlTypeDef(String name, XpidlType type)
+		internal XpidlConstant(String name, XpidlType type, Expression value)
 		{
 			m_Name = name;
 			m_Type = type;
+			m_Value = value;
 		}
 
 		public String Name
@@ -20,12 +22,13 @@ namespace Xpidl.Parser
 			get { return m_Type; }
 		}
 
-		public override String ToString()
+		public Expression Value
 		{
-			return String.Format("typedef {0} {1};", Type, Name);
+			get { return m_Value; }
 		}
 
 		private readonly String m_Name;
 		private readonly XpidlType m_Type;
+		private readonly Expression m_Value;
 	}
 }

@@ -2,9 +2,9 @@
 
 namespace Xpidl.Parser
 {
-	internal sealed class XpidlForwardDeclaration : XpidlNode
+	public sealed class XpidlForwardDeclaration : XpidlNode
 	{
-		public XpidlForwardDeclaration(String interfaceName)
+		internal XpidlForwardDeclaration(String interfaceName)
 		{
 			m_InterfaceName = interfaceName;
 		}

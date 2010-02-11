@@ -1,6 +1,6 @@
 ﻿namespace Xpidl.Parser.Gold
 {
-	internal sealed partial class GoldXpidlParser
+	public sealed partial class GoldXpidlParser
 	{
 		private enum SymbolConstants
 		{

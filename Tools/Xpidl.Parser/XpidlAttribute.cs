@@ -3,9 +3,9 @@ using System.Diagnostics;
 
 namespace Xpidl.Parser
 {
-	internal sealed class XpidlAttribute : XpidlNode
+	public sealed class XpidlAttribute : XpidlNode
 	{
-		public XpidlAttribute(String name, XpidlType type, Boolean isReadOnly, XpidlModifiers<XpidlMethodModifier> modifiers)
+		internal XpidlAttribute(String name, XpidlType type, Boolean isReadOnly, XpidlModifiers<XpidlMethodModifier> modifiers)
 		{
 			m_Name = name;
 			m_Type = type;

@@ -2,9 +2,9 @@
 
 namespace Xpidl.Parser
 {
-	internal sealed class XpidlInlineCHeader : XpidlNode
+	public sealed class XpidlInlineCHeader : XpidlNode
 	{
-		public XpidlInlineCHeader(String headerText)
+		internal XpidlInlineCHeader(String headerText)
 		{
 			m_HeaderText = headerText;
 		}

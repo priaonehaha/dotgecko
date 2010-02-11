@@ -2,9 +2,9 @@
 
 namespace Xpidl.Parser
 {
-	internal sealed class XpidlComment : XpidlNode
+	public sealed class XpidlComment : XpidlNode
 	{
-		public XpidlComment(String commentText)
+		internal XpidlComment(String commentText)
 		{
 			m_CommentText = commentText;
 		}
