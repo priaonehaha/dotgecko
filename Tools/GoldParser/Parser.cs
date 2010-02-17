@@ -301,6 +301,11 @@ namespace GoldParser
 		}
 
 		/// <summary>
+		/// Gets or sets flag to ignore CommentStart symbols inside comments.
+		/// </summary>
+		public Boolean IgnoreNestedComments { get; set; }
+
+		/// <summary>
 		/// Gets or sets callback function to track source line text.
 		/// </summary>
 		public SourceLineReadCallback SourceLineReadCallback
@@ -699,7 +704,10 @@ namespace GoldParser
 					switch (symbolType)
 					{
 						case SymbolType.CommentStart:
-							m_CommentLevel++;
+							if (!IgnoreNestedComments)
+							{
+								m_CommentLevel++;
+							}
 							break;
 
 						case SymbolType.CommentEnd:
