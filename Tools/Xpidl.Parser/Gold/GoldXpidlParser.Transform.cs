@@ -124,7 +124,7 @@ namespace Xpidl.Parser.Gold
 			ValidateSyntaxNode(typedefSyntaxNode, RuleConstants.XpidlTypeDef);
 
 			String typeName = CreateXpidlId((SimpleSyntaxNode)typedefSyntaxNode[2]);
-			XpidlType typeType = CreateXpidlType((ComplexSyntaxNode)typedefSyntaxNode[1]);
+			String typeType = CreateXpidlType((ComplexSyntaxNode)typedefSyntaxNode[1]);
 
 			var xpidlTypeDef = new XpidlTypeDef(typeName, typeType);
 			return xpidlTypeDef;
@@ -168,7 +168,7 @@ namespace Xpidl.Parser.Gold
 				RuleConstants.XpidlInterface3,
 				RuleConstants.XpidlInterface4);
 
-			String interfaceName = CreateXpidlId((SimpleSyntaxNode)interfaceSyntaxNode[2]);
+			String interfaceName = CreateXpidlId((SimpleSyntaxNode)interfaceSyntaxNode[2, true]);
 			Guid uuid = CreateInterfaceUuid((ComplexSyntaxNode)interfaceSyntaxNode[0]);
 			XpidlInterfaceModifier interfaceModifiers = CreateXpidlInterfaceModifiers((ComplexSyntaxNode)interfaceSyntaxNode[0]);
 			String baseInterfaceName = null;
@@ -177,7 +177,7 @@ namespace Xpidl.Parser.Gold
 			{
 				case RuleConstants.XpidlInterface1:
 				case RuleConstants.XpidlInterface2:
-					baseInterfaceName = CreateXpidlId((SimpleSyntaxNode)interfaceSyntaxNode[4]);
+					baseInterfaceName = CreateXpidlId((SimpleSyntaxNode)interfaceSyntaxNode[4, true]);
 					break;
 			}
 
@@ -343,7 +343,7 @@ namespace Xpidl.Parser.Gold
 			ValidateSyntaxNode(constantSyntaxNode, RuleConstants.XpidlConstant);
 
 			String constName = CreateXpidlId((SimpleSyntaxNode)constantSyntaxNode[2]);
-			XpidlType constType = CreateXpidlType((ComplexSyntaxNode)constantSyntaxNode[1]);
+			String constType = CreateXpidlType((ComplexSyntaxNode)constantSyntaxNode[1]);
 			Expression constValue = CreateExpression((ComplexSyntaxNode)constantSyntaxNode[4]);
 
 			var xpidlConstant = new XpidlConstant(constName, constType, constValue);
@@ -458,7 +458,7 @@ namespace Xpidl.Parser.Gold
 				RuleConstants.XpidlAttribute4);
 
 			String attrName = null;
-			XpidlType attrType = null;
+			String attrType = null;
 			Boolean attrReadonly = false;
 			XpidlModifiers<XpidlMethodModifier> attrModifier = null;
 
@@ -516,7 +516,7 @@ namespace Xpidl.Parser.Gold
 				RuleConstants.XpidlMethod8);
 
 			String methodName = null;
-			XpidlType methodType = null;
+			String methodType = null;
 			XpidlModifiers<XpidlMethodModifier> methodModifiers = null;
 			IEnumerable<XpidlMethodParameter> methodParameters = null;
 
@@ -652,7 +652,7 @@ namespace Xpidl.Parser.Gold
 		private static XpidlMethodParameter CreateXpidlMethodParameter(ComplexSyntaxNode parameterSyntaxNode)
 		{
 			String paramName;
-			XpidlType paramType;
+			String paramType;
 			XpidlParameterDirection paramDirection;
 			XpidlModifiers<XpidlParamModifier> paramModifiers = null;
 
@@ -784,7 +784,7 @@ namespace Xpidl.Parser.Gold
 			return xpidlId;
 		}
 
-		private static XpidlType CreateXpidlType(ComplexSyntaxNode typeSyntaxNode)
+		private static String CreateXpidlType(ComplexSyntaxNode typeSyntaxNode)
 		{
 			ValidateSyntaxNode(
 				typeSyntaxNode,
@@ -809,7 +809,7 @@ namespace Xpidl.Parser.Gold
 				RuleConstants.XpidlTypeDOMString,
 				RuleConstants.XpidlTypeId);
 
-			var xpidlType = new XpidlType(((SimpleSyntaxNode)typeSyntaxNode[0]).Text);
+			String xpidlType = ((SimpleSyntaxNode)typeSyntaxNode[0]).Text;
 			return xpidlType;
 		}
 

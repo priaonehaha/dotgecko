@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace Xpidl.Parser
 {
-	public class XpidlType
+	public static class XpidlType
 	{
 		public const String Void = "void";
 		public const String Boolean = "boolean";
@@ -24,76 +23,28 @@ namespace Xpidl.Parser
 		public const String ACString = "ACString";
 		public const String AUTF8String = "AUTF8String";
 		public const String DOMString = "DOMString";
-
-		internal XpidlType(String typeName)
-		{
-			m_Name = typeName;
-			m_ClrType = GetClrType(m_Name, out m_MarshalAs);
-		}
-
-		public String Name
-		{
-			get { return m_Name; }
-		}
-
-		public Type ClrType
-		{
-			get { return m_ClrType; }
-		}
-
-		public MarshalAsAttribute MarshalAs
-		{
-			get { return m_MarshalAs; }
-		}
-
-		public override String ToString()
-		{
-			return Name;
-		}
-
-		private static Type GetClrType(String xpidlType, out MarshalAsAttribute marshalAs)
-		{
-			marshalAs = null;
-			switch (xpidlType)
-			{
-				case Void:
-					return typeof(void);
-				case Boolean:
-					return typeof(Boolean);
-				case Octet:
-					return typeof(Byte);
-				case Short:
-					return typeof(Int16);
-				case Long:
-					return typeof(Int32);
-				case LongLong:
-					return typeof(Int64);
-				case UnsignedShort:
-					return typeof(UInt16);
-				case UnsignedLong:
-					return typeof(UInt32);
-				case UnsignedLongLong:
-					return typeof(UInt64);
-				case Float:
-					return typeof(Single);
-				case Double:
-					return typeof(Double);
-				case Char:
-					return typeof(Byte);
-				case WChar:
-					return typeof(Char);
-				case String:
-					marshalAs = new MarshalAsAttribute(UnmanagedType.LPStr);
-					return typeof(String);
-				case WString:
-					marshalAs = new MarshalAsAttribute(UnmanagedType.LPWStr);
-					return typeof(String);
-			}
-			return null;
-		}
-
-		private readonly String m_Name;
-		private readonly Type m_ClrType;
-		private readonly MarshalAsAttribute m_MarshalAs;
+		public const String PRBool = "PRBool";
+		public const String PRUint8 = "PRUint8";
+		public const String PRInt16 = "PRInt16";
+		public const String PRInt32 = "PRInt32";
+		public const String PRInt64 = "PRInt64";
+		public const String PRUint16 = "PRUint16";
+		public const String PRUnichar = "PRUnichar";
+		public const String PRUint32 = "PRUint32";
+		public const String PRUint64 = "PRUint64";
+		public const String PRTime = "PRTime";
+		public const String nsRefCnt = "nsrefcnt";
+		public const String nsResult = "nsresult";
+		public const String nsQIResult = "nsQIResult";
+		public const String nsIDRef = "nsIDRef";
+		public const String nsIIDRef = "nsIIDRef";
+		public const String nsCIDRef = "nsCIDRef";
+		public const String nsIDPtr = "nsIDPtr";
+		public const String nsIIDPtr = "nsIIDPtr";
+		public const String nsCIDPtr = "nsCIDPtr";
+		public const String nsID = "nsID";
+		public const String nsIID = "nsIID";
+		public const String nsCID = "nsCID";
+		public const String VoidPtr = "voidPtr";
 	}
 }

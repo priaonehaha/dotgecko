@@ -114,7 +114,36 @@ namespace Xpidl.Parser.Gold
 
 			internal SyntaxNode this[Int32 index]
 			{
-				get { return m_ChildNodes[index]; }
+				get { return this[index, false]; }
+			}
+
+			internal SyntaxNode this[Int32 index, Boolean skipComments]
+			{
+				get
+				{
+					if (!skipComments)
+					{
+						return m_ChildNodes[index];
+					}
+
+					Int32 i;
+					Int32 count = -1;
+					for (i = 0; (count < index) && (i < m_ChildNodes.Count); ++i)
+					{
+						if (!(m_ChildNodes[i] is CommentSyntaxNode))
+						{
+							++count;
+						}
+					}
+					
+					if (count == index)
+					{
+						--i;
+						return m_ChildNodes[i];
+					}
+
+					throw new ArgumentOutOfRangeException("index");
+				}
 			}
 
 			internal void AddChildNode(SyntaxNode childNode)

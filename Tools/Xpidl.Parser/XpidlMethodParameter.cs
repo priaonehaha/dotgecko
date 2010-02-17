@@ -22,7 +22,7 @@ namespace Xpidl.Parser
 
 	public sealed class XpidlMethodParameter
 	{
-		internal XpidlMethodParameter(String name, XpidlType type, XpidlParameterDirection direction, XpidlModifiers<XpidlParamModifier> modifiers)
+		internal XpidlMethodParameter(String name, String type, XpidlParameterDirection direction, XpidlModifiers<XpidlParamModifier> modifiers)
 		{
 			m_Name = name;
 			m_Type = type;
@@ -35,7 +35,7 @@ namespace Xpidl.Parser
 			get { return m_Name; }
 		}
 
-		public XpidlType Type
+		public String Type
 		{
 			get { return m_Type; }
 		}
@@ -51,7 +51,7 @@ namespace Xpidl.Parser
 		}
 
 		private readonly String m_Name;
-		private readonly XpidlType m_Type;
+		private readonly String m_Type;
 		private readonly XpidlParameterDirection m_Direction;
 		private readonly XpidlModifiers<XpidlParamModifier> m_Modifiers;
 	}

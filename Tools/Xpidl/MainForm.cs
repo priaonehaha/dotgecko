@@ -1,8 +1,10 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using Xpidl.Formatter.CodeDom;
 using Xpidl.Parser;
 using Xpidl.Parser.Gold;
 
@@ -26,10 +28,29 @@ namespace Xpidl
 					{
 						xpidlParser = new GoldXpidlParser(grammarReader);
 					}
+
+					XpidlFile xpidlFile;
 					using (var xpidlTextReader = new StreamReader(openDialog.FileName, Encoding.UTF8))
 					{
-						xpidlParser.Parse(xpidlTextReader);
+						xpidlFile = xpidlParser.Parse(xpidlTextReader);
 					}
+
+					var codeGeneratorOptions =
+						new CodeGeneratorOptions
+						{
+							BlankLinesBetweenMembers = true,
+							BracingStyle = "C",
+							ElseOnClosing = false,
+							IndentString = "\t",
+							VerbatimOrder = true
+						};
+					var xpidlFormatter = new CodeDomXpidlFormatter("c#", codeGeneratorOptions);
+					var codeStringuilder = new StringBuilder();
+					using (var textWriter = new StringWriter(codeStringuilder))
+					{
+						xpidlFormatter.Format(xpidlFile, textWriter);
+					}
+					textBoxOutput.Text = codeStringuilder.ToString();
 				}
 			}
 		}

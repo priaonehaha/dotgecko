@@ -13,7 +13,7 @@ namespace Xpidl.Parser
 
 	public sealed class XpidlMethod : XpidlNode
 	{
-		internal XpidlMethod(String name, XpidlType type, XpidlModifiers<XpidlMethodModifier> modifiers, IEnumerable<XpidlMethodParameter> parameters)
+		internal XpidlMethod(String name, String type, XpidlModifiers<XpidlMethodModifier> modifiers, IEnumerable<XpidlMethodParameter> parameters)
 		{
 			m_Name = name;
 			m_Type = type;
@@ -26,7 +26,7 @@ namespace Xpidl.Parser
 			get { return m_Name; }
 		}
 
-		public XpidlType Type
+		public String Type
 		{
 			get { return m_Type; }
 		}
@@ -54,7 +54,7 @@ namespace Xpidl.Parser
 		}
 
 		private readonly String m_Name;
-		private readonly XpidlType m_Type;
+		private readonly String m_Type;
 		private readonly XpidlModifiers<XpidlMethodModifier> m_Modifiers;
 		private readonly ReadOnlyCollection<XpidlMethodParameter> m_ReadOnlyParameters;
 	}

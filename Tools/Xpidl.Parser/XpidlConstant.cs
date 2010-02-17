@@ -5,7 +5,7 @@ namespace Xpidl.Parser
 {
 	public sealed class XpidlConstant : XpidlNode
 	{
-		internal XpidlConstant(String name, XpidlType type, Expression value)
+		internal XpidlConstant(String name, String type, Expression value)
 		{
 			m_Name = name;
 			m_Type = type;
@@ -17,7 +17,7 @@ namespace Xpidl.Parser
 			get { return m_Name; }
 		}
 
-		public XpidlType Type
+		public String Type
 		{
 			get { return m_Type; }
 		}
@@ -28,7 +28,7 @@ namespace Xpidl.Parser
 		}
 
 		private readonly String m_Name;
-		private readonly XpidlType m_Type;
+		private readonly String m_Type;
 		private readonly Expression m_Value;
 	}
 }

@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Xpidl.Parser
 {
 	public sealed class XpidlAttribute : XpidlNode
 	{
-		internal XpidlAttribute(String name, XpidlType type, Boolean isReadOnly, XpidlModifiers<XpidlMethodModifier> modifiers)
+		internal XpidlAttribute(String name, String type, Boolean isReadOnly, XpidlModifiers<XpidlMethodModifier> modifiers)
 		{
 			m_Name = name;
 			m_Type = type;
 			m_IsReadOnly = isReadOnly;
 			m_Modifiers = (modifiers ?? new XpidlModifiers<XpidlMethodModifier>()).AsReadOnly();
-
-			Debug.WriteLine(ToString());
 		}
 
 		public String Name
@@ -20,7 +17,7 @@ namespace Xpidl.Parser
 			get { return m_Name; }
 		}
 
-		public XpidlType Type
+		public String Type
 		{
 			get { return m_Type; }
 		}
@@ -41,7 +38,7 @@ namespace Xpidl.Parser
 		}
 
 		private readonly String m_Name;
-		private readonly XpidlType m_Type;
+		private readonly String m_Type;
 		private readonly Boolean m_IsReadOnly;
 		private readonly XpidlModifiers<XpidlMethodModifier> m_Modifiers;
 	}
