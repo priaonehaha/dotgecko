@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Xpidl.Parser
 {
-	public sealed class XpidlModifiers<T> where T : struct //enum
+	public sealed class XpidlModifiers<T> : IEnumerable<T> where T : struct //enum
 	{
 		internal XpidlModifiers()
 		{
 			if (!typeof(T).IsEnum)
 			{
-				throw new InvalidOperationException("Only enumeration can be used as a type parameter");
+				throw new InvalidOperationException("Only enumerations can be used as a type parameter");
 			}
 
 			m_Parameters = new Dictionary<T, String>(0);
@@ -27,6 +28,16 @@ namespace Xpidl.Parser
 		public Boolean Contains(T modifier)
 		{
 			return m_Parameters.ContainsKey(modifier);
+		}
+
+		public IEnumerator<T> GetEnumerator()
+		{
+			return m_Parameters.Keys.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
 		}
 
 		internal void Add(T modifier)

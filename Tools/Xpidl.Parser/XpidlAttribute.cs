@@ -34,7 +34,7 @@ namespace Xpidl.Parser
 
 		public override String ToString()
 		{
-			return String.Format(new BooleanFormatProvider(), "{0:readonly |}attribute {1} {2};", IsReadOnly, Type, Name);
+			return String.Format("{0}attribute {1} {2};", IsReadOnly ? "readonly " : String.Empty, Type, Name);
 		}
 
 		private readonly String m_Name;

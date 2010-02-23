@@ -2,98 +2,98 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace Xpidl.Parser.Gold
 {
 	public sealed partial class GoldXpidlParser
 	{
-		private static XpidlFile CreateXpidlFile(String xpidlFileName, ComplexSyntaxNode rootSyntaxNode)
+		private static XpidlFile CreateXpidlFile(IEnumerable<SyntaxNode> rootSyntaxNodes)
 		{
-			if (rootSyntaxNode == null)
+			if (rootSyntaxNodes == null)
 			{
-				throw new ArgumentNullException("rootSyntaxNode");
-			}
-			if (rootSyntaxNode.Rule != null)
-			{
-				throw new ArgumentException(InvalidSyntaxNode, "rootSyntaxNode");
+				throw new ArgumentNullException("rootSyntaxNodes");
 			}
 
-			var xpidlFile = new XpidlFile(xpidlFileName);
-			BuildXpidlFile(xpidlFile, rootSyntaxNode);
+			var xpidlFile = new XpidlFile();
+			foreach (SyntaxNode syntaxNode in rootSyntaxNodes)
+			{
+				BuildXpidlFile(xpidlFile, syntaxNode);
+			}
 			return xpidlFile;
 		}
 
-		private static void BuildXpidlFile(XpidlFile xpidlFile, ComplexSyntaxNode rootSyntaxNode)
+		private static void BuildXpidlFile(XpidlFile xpidlFile, SyntaxNode syntaxNode)
 		{
-			foreach (SyntaxNode syntaxNode in rootSyntaxNode)
+			if (syntaxNode is CommentSyntaxNode)
 			{
-				if (syntaxNode is CommentSyntaxNode)
+				var commentSyntaxNode = (CommentSyntaxNode) syntaxNode;
+				if (commentSyntaxNode.IsInlineCHeader)
 				{
-					var commentSyntaxNode = (CommentSyntaxNode)syntaxNode;
-					if (commentSyntaxNode.IsInlineCHeader)
-					{
-						XpidlInlineCHeader xpidlInlineCHeader = CreateXpidlInlineCHeader(commentSyntaxNode);
-						xpidlFile.AddNode(xpidlInlineCHeader);
-					}
-					else
-					{
-						XpidlComment xpidlComment = CreateXpidlComment(commentSyntaxNode);
-						xpidlFile.AddNode(xpidlComment);
-					}
+					XpidlInlineCHeader xpidlInlineCHeader = CreateXpidlInlineCHeader(commentSyntaxNode);
+					xpidlFile.AddNode(xpidlInlineCHeader);
 				}
-				else if (syntaxNode is ComplexSyntaxNode)
+				else
 				{
-					var complexSyntaxNode = (ComplexSyntaxNode)syntaxNode;
-					switch ((RuleConstants)complexSyntaxNode.Rule.Index)
-					{
-						case RuleConstants.Xpidl:
-						case RuleConstants.XpidlItems1:
-						case RuleConstants.XpidlItems2:
-						case RuleConstants.XpidlItem1:
-						case RuleConstants.XpidlItem2:
-						case RuleConstants.XpidlItem3:
-						case RuleConstants.XpidlItem4:
-						case RuleConstants.XpidlItem5:
-							BuildXpidlFile(xpidlFile, complexSyntaxNode);
-							break;
-
-						case RuleConstants.XpidlTypeDef:
-							XpidlTypeDef xpidlTypeDef = CreateXpidlTypeDef(complexSyntaxNode);
-							xpidlFile.AddNode(xpidlTypeDef);
-							break;
-
-						case RuleConstants.XpidlInclude:
-							XpidlInclude xpidlInclude = CreateXpidlInclude(complexSyntaxNode);
-							xpidlFile.AddNode(xpidlInclude);
-							break;
-
-						case RuleConstants.XpidlForwardDeclaration:
-							XpidlForwardDeclaration xpidlForwardDeclaration = CreateXpidlForwardDeclaration(complexSyntaxNode);
-							xpidlFile.AddNode(xpidlForwardDeclaration);
-							break;
-
-						case RuleConstants.XpidlNativeType1:
-						case RuleConstants.XpidlNativeType2:
-							XpidlNativeType xpidlNativeType = CreateXpidlNativeType(complexSyntaxNode);
-							xpidlFile.AddNode(xpidlNativeType);
-							break;
-
-						case RuleConstants.XpidlInterface1:
-						case RuleConstants.XpidlInterface2:
-						case RuleConstants.XpidlInterface3:
-						case RuleConstants.XpidlInterface4:
-							XpidlInterface xpidlInterface = CreateXpidlInterface(complexSyntaxNode);
-							xpidlFile.AddNode(xpidlInterface);
-							break;
-
-						default:
-							throw new ArgumentException(InvalidSyntaxNode, "rootSyntaxNode");
-					}
+					XpidlComment xpidlComment = CreateXpidlComment(commentSyntaxNode);
+					xpidlFile.AddNode(xpidlComment);
 				}
-				else // SimpleSyntaxNode
+			}
+			else if (syntaxNode is ComplexSyntaxNode)
+			{
+				var complexSyntaxNode = (ComplexSyntaxNode) syntaxNode;
+				switch ((RuleConstants) complexSyntaxNode.Rule.Index)
 				{
-					throw new ArgumentException(InvalidSyntaxNode, "rootSyntaxNode");
+					case RuleConstants.Xpidl:
+					case RuleConstants.XpidlItems1:
+					case RuleConstants.XpidlItems2:
+					case RuleConstants.XpidlItem1:
+					case RuleConstants.XpidlItem2:
+					case RuleConstants.XpidlItem3:
+					case RuleConstants.XpidlItem4:
+					case RuleConstants.XpidlItem5:
+						foreach (SyntaxNode node in complexSyntaxNode)
+						{
+							BuildXpidlFile(xpidlFile, node);
+						}
+						break;
+
+					case RuleConstants.XpidlTypeDef:
+						XpidlTypeDef xpidlTypeDef = CreateXpidlTypeDef(complexSyntaxNode);
+						xpidlFile.AddNode(xpidlTypeDef);
+						break;
+
+					case RuleConstants.XpidlInclude:
+						XpidlInclude xpidlInclude = CreateXpidlInclude(complexSyntaxNode);
+						xpidlFile.AddNode(xpidlInclude);
+						break;
+
+					case RuleConstants.XpidlForwardDeclaration:
+						XpidlForwardDeclaration xpidlForwardDeclaration = CreateXpidlForwardDeclaration(complexSyntaxNode);
+						xpidlFile.AddNode(xpidlForwardDeclaration);
+						break;
+
+					case RuleConstants.XpidlNativeType1:
+					case RuleConstants.XpidlNativeType2:
+						XpidlNativeType xpidlNativeType = CreateXpidlNativeType(complexSyntaxNode);
+						xpidlFile.AddNode(xpidlNativeType);
+						break;
+
+					case RuleConstants.XpidlInterface1:
+					case RuleConstants.XpidlInterface2:
+					case RuleConstants.XpidlInterface3:
+					case RuleConstants.XpidlInterface4:
+						XpidlInterface xpidlInterface = CreateXpidlInterface(complexSyntaxNode);
+						xpidlFile.AddNode(xpidlInterface);
+						break;
+
+					default:
+						throw new ArgumentException(mc_InvalidSyntaxNode, "syntaxNode");
 				}
+			}
+			else // SimpleSyntaxNode
+			{
+				throw new ArgumentException(mc_InvalidSyntaxNode, "syntaxNode");
 			}
 		}
 
@@ -152,11 +152,125 @@ namespace Xpidl.Parser.Gold
 
 		private static XpidlNativeType CreateXpidlNativeType(ComplexSyntaxNode nativeTypeSyntaxNode)
 		{
-			ValidateSyntaxNode(nativeTypeSyntaxNode, RuleConstants.XpidlNativeType1, RuleConstants.XpidlNativeType2);
+			ValidateSyntaxNode(nativeTypeSyntaxNode);
 
-			//TODO: Create valid XpidlNativeType node.
-			var xpidlNativeType = new XpidlNativeType();
+			String name;
+			String definition;
+			XpidlModifiers<XpidlNativeTypeModifier> modifiers = null;
+
+			switch ((RuleConstants)nativeTypeSyntaxNode.Rule.Index)
+			{
+				case RuleConstants.XpidlNativeType1:
+					name = CreateXpidlId((SimpleSyntaxNode) nativeTypeSyntaxNode[1]);
+					definition = CreateXpidlNativeTypeDefinition((ComplexSyntaxNode) nativeTypeSyntaxNode[3]);
+					break;
+				case RuleConstants.XpidlNativeType2:
+					name = CreateXpidlId((SimpleSyntaxNode)nativeTypeSyntaxNode[2]);
+					definition = CreateXpidlNativeTypeDefinition((ComplexSyntaxNode)nativeTypeSyntaxNode[4]);
+					modifiers = CreateNativeTypeModifiers((ComplexSyntaxNode) nativeTypeSyntaxNode[0]);
+					break;
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "nativeTypeSyntaxNode");
+			}
+
+			var xpidlNativeType = new XpidlNativeType(name, definition, modifiers);
 			return xpidlNativeType;
+		}
+
+		private static String CreateXpidlNativeTypeDefinition(ComplexSyntaxNode nativeTypeDefSyntaxNode)
+		{
+			ValidateSyntaxNode(nativeTypeDefSyntaxNode);
+
+			var definition = new StringBuilder();
+			BuildXpidlNativeTypeDefinition(definition, nativeTypeDefSyntaxNode);
+			return definition.ToString().Trim();
+		}
+
+		private static void BuildXpidlNativeTypeDefinition(StringBuilder definition, ComplexSyntaxNode nativeTypeDefSyntaxNode)
+		{
+			switch ((RuleConstants) nativeTypeDefSyntaxNode.Rule.Index)
+			{
+				case RuleConstants.XpidlNativeTypeDeclList1:
+				case RuleConstants.XpidlNativeTypeDeclList2:
+				case RuleConstants.XpidlNativeTypeDecl1:
+				case RuleConstants.XpidlNativeTypeDecl2:
+				case RuleConstants.XpidlNativeTypeDecl3:
+				case RuleConstants.XpidlNativeTypeDecl4:
+				case RuleConstants.XpidlNativeTypeDecl5:
+				case RuleConstants.XpidlNativeTypeDef1:
+				case RuleConstants.XpidlNativeTypeDef2:
+				case RuleConstants.XpidlNativeTypeDef3:
+				case RuleConstants.XpidlNativeTypeDef4:
+				case RuleConstants.XpidlNativeTypeDef5:
+				case RuleConstants.XpidlNativeTypeDef6:
+				case RuleConstants.XpidlNativeTypeDef7:
+					foreach (SyntaxNode syntaxNode in nativeTypeDefSyntaxNode)
+					{
+						if (syntaxNode is ComplexSyntaxNode)
+						{
+							BuildXpidlNativeTypeDefinition(definition, (ComplexSyntaxNode)syntaxNode);
+							definition.Append(' ');
+						}
+						else if (syntaxNode is SimpleSyntaxNode)
+						{
+							var simplesyntaxNode = (SimpleSyntaxNode) syntaxNode;
+							definition.Append(simplesyntaxNode.Text);
+						}
+					}
+					break;
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "nativeTypeDefSyntaxNode");
+			}
+		}
+
+		private static XpidlModifiers<XpidlNativeTypeModifier> CreateNativeTypeModifiers(ComplexSyntaxNode nativeTypeModifiersSyntaxNode)
+		{
+			ValidateSyntaxNode(nativeTypeModifiersSyntaxNode, RuleConstants.XpidlNativeTypeModifiersDecl);
+
+			var nativeTypeModifiers = new XpidlModifiers<XpidlNativeTypeModifier>();
+			BuildXpidlNativeTypeModifiers(nativeTypeModifiers, nativeTypeModifiersSyntaxNode);
+			return nativeTypeModifiers;
+		}
+
+		private static void BuildXpidlNativeTypeModifiers(XpidlModifiers<XpidlNativeTypeModifier> nativeTypeModifiers, ComplexSyntaxNode nativeTypeModifiersSyntaxNode)
+		{
+			switch ((RuleConstants) nativeTypeModifiersSyntaxNode.Rule.Index)
+			{
+				case RuleConstants.XpidlNativeTypeModifiersDecl:
+				case RuleConstants.XpidlNativeTypeModifiersList1:
+				case RuleConstants.XpidlNativeTypeModifiersList2:
+					foreach (SyntaxNode syntaxNode in nativeTypeModifiersSyntaxNode)
+					{
+						if (syntaxNode is ComplexSyntaxNode)
+						{
+							BuildXpidlNativeTypeModifiers(nativeTypeModifiers, (ComplexSyntaxNode) syntaxNode);
+						}
+					}
+					break;
+				case RuleConstants.XpidlNativeTypeModifierRef:
+					nativeTypeModifiers.Add(XpidlNativeTypeModifier.Ref);
+					break;
+				case RuleConstants.XpidlNativeTypeModifierPtr:
+					nativeTypeModifiers.Add(XpidlNativeTypeModifier.Ptr);
+					break;
+				case RuleConstants.XpidlNativeTypeModifierNsId:
+					nativeTypeModifiers.Add(XpidlNativeTypeModifier.NsId);
+					break;
+				case RuleConstants.XpidlNativeTypeModifierDomString:
+					nativeTypeModifiers.Add(XpidlNativeTypeModifier.DomString);
+					break;
+				case RuleConstants.XpidlNativeTypeModifierUtf8String:
+					nativeTypeModifiers.Add(XpidlNativeTypeModifier.Utf8String);
+					break;
+				case RuleConstants.XpidlNativeTypeModifierCString:
+					nativeTypeModifiers.Add(XpidlNativeTypeModifier.CString);
+					break;
+				case RuleConstants.XpidlNativeTypeModifierAString:
+					nativeTypeModifiers.Add(XpidlNativeTypeModifier.AString);
+					break;
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "nativeTypeModifiersSyntaxNode");
+			}
 		}
 
 		private static XpidlInterface CreateXpidlInterface(ComplexSyntaxNode interfaceSyntaxNode)
@@ -170,7 +284,7 @@ namespace Xpidl.Parser.Gold
 
 			String interfaceName = CreateXpidlId((SimpleSyntaxNode)interfaceSyntaxNode[2, true]);
 			Guid uuid = CreateInterfaceUuid((ComplexSyntaxNode)interfaceSyntaxNode[0]);
-			XpidlInterfaceModifier interfaceModifiers = CreateXpidlInterfaceModifiers((ComplexSyntaxNode)interfaceSyntaxNode[0]);
+			XpidlModifiers<XpidlInterfaceModifier> interfaceModifiers = CreateXpidlInterfaceModifiers((ComplexSyntaxNode)interfaceSyntaxNode[0]);
 			String baseInterfaceName = null;
 
 			switch ((RuleConstants)interfaceSyntaxNode.Rule.Index)
@@ -181,82 +295,78 @@ namespace Xpidl.Parser.Gold
 					break;
 			}
 
-			var xpidlInterface = new XpidlInterface(interfaceName, uuid, interfaceModifiers, baseInterfaceName);
+			var xpidlInterface = new XpidlInterface(interfaceName, baseInterfaceName, uuid, interfaceModifiers);
 			BuildXpidlInterface(xpidlInterface, interfaceSyntaxNode);
 			return xpidlInterface;
 		}
 
 		private static void BuildXpidlInterface(XpidlInterface xpidlInterface, ComplexSyntaxNode interfaceSyntaxNode)
 		{
-			foreach (SyntaxNode syntaxNode in interfaceSyntaxNode)
+			switch ((RuleConstants) interfaceSyntaxNode.Rule.Index)
 			{
-				if (syntaxNode is CommentSyntaxNode)
-				{
-					var commentSyntaxNode = (CommentSyntaxNode)syntaxNode;
-					if (commentSyntaxNode.IsInlineCHeader)
+				case RuleConstants.XpidlInterface1:
+				case RuleConstants.XpidlInterface2:
+				case RuleConstants.XpidlInterface3:
+				case RuleConstants.XpidlInterface4:
+				case RuleConstants.XpidlInterfaceMembers1:
+				case RuleConstants.XpidlInterfaceMembers2:
+				case RuleConstants.XpidlInterfaceMemberConstant:
+				case RuleConstants.XpidlInterfaceMemberAttribute:
+				case RuleConstants.XpidlInterfaceMemberMethod:
+					foreach (SyntaxNode syntaxNode in interfaceSyntaxNode)
 					{
-						XpidlInlineCHeader xpidlInlineCHeader = CreateXpidlInlineCHeader(commentSyntaxNode);
-						xpidlInterface.AddNode(xpidlInlineCHeader);
+						if (syntaxNode is CommentSyntaxNode)
+						{
+							var commentSyntaxNode = (CommentSyntaxNode) syntaxNode;
+							if (commentSyntaxNode.IsInlineCHeader)
+							{
+								XpidlInlineCHeader xpidlInlineCHeader = CreateXpidlInlineCHeader(commentSyntaxNode);
+								xpidlInterface.AddNode(xpidlInlineCHeader);
+							}
+							else
+							{
+								XpidlComment xpidlComment = CreateXpidlComment(commentSyntaxNode);
+								xpidlInterface.AddNode(xpidlComment);
+							}
+						}
+						else if (syntaxNode is ComplexSyntaxNode)
+						{
+							BuildXpidlInterface(xpidlInterface, (ComplexSyntaxNode) syntaxNode);
+						}
 					}
-					else
-					{
-						XpidlComment xpidlComment = CreateXpidlComment(commentSyntaxNode);
-						xpidlInterface.AddNode(xpidlComment);
-					}
-				}
-				else if (syntaxNode is ComplexSyntaxNode)
-				{
-					var complexSyntaxNode = (ComplexSyntaxNode)syntaxNode;
-					switch ((RuleConstants)complexSyntaxNode.Rule.Index)
-					{
-						case RuleConstants.XpidlInterfaceMembers1:
-						case RuleConstants.XpidlInterfaceMembers2:
-						case RuleConstants.XpidlInterfaceMemberConstant:
-						case RuleConstants.XpidlInterfaceMemberAttribute:
-						case RuleConstants.XpidlInterfaceMemberMethod:
-							BuildXpidlInterface(xpidlInterface, complexSyntaxNode);
-							break;
-						case RuleConstants.XpidlConstant:
-							XpidlConstant xpidlConstant = CreateXpidlConstant(complexSyntaxNode);
-							xpidlInterface.AddNode(xpidlConstant);
-							break;
-						case RuleConstants.XpidlAttribute1:
-						case RuleConstants.XpidlAttribute2:
-						case RuleConstants.XpidlAttribute3:
-						case RuleConstants.XpidlAttribute4:
-							XpidlAttribute xpidlAttribute = CreateXpidlAttribute(complexSyntaxNode);
-							xpidlInterface.AddNode(xpidlAttribute);
-							break;
-						case RuleConstants.XpidlMethod1:
-						case RuleConstants.XpidlMethod2:
-						case RuleConstants.XpidlMethod3:
-						case RuleConstants.XpidlMethod4:
-						case RuleConstants.XpidlMethod5:
-						case RuleConstants.XpidlMethod6:
-						case RuleConstants.XpidlMethod7:
-						case RuleConstants.XpidlMethod8:
-							XpidlMethod xpidlMethod = CreateXpidlMethod(complexSyntaxNode);
-							xpidlInterface.AddNode(xpidlMethod);
-							break;
-						case RuleConstants.XpidlInterfaceModifiersDecl1:
-						case RuleConstants.XpidlInterfaceModifiersDecl2:
-							break;
-						default:
-							throw new ArgumentException(InvalidSyntaxNode, "interfaceSyntaxNode");
-					}
-				}
-				else
-				{
-					var simpleSyntaxNode = (SimpleSyntaxNode)syntaxNode;
-					ValidateSyntaxNode(
-						simpleSyntaxNode,
-						SymbolConstants.Interface,
-						SymbolConstants.XpidlId,
-						SymbolConstants.Colon,
-						SymbolConstants.LBrace,
-						SymbolConstants.RBrace,
-						SymbolConstants.Semicolon);
-				}
+					break;
+
+				case RuleConstants.XpidlConstant:
+					XpidlConstant xpidlConstant = CreateXpidlConstant(interfaceSyntaxNode);
+					xpidlInterface.AddNode(xpidlConstant);
+					break;
+
+				case RuleConstants.XpidlAttribute1:
+				case RuleConstants.XpidlAttribute2:
+				case RuleConstants.XpidlAttribute3:
+				case RuleConstants.XpidlAttribute4:
+					XpidlAttribute xpidlAttribute = CreateXpidlAttribute(interfaceSyntaxNode);
+					xpidlInterface.AddNode(xpidlAttribute);
+					break;
+
+				case RuleConstants.XpidlMethod1:
+				case RuleConstants.XpidlMethod2:
+				case RuleConstants.XpidlMethod3:
+				case RuleConstants.XpidlMethod4:
+				case RuleConstants.XpidlMethod5:
+				case RuleConstants.XpidlMethod6:
+				case RuleConstants.XpidlMethod7:
+				case RuleConstants.XpidlMethod8:
+					XpidlMethod xpidlMethod = CreateXpidlMethod(interfaceSyntaxNode);
+					xpidlInterface.AddNode(xpidlMethod);
+					break;
+
+				case RuleConstants.XpidlInterfaceModifiersDecl1:
+				case RuleConstants.XpidlInterfaceModifiersDecl2:
+					break;
+
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "interfaceSyntaxNode");
 			}
 		}
 
@@ -274,7 +384,7 @@ namespace Xpidl.Parser.Gold
 					uuidSyntaxNode = (ComplexSyntaxNode)interfaceModifiersSyntaxNode[1];
 					break;
 				default:
-					throw new ArgumentException(InvalidSyntaxNode, "interfaceModifiersSyntaxNode");
+					throw new ArgumentException(mc_InvalidSyntaxNode, "interfaceModifiersSyntaxNode");
 			}
 			ValidateSyntaxNode(uuidSyntaxNode, RuleConstants.XpidlInterfaceUuid);
 
@@ -282,60 +392,51 @@ namespace Xpidl.Parser.Gold
 			return uuid;
 		}
 
-		private static XpidlInterfaceModifier CreateXpidlInterfaceModifiers(ComplexSyntaxNode interfaceModifiersSyntaxNode)
+		private static XpidlModifiers<XpidlInterfaceModifier> CreateXpidlInterfaceModifiers(ComplexSyntaxNode interfaceModifiersSyntaxNode)
 		{
-			if (interfaceModifiersSyntaxNode == null)
-			{
-				throw new ArgumentNullException("interfaceModifiersSyntaxNode");
-			}
+			ValidateSyntaxNode(interfaceModifiersSyntaxNode);
 
-			var interfaceModifiers = XpidlInterfaceModifier.None;
-
-			for (Int32 i = 0; i < interfaceModifiersSyntaxNode.Count; ++i)
-			{
-				SyntaxNode syntaxNode = interfaceModifiersSyntaxNode[i];
-				if (syntaxNode is ComplexSyntaxNode)
-				{
-					var complexSyntaxNode = (ComplexSyntaxNode) syntaxNode;
-					switch ((RuleConstants)complexSyntaxNode.Rule.Index)
-					{
-						case RuleConstants.XpidlInterfaceModifiersList1:
-						case RuleConstants.XpidlInterfaceModifiersList2:
-							interfaceModifiers |= CreateXpidlInterfaceModifiers(complexSyntaxNode);
-							break;
-						case RuleConstants.XpidlInterfaceModifierScriptable:
-							interfaceModifiers |= XpidlInterfaceModifier.Scriptable;
-							break;
-						case RuleConstants.XpidlInterfaceModifierFunction:
-							interfaceModifiers |= XpidlInterfaceModifier.Function;
-							break;
-						case RuleConstants.XpidlInterfaceModifierObject:
-							interfaceModifiers |= XpidlInterfaceModifier.Object;
-							break;
-						case RuleConstants.XpidlInterfaceModifierNotXpcom:
-							interfaceModifiers |= XpidlInterfaceModifier.NotXpcom;
-							break;
-						case RuleConstants.XpidlInterfaceModifierNoScript:
-							interfaceModifiers |= XpidlInterfaceModifier.NoScript;
-							break;
-						case RuleConstants.XpidlInterfaceUuid:
-							break;
-						default:
-							throw new ArgumentException(InvalidSyntaxNode, "interfaceModifiersSyntaxNode");
-					}
-				}
-				else if (syntaxNode is SimpleSyntaxNode)
-				{
-					var simpleSyntaxNode = (SimpleSyntaxNode) syntaxNode;
-					ValidateSyntaxNode(simpleSyntaxNode, SymbolConstants.LBracket, SymbolConstants.RBracket, SymbolConstants.Comma);
-				}
-				else
-				{
-					throw new ArgumentException(InvalidSyntaxNode, "interfaceModifiersSyntaxNode");
-				}
-			}
-
+			var interfaceModifiers = new XpidlModifiers<XpidlInterfaceModifier>();
+			BuildXpidlInterfaceModifiers(interfaceModifiers, interfaceModifiersSyntaxNode);
 			return interfaceModifiers;
+		}
+
+		private static void BuildXpidlInterfaceModifiers(XpidlModifiers<XpidlInterfaceModifier> interfaceModifiers, ComplexSyntaxNode interfaceModifiersSyntaxNode)
+		{
+			switch ((RuleConstants) interfaceModifiersSyntaxNode.Rule.Index)
+			{
+				case RuleConstants.XpidlInterfaceModifiersDecl1:
+				case RuleConstants.XpidlInterfaceModifiersDecl2:
+				case RuleConstants.XpidlInterfaceModifiersList1:
+				case RuleConstants.XpidlInterfaceModifiersList2:
+					foreach (SyntaxNode syntaxNode in interfaceModifiersSyntaxNode)
+					{
+						if (syntaxNode is ComplexSyntaxNode)
+						{
+							BuildXpidlInterfaceModifiers(interfaceModifiers, (ComplexSyntaxNode) syntaxNode);
+						}
+					}
+					break;
+				case RuleConstants.XpidlInterfaceModifierScriptable:
+					interfaceModifiers.Add(XpidlInterfaceModifier.Scriptable);
+					break;
+				case RuleConstants.XpidlInterfaceModifierFunction:
+					interfaceModifiers.Add(XpidlInterfaceModifier.Function);
+					break;
+				case RuleConstants.XpidlInterfaceModifierObject:
+					interfaceModifiers.Add(XpidlInterfaceModifier.Object);
+					break;
+				case RuleConstants.XpidlInterfaceModifierNotXpcom:
+					interfaceModifiers.Add(XpidlInterfaceModifier.NotXpcom);
+					break;
+				case RuleConstants.XpidlInterfaceModifierNoScript:
+					interfaceModifiers.Add(XpidlInterfaceModifier.NoScript);
+					break;
+				case RuleConstants.XpidlInterfaceUuid:
+					break;
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "interfaceModifiersSyntaxNode");
+			}
 		}
 
 		private static XpidlConstant CreateXpidlConstant(ComplexSyntaxNode constantSyntaxNode)
@@ -444,21 +545,16 @@ namespace Xpidl.Parser.Gold
 					return CreateExpression((ComplexSyntaxNode)expressionSyntaxNode[1]);
 
 				default:
-					throw new ArgumentException(InvalidSyntaxNode, "expressionSyntaxNode");
+					throw new ArgumentException(mc_InvalidSyntaxNode, "expressionSyntaxNode");
 			}
 		}
 
 		private static XpidlAttribute CreateXpidlAttribute(ComplexSyntaxNode attributeSyntaxNode)
 		{
-			ValidateSyntaxNode(
-				attributeSyntaxNode,
-				RuleConstants.XpidlAttribute1,
-				RuleConstants.XpidlAttribute2,
-				RuleConstants.XpidlAttribute3,
-				RuleConstants.XpidlAttribute4);
+			ValidateSyntaxNode(attributeSyntaxNode);
 
-			String attrName = null;
-			String attrType = null;
+			String attrName;
+			String attrType;
 			Boolean attrReadonly = false;
 			XpidlModifiers<XpidlMethodModifier> attrModifier = null;
 
@@ -484,6 +580,8 @@ namespace Xpidl.Parser.Gold
 					attrReadonly = true;
 					attrModifier = CreateXpidlMethodModifiers((ComplexSyntaxNode)attributeSyntaxNode[0]);
 					break;
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "attributeSyntaxNode");
 			}
 
 			var xpidlAttribute = new XpidlAttribute(attrName, attrType, attrReadonly, attrModifier);
@@ -504,21 +602,13 @@ namespace Xpidl.Parser.Gold
 
 		private static XpidlMethod CreateXpidlMethod(ComplexSyntaxNode methodSyntaxNode)
 		{
-			ValidateSyntaxNode(
-				methodSyntaxNode,
-				RuleConstants.XpidlMethod1,
-				RuleConstants.XpidlMethod2,
-				RuleConstants.XpidlMethod3,
-				RuleConstants.XpidlMethod4,
-				RuleConstants.XpidlMethod5,
-				RuleConstants.XpidlMethod6,
-				RuleConstants.XpidlMethod7,
-				RuleConstants.XpidlMethod8);
+			ValidateSyntaxNode(methodSyntaxNode);
 
-			String methodName = null;
-			String methodType = null;
+			String methodName;
+			String methodType;
 			XpidlModifiers<XpidlMethodModifier> methodModifiers = null;
 			IEnumerable<XpidlMethodParameter> methodParameters = null;
+			IEnumerable<String> methodExceptions = null;
 
 			switch ((RuleConstants)methodSyntaxNode.Rule.Index)
 			{
@@ -562,9 +652,11 @@ namespace Xpidl.Parser.Gold
 					methodType = CreateXpidlType((ComplexSyntaxNode)methodSyntaxNode[1]);
 					methodModifiers = CreateXpidlMethodModifiers((ComplexSyntaxNode)methodSyntaxNode[0]);
 					break;
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "methodSyntaxNode");
 			}
 
-			var xpidlMethod = new XpidlMethod(methodName, methodType, methodModifiers, methodParameters);
+			var xpidlMethod = new XpidlMethod(methodName, methodType, methodModifiers, methodParameters, methodExceptions);
 			return xpidlMethod;
 		}
 
@@ -577,80 +669,73 @@ namespace Xpidl.Parser.Gold
 			return methodModifiers;
 		}
 
-		private static void BuildXpidlMethodModifiers(XpidlModifiers<XpidlMethodModifier> modifiers, ComplexSyntaxNode methodModifiersSyntaxNode)
+		private static void BuildXpidlMethodModifiers(XpidlModifiers<XpidlMethodModifier> methodModifiers, ComplexSyntaxNode methodModifiersSyntaxNode)
 		{
-			for (Int32 i = 0; i < methodModifiersSyntaxNode.Count; ++i)
+			switch ((RuleConstants) methodModifiersSyntaxNode.Rule.Index)
 			{
-				SyntaxNode syntaxNode = methodModifiersSyntaxNode[i];
-				if (syntaxNode is ComplexSyntaxNode)
-				{
-					var complexSyntaxNode = (ComplexSyntaxNode)syntaxNode;
-					switch ((RuleConstants)complexSyntaxNode.Rule.Index)
+				case RuleConstants.XpidlMethodModifiersDecl:
+				case RuleConstants.XpidlMethodModifiersList1:
+				case RuleConstants.XpidlMethodModifiersList2:
+					foreach (SyntaxNode syntaxNode in methodModifiersSyntaxNode)
 					{
-						case RuleConstants.XpidlMethodModifiersDecl:
-						case RuleConstants.XpidlMethodModifiersList1:
-						case RuleConstants.XpidlMethodModifiersList2:
-							BuildXpidlMethodModifiers(modifiers, complexSyntaxNode);
-							break;
-						case RuleConstants.XpidlMethodModifier1:
-							modifiers.Add(XpidlMethodModifier.NoScript);
-							break;
-						case RuleConstants.XpidlMethodModifier2:
-							modifiers.Add(XpidlMethodModifier.NotXpcom);
-							break;
-						case RuleConstants.XpidlMethodModifier3:
-							var simpleSyntaxNode = (SimpleSyntaxNode)complexSyntaxNode[2];
-							modifiers.Add(XpidlMethodModifier.BinaryName, simpleSyntaxNode.Text);
-							break;
-						default:
-							throw new ArgumentException(InvalidSyntaxNode, "methodModifiersSyntaxNode");
+						if (syntaxNode is ComplexSyntaxNode)
+						{
+							BuildXpidlMethodModifiers(methodModifiers, (ComplexSyntaxNode) syntaxNode);
+						}
 					}
-				}
-				else if (syntaxNode is SimpleSyntaxNode)
-				{
-					var simpleSyntaxNode = (SimpleSyntaxNode)syntaxNode;
-					ValidateSyntaxNode(
-						simpleSyntaxNode,
-						SymbolConstants.LBracket,
-						SymbolConstants.RBracket,
-						SymbolConstants.Comma);
-				}
-				else
-				{
-					throw new ArgumentException(InvalidSyntaxNode, "methodModifiersSyntaxNode");
-				}
+					break;
+				case RuleConstants.XpidlMethodModifier1:
+					methodModifiers.Add(XpidlMethodModifier.NoScript);
+					break;
+				case RuleConstants.XpidlMethodModifier2:
+					methodModifiers.Add(XpidlMethodModifier.NotXpcom);
+					break;
+				case RuleConstants.XpidlMethodModifier3:
+					var simpleSyntaxNode = (SimpleSyntaxNode) methodModifiersSyntaxNode[2];
+					methodModifiers.Add(XpidlMethodModifier.BinaryName, simpleSyntaxNode.Text);
+					break;
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "methodModifiersSyntaxNode");
 			}
 		}
 
-		private static List<XpidlMethodParameter> CreateXpidlMethodParameters(ComplexSyntaxNode methodParametersSyntaxNode)
+		private static List<XpidlMethodParameter> CreateXpidlMethodParameters(ComplexSyntaxNode parametersSyntaxNode)
 		{
-			var methodParams = new List<XpidlMethodParameter>(0);
+			ValidateSyntaxNode(parametersSyntaxNode);
 
-			switch ((RuleConstants)methodParametersSyntaxNode.Rule.Index)
+			var methodParams = new List<XpidlMethodParameter>(0);
+			BuildXpidlMethodParameters(methodParams, parametersSyntaxNode);
+			return methodParams;
+		}
+
+		private static void BuildXpidlMethodParameters(ICollection<XpidlMethodParameter> methodParams, ComplexSyntaxNode parametersSyntaxNode)
+		{
+			switch ((RuleConstants)parametersSyntaxNode.Rule.Index)
 			{
 				case RuleConstants.XpidlMethodParamsList1:
 				case RuleConstants.XpidlMethodParamsList2:
-					for (Int32 i = 0; i < methodParametersSyntaxNode.Count; ++i)
+					foreach (SyntaxNode syntaxNode in parametersSyntaxNode)
 					{
-						SyntaxNode syntaxNode = methodParametersSyntaxNode[i];
 						if (syntaxNode is ComplexSyntaxNode)
 						{
-							methodParams.AddRange(CreateXpidlMethodParameters((ComplexSyntaxNode)syntaxNode));
+							BuildXpidlMethodParameters(methodParams, (ComplexSyntaxNode)syntaxNode);
 						}
 					}
 					break;
 				case RuleConstants.XpidlMethodParam1:
 				case RuleConstants.XpidlMethodParam2:
-					XpidlMethodParameter methodParameter = CreateXpidlMethodParameter(methodParametersSyntaxNode);
+					XpidlMethodParameter methodParameter = CreateXpidlMethodParameter(parametersSyntaxNode);
 					methodParams.Add(methodParameter);
 					break;
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "parametersSyntaxNode");
 			}
-
-			return methodParams;
 		}
 
 		private static XpidlMethodParameter CreateXpidlMethodParameter(ComplexSyntaxNode parameterSyntaxNode)
 		{
+			ValidateSyntaxNode(parameterSyntaxNode);
+
 			String paramName;
 			String paramType;
 			XpidlParameterDirection paramDirection;
@@ -659,25 +744,25 @@ namespace Xpidl.Parser.Gold
 			switch ((RuleConstants)parameterSyntaxNode.Rule.Index)
 			{
 				case RuleConstants.XpidlMethodParam1:
-					paramName = CreateMethodParamName((ComplexSyntaxNode)parameterSyntaxNode[2]);
+					paramName = CreateXpidlMethodParamName((ComplexSyntaxNode)parameterSyntaxNode[2]);
 					paramType = CreateXpidlType((ComplexSyntaxNode)parameterSyntaxNode[1]);
-					paramDirection = CreateMethodParamDirection((ComplexSyntaxNode)parameterSyntaxNode[0]);
+					paramDirection = CreateXpidlMethodParamDirection((ComplexSyntaxNode)parameterSyntaxNode[0]);
 					break;
 				case RuleConstants.XpidlMethodParam2:
-					paramName = CreateMethodParamName((ComplexSyntaxNode)parameterSyntaxNode[3]);
+					paramName = CreateXpidlMethodParamName((ComplexSyntaxNode)parameterSyntaxNode[3]);
 					paramType = CreateXpidlType((ComplexSyntaxNode)parameterSyntaxNode[2]);
-					paramDirection = CreateMethodParamDirection((ComplexSyntaxNode)parameterSyntaxNode[1]);
-					paramModifiers = CreateMethodParamModifiers((ComplexSyntaxNode)parameterSyntaxNode[0]);
+					paramDirection = CreateXpidlMethodParamDirection((ComplexSyntaxNode)parameterSyntaxNode[1]);
+					paramModifiers = CreateXpidlMethodParamModifiers((ComplexSyntaxNode)parameterSyntaxNode[0]);
 					break;
 				default:
-					throw new ArgumentException(InvalidSyntaxNode, "parameterSyntaxNode");
+					throw new ArgumentException(mc_InvalidSyntaxNode, "parameterSyntaxNode");
 			}
 
 			var methodParam = new XpidlMethodParameter(paramName, paramType, paramDirection, paramModifiers);
 			return methodParam;
 		}
 
-		private static String CreateMethodParamName(ComplexSyntaxNode paramNameSyntaxNode)
+		private static String CreateXpidlMethodParamName(ComplexSyntaxNode paramNameSyntaxNode)
 		{
 			ValidateSyntaxNode(
 				paramNameSyntaxNode,
@@ -692,7 +777,7 @@ namespace Xpidl.Parser.Gold
 			return paramName;
 		}
 
-		private static XpidlParameterDirection CreateMethodParamDirection(ComplexSyntaxNode paramDirectionSyntaxNode)
+		private static XpidlParameterDirection CreateXpidlMethodParamDirection(ComplexSyntaxNode paramDirectionSyntaxNode)
 		{
 			ValidateSyntaxNode(paramDirectionSyntaxNode);
 
@@ -705,74 +790,67 @@ namespace Xpidl.Parser.Gold
 				case RuleConstants.XpidlParamDirectionInOut:
 					return XpidlParameterDirection.In | XpidlParameterDirection.Out;
 				default:
-					throw new ArgumentException(InvalidSyntaxNode, "paramDirectionSyntaxNode");
+					throw new ArgumentException(mc_InvalidSyntaxNode, "paramDirectionSyntaxNode");
 			}
 		}
 
-		private static XpidlModifiers<XpidlParamModifier> CreateMethodParamModifiers(ComplexSyntaxNode paramModifiersSyntaxNode)
+		private static XpidlModifiers<XpidlParamModifier> CreateXpidlMethodParamModifiers(ComplexSyntaxNode paramModifiersSyntaxNode)
 		{
 			ValidateSyntaxNode(paramModifiersSyntaxNode, RuleConstants.XpidlMethodParamModifiersDecl);
 
 			var paramModifiers = new XpidlModifiers<XpidlParamModifier>();
-			BuildMethodParamModifiers(paramModifiers, paramModifiersSyntaxNode);
+			BuildXpidlMethodParamModifiers(paramModifiers, paramModifiersSyntaxNode);
 			return paramModifiers;
 		}
 
-		private static void BuildMethodParamModifiers(XpidlModifiers<XpidlParamModifier> modifiers, ComplexSyntaxNode paramModifiersSyntaxNode)
+		private static void BuildXpidlMethodParamModifiers(XpidlModifiers<XpidlParamModifier> paramModifiers, ComplexSyntaxNode paramModifiersSyntaxNode)
 		{
-			for (Int32 i = 0; i < paramModifiersSyntaxNode.Count; ++i)
+			switch ((RuleConstants) paramModifiersSyntaxNode.Rule.Index)
 			{
-				SyntaxNode syntaxNode = paramModifiersSyntaxNode[i];
-				if (syntaxNode is ComplexSyntaxNode)
-				{
-					var complexSyntaxNode = (ComplexSyntaxNode)syntaxNode;
-					switch ((RuleConstants)complexSyntaxNode.Rule.Index)
+				case RuleConstants.XpidlMethodParamModifiersDecl:
+				case RuleConstants.XpidlMethodParamModifiersList1:
+				case RuleConstants.XpidlMethodParamModifiersList2:
+					foreach (SyntaxNode syntaxNode in paramModifiersSyntaxNode)
 					{
-						case RuleConstants.XpidlMethodParamModifiersDecl:
-						case RuleConstants.XpidlMethodParamModifiersList1:
-						case RuleConstants.XpidlMethodParamModifiersList2:
-							BuildMethodParamModifiers(modifiers, complexSyntaxNode);
-							break;
-						case RuleConstants.XpidlParamModifierArray:
-							modifiers.Add(XpidlParamModifier.Array);
-							break;
-						case RuleConstants.XpidlParamModifierSizeIs:
-							var paramNameSyntaxNode = (ComplexSyntaxNode)complexSyntaxNode[2];
-							modifiers.Add(XpidlParamModifier.SizeIs, ((SimpleSyntaxNode)paramNameSyntaxNode[0]).Text);
-							break;
-						case RuleConstants.XpidlParamModifierIidIs:
-							paramNameSyntaxNode = (ComplexSyntaxNode)complexSyntaxNode[2];
-							modifiers.Add(XpidlParamModifier.IidIs, ((SimpleSyntaxNode)paramNameSyntaxNode[0]).Text);
-							break;
-						case RuleConstants.XpidlParamModifierRetVal:
-							modifiers.Add(XpidlParamModifier.RetVal);
-							break;
-						case RuleConstants.XpidlParamModifierConst:
-							modifiers.Add(XpidlParamModifier.Const);
-							break;
-						case RuleConstants.XpidlParamModifierShared:
-							modifiers.Add(XpidlParamModifier.Shared);
-							break;
-						case RuleConstants.XpidlParamModifierOptional:
-							modifiers.Add(XpidlParamModifier.Optional);
-							break;
-						default:
-							throw new ArgumentException(InvalidSyntaxNode, "paramModifiersSyntaxNode");
+						if (syntaxNode is ComplexSyntaxNode)
+						{
+							BuildXpidlMethodParamModifiers(paramModifiers, (ComplexSyntaxNode)syntaxNode);
+						}
 					}
-				}
-				else if (syntaxNode is SimpleSyntaxNode)
-				{
-					var simpleSyntaxNode = (SimpleSyntaxNode)syntaxNode;
-					ValidateSyntaxNode(
-						simpleSyntaxNode,
-						SymbolConstants.LBracket,
-						SymbolConstants.RBracket,
-						SymbolConstants.Comma);
-				}
-				else
-				{
-					throw new ArgumentException(InvalidSyntaxNode, "paramModifiersSyntaxNode");
-				}
+					break;
+
+				case RuleConstants.XpidlParamModifierArray:
+					paramModifiers.Add(XpidlParamModifier.Array);
+					break;
+
+				case RuleConstants.XpidlParamModifierSizeIs:
+					var paramNameSyntaxNode = (ComplexSyntaxNode) paramModifiersSyntaxNode[2];
+					paramModifiers.Add(XpidlParamModifier.SizeIs, ((SimpleSyntaxNode) paramNameSyntaxNode[0]).Text);
+					break;
+
+				case RuleConstants.XpidlParamModifierIidIs:
+					paramNameSyntaxNode = (ComplexSyntaxNode) paramModifiersSyntaxNode[2];
+					paramModifiers.Add(XpidlParamModifier.IidIs, ((SimpleSyntaxNode) paramNameSyntaxNode[0]).Text);
+					break;
+
+				case RuleConstants.XpidlParamModifierRetVal:
+					paramModifiers.Add(XpidlParamModifier.RetVal);
+					break;
+
+				case RuleConstants.XpidlParamModifierConst:
+					paramModifiers.Add(XpidlParamModifier.Const);
+					break;
+
+				case RuleConstants.XpidlParamModifierShared:
+					paramModifiers.Add(XpidlParamModifier.Shared);
+					break;
+
+				case RuleConstants.XpidlParamModifierOptional:
+					paramModifiers.Add(XpidlParamModifier.Optional);
+					break;
+
+				default:
+					throw new ArgumentException(mc_InvalidSyntaxNode, "paramModifiersSyntaxNode");
 			}
 		}
 
@@ -825,7 +903,7 @@ namespace Xpidl.Parser.Gold
 				 (symbolConstants.Length > 0) &&
 				 !symbolConstants.Contains((SymbolConstants)simpleSyntaxNode.Symbol.Index)))
 			{
-				throw new ArgumentException(InvalidSyntaxNode, "simpleSyntaxNode");
+				throw new ArgumentException(mc_InvalidSyntaxNode, "simpleSyntaxNode");
 			}
 		}
 
@@ -841,10 +919,11 @@ namespace Xpidl.Parser.Gold
 				 (ruleConstants.Length > 0) &&
 				 !ruleConstants.Contains((RuleConstants)complexSyntaxNode.Rule.Index)))
 			{
-				throw new ArgumentException(InvalidSyntaxNode, "complexSyntaxNode");
+				throw new ArgumentException(mc_InvalidSyntaxNode, "complexSyntaxNode");
 			}
 		}
 
-		private const String InvalidSyntaxNode = "Invalid syntax node.";
+		//TODO: Put it to resources
+		private const String mc_InvalidSyntaxNode = "Invalid syntax node.";
 	}
 }

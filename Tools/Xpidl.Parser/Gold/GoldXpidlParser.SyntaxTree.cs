@@ -138,8 +138,7 @@ namespace Xpidl.Parser.Gold
 					
 					if (count == index)
 					{
-						--i;
-						return m_ChildNodes[i];
+						return m_ChildNodes[i - 1];
 					}
 
 					throw new ArgumentOutOfRangeException("index");

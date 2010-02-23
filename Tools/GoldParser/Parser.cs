@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 
 namespace GoldParser
 {
@@ -40,6 +43,10 @@ namespace GoldParser
 			m_LRState = m_Grammar.InitialLRState;
 			var start = new LRStackItem { Token = { Symbol = m_Grammar.StartSymbol }, State = m_LRState };
 			m_LRStack[m_LRStackIndex] = start;
+
+			m_CommentSymbols = new List<Regex>();
+			m_ReadOnlyCommentSymbols = new ReadOnlyCollection<Regex>(m_CommentSymbols);
+			m_CommentEndSymbols = new Stack<Regex>();
 
 			m_ReductionCount = Undefined; // there are no reductions yet.
 		}
@@ -301,6 +308,14 @@ namespace GoldParser
 		}
 
 		/// <summary>
+		/// List of regular expressions to determine begin and end of comment blocks.
+		/// </summary>
+		public IList<Regex> CommentSymbols
+		{
+			get { return m_ReadOnlyCommentSymbols; }
+		}
+
+		/// <summary>
 		/// Gets or sets flag to ignore CommentStart symbols inside comments.
 		/// </summary>
 		public Boolean IgnoreNestedComments { get; set; }
@@ -462,6 +477,17 @@ namespace GoldParser
 			return m_ExpectedTokens;
 		}
 
+		public void AddCommentSymbols(Regex begin, Regex end)
+		{
+			m_CommentSymbols.Add(begin);
+			m_CommentSymbols.Add(end);
+		}
+
+		public void ClearCommentSymbols()
+		{
+			m_CommentSymbols.Clear();
+		}
+
 		/// <summary>
 		/// Executes next step of parser and returns parser state.
 		/// </summary>
@@ -508,6 +534,8 @@ namespace GoldParser
 
 						case SymbolType.CommentStart:
 							m_CommentLevel = 1; // Switch to block comment mode.
+							m_CommentEndSymbols.Clear();
+							PushEndCommentSymbol(TokenText);
 							return ParseMessage.CommentBlockRead;
 
 						case SymbolType.CommentLine:
@@ -544,6 +572,18 @@ namespace GoldParser
 							}
 							break;
 					}
+				}
+			}
+		}
+
+		private void PushEndCommentSymbol(String tokenText)
+		{
+			for (Int32 i = 0; i < CommentSymbols.Count - 1; i += 2)
+			{
+				if (CommentSymbols[i].IsMatch(tokenText))
+				{
+					m_CommentEndSymbols.Push(CommentSymbols[i + 1]);
+					break;
 				}
 			}
 		}
@@ -707,15 +747,20 @@ namespace GoldParser
 							if (!IgnoreNestedComments)
 							{
 								m_CommentLevel++;
+								PushEndCommentSymbol(TokenText);
 							}
 							break;
 
 						case SymbolType.CommentEnd:
-							m_CommentLevel--;
-							if (m_CommentLevel == 0)
+							if ((m_CommentEndSymbols.Count == 0) || m_CommentEndSymbols.Peek().IsMatch(TokenText))
 							{
-								// Done with comment.
-								return;
+								m_CommentEndSymbols.Pop();
+								m_CommentLevel--;
+								if (m_CommentLevel == 0)
+								{
+									// Done with comment.
+									return;
+								}
 							}
 							break;
 
@@ -901,6 +946,9 @@ namespace GoldParser
 		private Int32 m_LineNumber = 1;   // Current line number.
 		private Int32 m_CommentLevel;     // Keeps stack level for embedded comments
 		private StringBuilder m_CommentText;   // Current comment text.
+		private readonly Stack<Regex> m_CommentEndSymbols;
+		private readonly List<Regex> m_CommentSymbols;
+		private readonly ReadOnlyCollection<Regex> m_ReadOnlyCommentSymbols;
 
 		private SourceLineReadCallback m_SourceLineReadCallback; // Called when line reading finished. 
 

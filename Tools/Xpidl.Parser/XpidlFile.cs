@@ -1,18 +1,9 @@
-﻿using System;
-
-namespace Xpidl.Parser
+﻿namespace Xpidl.Parser
 {
 	public sealed class XpidlFile : XpidlComplexNode
 	{
-		internal XpidlFile(String name)
-		{
-			m_Name = name;
-		}
-
-		public String Name
-		{
-			get { return m_Name; }
-		}
+		internal XpidlFile()
+		{ }
 
 		internal void AddNode(XpidlComment comment)
 		{
@@ -48,7 +39,5 @@ namespace Xpidl.Parser
 		{
 			AddNodeImpl(xpidlInterface);
 		}
-
-		private readonly String m_Name;
 	}
 }

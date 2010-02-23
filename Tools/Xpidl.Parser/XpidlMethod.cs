@@ -13,12 +13,13 @@ namespace Xpidl.Parser
 
 	public sealed class XpidlMethod : XpidlNode
 	{
-		internal XpidlMethod(String name, String type, XpidlModifiers<XpidlMethodModifier> modifiers, IEnumerable<XpidlMethodParameter> parameters)
+		internal XpidlMethod(String name, String type, XpidlModifiers<XpidlMethodModifier> modifiers, IEnumerable<XpidlMethodParameter> parameters, IEnumerable<String> exceptions)
 		{
 			m_Name = name;
 			m_Type = type;
 			m_Modifiers = (modifiers ?? new XpidlModifiers<XpidlMethodModifier>()).AsReadOnly();
 			m_ReadOnlyParameters = (parameters != null ? new List<XpidlMethodParameter>(parameters) : new List<XpidlMethodParameter>(0)).AsReadOnly();
+			m_Exceptions = (exceptions != null ? new List<String>(exceptions) : new List<String>(0)).AsReadOnly();
 		}
 
 		public String Name
@@ -41,6 +42,11 @@ namespace Xpidl.Parser
 			get { return m_ReadOnlyParameters; }
 		}
 
+		public IList<String> Exceptions
+		{
+			get { return m_Exceptions; }
+		}
+
 		public Int32 GetParameterIndex(String parameterName)
 		{
 			for (Int32 i = 0; i < Parameters.Count; ++i)
@@ -57,5 +63,6 @@ namespace Xpidl.Parser
 		private readonly String m_Type;
 		private readonly XpidlModifiers<XpidlMethodModifier> m_Modifiers;
 		private readonly ReadOnlyCollection<XpidlMethodParameter> m_ReadOnlyParameters;
+		private readonly ReadOnlyCollection<String> m_Exceptions;
 	}
 }

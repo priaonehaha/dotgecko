@@ -2,25 +2,23 @@
 
 namespace Xpidl.Parser
 {
-	[Flags]
 	public enum XpidlInterfaceModifier : byte
 	{
-		None = 0x00,
-		Scriptable = 0x01,
-		Function = 0x02,
-		Object = 0x04,
-		NotXpcom = 0x08,
-		NoScript = 0x10
+		Scriptable,
+		Function,
+		Object,
+		NotXpcom,
+		NoScript
 	}
 
 	public sealed class XpidlInterface : XpidlComplexNode
 	{
-		internal XpidlInterface(String name, Guid uuid, XpidlInterfaceModifier modifier, String baseName)
+		internal XpidlInterface(String name, String baseName, Guid uuid, XpidlModifiers<XpidlInterfaceModifier> modifiers)
 		{
 			m_Name = name;
-			m_Uuid = uuid;
-			m_Modifier = modifier;
 			m_BaseName = baseName;
+			m_Uuid = uuid;
+			m_Modifiers = (modifiers ?? new XpidlModifiers<XpidlInterfaceModifier>()).AsReadOnly();
 		}
 
 		public String Name
@@ -28,19 +26,19 @@ namespace Xpidl.Parser
 			get { return m_Name; }
 		}
 
+		public String BaseName
+		{
+			get { return m_BaseName; }
+		}
+
 		public Guid Uuid
 		{
 			get { return m_Uuid; }
 		}
 
-		public XpidlInterfaceModifier Modifier
+		public XpidlModifiers<XpidlInterfaceModifier> Modifiers
 		{
-			get { return m_Modifier; }
-		}
-
-		public String BaseName
-		{
-			get { return m_BaseName; }
+			get { return m_Modifiers; }
 		}
 
 		internal void AddNode(XpidlComment comment)
@@ -69,8 +67,8 @@ namespace Xpidl.Parser
 		}
 
 		private readonly String m_Name;
-		private readonly Guid m_Uuid;
-		private readonly XpidlInterfaceModifier m_Modifier;
 		private readonly String m_BaseName;
+		private readonly Guid m_Uuid;
+		private readonly XpidlModifiers<XpidlInterfaceModifier> m_Modifiers;
 	}
 }

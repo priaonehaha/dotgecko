@@ -7,7 +7,6 @@ namespace Xpidl.Parser
 		internal XpidlComment(String commentText)
 		{
 			m_CommentText = commentText;
-			m_IsSingleline = commentText.StartsWith(@"//");
 		}
 
 		public String CommentText
@@ -15,12 +14,22 @@ namespace Xpidl.Parser
 			get { return m_CommentText; }
 		}
 
+		public String CommentBody
+		{
+			get { return IsSingleline ? CommentText.Substring(2).Trim() : GetCommentBlockBody(); }
+		}
+
 		public Boolean IsSingleline
 		{
-			get { return m_IsSingleline; }
+			get { return CommentText.StartsWith(@"//"); }
+		}
+
+		private String GetCommentBlockBody()
+		{
+			//TODO: Get body of multiline comment
+			return CommentText;
 		}
 
 		private readonly String m_CommentText;
-		private readonly Boolean m_IsSingleline;
 	}
 }

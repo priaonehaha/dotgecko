@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BooleanFormatProvider.cs" />
     <Compile Include="Gold\GoldXpidlParser.Constants.cs" />
     <Compile Include="Gold\GoldXpidlParser.cs" />
     <Compile Include="Gold\GoldXpidlParser.SyntaxTree.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="XpidlModifiers.cs" />
     <Compile Include="XpidlNativeType.cs" />
     <Compile Include="XpidlNode.cs" />
+    <Compile Include="XpidlParserException.cs" />
     <Compile Include="XpidlType.cs" />
     <Compile Include="XpidlTypeDef.cs" />
   </ItemGroup>

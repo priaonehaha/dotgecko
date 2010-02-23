@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using GoldParser;
 
 namespace Xpidl.Parser.Gold
@@ -14,17 +15,34 @@ namespace Xpidl.Parser.Gold
 
 		public XpidlFile Parse(TextReader xpidlTextReader)
 		{
-			ComplexSyntaxNode rootSyntaxNode = ParseImpl(xpidlTextReader);
-			DisplaySyntaxTree(rootSyntaxNode);
-			XpidlFile xpidlFile = CreateXpidlFile("", rootSyntaxNode);
-			return xpidlFile;
+			try
+			{
+				ComplexSyntaxNode rootSyntaxNode = ParseImpl(xpidlTextReader);
+				DisplaySyntaxTree(rootSyntaxNode);
+				XpidlFile xpidlFile = CreateXpidlFile(rootSyntaxNode);
+				return xpidlFile;
+			}
+			catch(XpidlParserException)
+			{
+				throw;
+			}
+			catch(Exception e)
+			{
+				throw new XpidlParserException("Internal parser error", e);
+			}
 		}
 
 		private ComplexSyntaxNode ParseImpl(TextReader xpidlTextReader)
 		{
-			var goldParser = new GoldParser.Parser(xpidlTextReader, m_Grammar) { TrimReductions = true };
-			var rootSyntaxNode = new ComplexSyntaxNode(null);
+			var goldParser = new GoldParser.Parser(xpidlTextReader, m_Grammar) { TrimReductions = true, IgnoreNestedComments = true };
+			goldParser.AddCommentSymbols(
+				new Regex(@"^\/\*$", RegexOptions.Singleline),  //  /*
+				new Regex(@"^\*\/$", RegexOptions.Singleline)); //  */
+			goldParser.AddCommentSymbols(
+				new Regex(@"^\%\{\s*C\+\+$", RegexOptions.Singleline),     //  %{ C++
+				new Regex(@"^\%\}(\s*C\+\+)?$", RegexOptions.Singleline)); //  %} C++
 
+			var rootSyntaxNode = new ComplexSyntaxNode(null);
 			while (true)
 			{
 				ParseMessage parseMessage = goldParser.Parse();
@@ -82,28 +100,23 @@ namespace Xpidl.Parser.Gold
 
 					// Grammar table is not loaded
 					case ParseMessage.NotLoadedError:
-						// TODO: throw an exception
-						return null;
+						throw new XpidlParserException("Grammar not loaded");
 
 					// Unexpected end of input
 					case ParseMessage.CommentError:
-						// TODO: throw an exception
-						return null;
+						throw new XpidlParserException("Comment error");
 
 					// Invalid token
 					case ParseMessage.LexicalError:
-						// TODO: throw an exception
-						return null;
+						throw new XpidlParserSyntaxException("Can not recognize token", goldParser.TokenText, goldParser.LineNumber, goldParser.LinePosition);
 
 					// Unexpected token
 					case ParseMessage.SyntaxError:
-						// TODO: throw an exception
-						return null;
+						throw new XpidlParserSyntaxException("Unexpected token", goldParser.TokenText, goldParser.LineNumber, goldParser.LinePosition);
 
 					// Fatal internal error
 					case ParseMessage.InternalError:
-						// TODO: throw an exception
-						return null;
+						throw new XpidlParserException("Internal parser error");
 				}
 			}
 		}
@@ -118,7 +131,7 @@ namespace Xpidl.Parser.Gold
 				if (currentSyntaxNode is CommentSyntaxNode)
 				{
 					var commentSyntaxNode = (CommentSyntaxNode)currentSyntaxNode;
-					if (commentSyntaxNode.CommentText.StartsWith("%{"))
+					if (commentSyntaxNode.IsInlineCHeader)
 					{
 						Debug.WriteLine("%{ C++ inline c header %}");
 					}

@@ -89,52 +89,6 @@
 			SYMBOL_WCHAR = 82, // wchar
 			SYMBOL_WSTRING = 83, // wstring
 			XpidlId = 84, // xpidl-id
-			SYMBOL_ATTRIBUTEMINUSNAME = 85, // <attribute-name>
-			SYMBOL_XPIDL = 86, // <xpidl>
-			SYMBOL_XPIDLMINUSATTRIBUTE = 87, // <xpidl-attribute>
-			SYMBOL_XPIDLMINUSCONSTANT = 88, // <xpidl-constant>
-			SYMBOL_XPIDLMINUSEXPRESSION = 89, // <xpidl-expression>
-			SYMBOL_XPIDLMINUSEXPRESSIONMINUSADD = 90, // <xpidl-expression-add>
-			SYMBOL_XPIDLMINUSEXPRESSIONMINUSAND = 91, // <xpidl-expression-and>
-			SYMBOL_XPIDLMINUSEXPRESSIONMINUSMULT = 92, // <xpidl-expression-mult>
-			SYMBOL_XPIDLMINUSEXPRESSIONMINUSOPERAND = 93, // <xpidl-expression-operand>
-			SYMBOL_XPIDLMINUSEXPRESSIONMINUSOR = 94, // <xpidl-expression-or>
-			SYMBOL_XPIDLMINUSEXPRESSIONMINUSSHIFT = 95, // <xpidl-expression-shift>
-			SYMBOL_XPIDLMINUSEXPRESSIONMINUSUNARY = 96, // <xpidl-expression-unary>
-			SYMBOL_XPIDLMINUSEXPRESSIONMINUSXOR = 97, // <xpidl-expression-xor>
-			SYMBOL_XPIDLMINUSFORWARDMINUSDECLARATION = 98, // <xpidl-forward-declaration>
-			SYMBOL_XPIDLMINUSINCLUDE = 99, // <xpidl-include>
-			SYMBOL_XPIDLMINUSINTERFACE = 100, // <xpidl-interface>
-			SYMBOL_XPIDLMINUSINTERFACEMINUSMEMBER = 101, // <xpidl-interface-member>
-			SYMBOL_XPIDLMINUSINTERFACEMINUSMEMBERS = 102, // <xpidl-interface-members>
-			SYMBOL_XPIDLMINUSINTERFACEMINUSMODIFIER = 103, // <xpidl-interface-modifier>
-			SYMBOL_XPIDLMINUSINTERFACEMINUSMODIFIERSMINUSDECL = 104, // <xpidl-interface-modifiers-decl>
-			SYMBOL_XPIDLMINUSINTERFACEMINUSMODIFIERSMINUSLIST = 105, // <xpidl-interface-modifiers-list>
-			SYMBOL_XPIDLMINUSINTERFACEMINUSUUID = 106, // <xpidl-interface-uuid>
-			SYMBOL_XPIDLMINUSITEM = 107, // <xpidl-item>
-			SYMBOL_XPIDLMINUSITEMS = 108, // <xpidl-items>
-			SYMBOL_XPIDLMINUSMETHOD = 109, // <xpidl-method>
-			SYMBOL_XPIDLMINUSMETHODMINUSEXCEPTIONSMINUSLIST = 110, // <xpidl-method-exceptions-list>
-			SYMBOL_XPIDLMINUSMETHODMINUSMODIFIER = 111, // <xpidl-method-modifier>
-			SYMBOL_XPIDLMINUSMETHODMINUSMODIFIERSMINUSDECL = 112, // <xpidl-method-modifiers-decl>
-			SYMBOL_XPIDLMINUSMETHODMINUSMODIFIERSMINUSLIST = 113, // <xpidl-method-modifiers-list>
-			SYMBOL_XPIDLMINUSMETHODMINUSRAISES = 114, // <xpidl-method-raises>
-			SYMBOL_XPIDLMINUSNATIVEMINUSTYPE = 115, // <xpidl-native-type>
-			SYMBOL_XPIDLMINUSNATIVEMINUSTYPEMINUSDECL = 116, // <xpidl-native-type-decl>
-			SYMBOL_XPIDLMINUSNATIVEMINUSTYPEMINUSLIST = 117, // <xpidl-native-type-list>
-			SYMBOL_XPIDLMINUSNATIVEMINUSTYPEMINUSMODIFIER = 118, // <xpidl-native-type-modifier>
-			SYMBOL_XPIDLMINUSNATIVEMINUSTYPEMINUSMODIFIERSMINUSDECL = 119, // <xpidl-native-type-modifiers-decl>
-			SYMBOL_XPIDLMINUSNATIVEMINUSTYPEMINUSMODIFIERSMINUSLIST = 120, // <xpidl-native-type-modifiers-list>
-			SYMBOL_XPIDLMINUSNATIVEMINUSTYPEMINUSNAME = 121, // <xpidl-native-type-name>
-			SYMBOL_XPIDLMINUSPARAM = 122, // <xpidl-param>
-			SYMBOL_XPIDLMINUSPARAMMINUSMODIFIER = 123, // <xpidl-param-modifier>
-			SYMBOL_XPIDLMINUSPARAMMINUSMODIFIERSMINUSDECL = 124, // <xpidl-param-modifiers-decl>
-			SYMBOL_XPIDLMINUSPARAMMINUSMODIFIERSMINUSLIST = 125, // <xpidl-param-modifiers-list>
-			SYMBOL_XPIDLMINUSPARAMMINUSNAME = 126, // <xpidl-param-name>
-			SYMBOL_XPIDLMINUSPARAMSMINUSLIST = 127, // <xpidl-params-list>
-			SYMBOL_XPIDLMINUSPARAMMINUSTYPE = 128, // <xpidl-param-type>
-			SYMBOL_XPIDLMINUSTYPE = 129, // <xpidl-type>
-			SYMBOL_XPIDLMINUSTYPEDEF = 130  // <xpidl-typedef>
 		};
 
 		private enum RuleConstants
@@ -155,30 +109,30 @@
 			XpidlNativeType1 = 11, // <xpidl-native-type> ::= native xpidl-id '(' <xpidl-native-type-list> ')' ';'
 			XpidlNativeType2 = 12, // <xpidl-native-type> ::= <xpidl-native-type-modifiers-decl> native xpidl-id '(' <xpidl-native-type-list> ')' ';'
 
-			RULE_XPIDLNATIVETYPELIST = 13, // <xpidl-native-type-list> ::= <xpidl-native-type-list> <xpidl-native-type-decl>
-			RULE_XPIDLNATIVETYPELIST2 = 14, // <xpidl-native-type-list> ::= <xpidl-native-type-decl>
-			RULE_XPIDLNATIVETYPEDECL = 15, // <xpidl-native-type-decl> ::= <xpidl-native-type-name>
-			RULE_XPIDLNATIVETYPEDECL_LT_XPIDLMINUSID_GT = 16, // <xpidl-native-type-decl> ::= <xpidl-native-type-name> '<' xpidl-id '>'
-			RULE_XPIDLNATIVETYPEDECL_AMP = 17, // <xpidl-native-type-decl> ::= <xpidl-native-type-name> '&'
-			RULE_XPIDLNATIVETYPEDECL_TIMES = 18, // <xpidl-native-type-decl> ::= <xpidl-native-type-name> '*'
-			RULE_XPIDLNATIVETYPEDECL_TIMES_TIMES = 19, // <xpidl-native-type-decl> ::= <xpidl-native-type-name> '*' '*'
-			RULE_XPIDLNATIVETYPENAME_VOID = 20, // <xpidl-native-type-name> ::= void
-			RULE_XPIDLNATIVETYPENAME_CONST = 21, // <xpidl-native-type-name> ::= const
-			RULE_XPIDLNATIVETYPENAME_STRUCT = 22, // <xpidl-native-type-name> ::= struct
-			RULE_XPIDLNATIVETYPENAME_UNION = 23, // <xpidl-native-type-name> ::= union
-			RULE_XPIDLNATIVETYPENAME_UNSIGNED = 24, // <xpidl-native-type-name> ::= unsigned
-			RULE_XPIDLNATIVETYPENAME_CHAR = 25, // <xpidl-native-type-name> ::= char
-			RULE_XPIDLNATIVETYPENAME_XPIDLMINUSID = 26, // <xpidl-native-type-name> ::= xpidl-id
-			RULE_XPIDLNATIVETYPEMODIFIERSDECL_LBRACKET_RBRACKET = 27, // <xpidl-native-type-modifiers-decl> ::= '[' <xpidl-native-type-modifiers-list> ']'
-			RULE_XPIDLNATIVETYPEMODIFIERSLIST_COMMA = 28, // <xpidl-native-type-modifiers-list> ::= <xpidl-native-type-modifiers-list> ',' <xpidl-native-type-modifier>
-			RULE_XPIDLNATIVETYPEMODIFIERSLIST = 29, // <xpidl-native-type-modifiers-list> ::= <xpidl-native-type-modifier>
-			RULE_XPIDLNATIVETYPEMODIFIER_REF = 30, // <xpidl-native-type-modifier> ::= ref
-			RULE_XPIDLNATIVETYPEMODIFIER_PTR = 31, // <xpidl-native-type-modifier> ::= ptr
-			RULE_XPIDLNATIVETYPEMODIFIER_NSID = 32, // <xpidl-native-type-modifier> ::= nsid
-			RULE_XPIDLNATIVETYPEMODIFIER_DOMSTRING = 33, // <xpidl-native-type-modifier> ::= domstring
-			RULE_XPIDLNATIVETYPEMODIFIER_UTF8STRING = 34, // <xpidl-native-type-modifier> ::= 'utf8string'
-			RULE_XPIDLNATIVETYPEMODIFIER_CSTRING = 35, // <xpidl-native-type-modifier> ::= cstring
-			RULE_XPIDLNATIVETYPEMODIFIER_ASTRING = 36, // <xpidl-native-type-modifier> ::= astring
+			XpidlNativeTypeDeclList1 = 13, // <xpidl-native-type-list> ::= <xpidl-native-type-list> <xpidl-native-type-decl>
+			XpidlNativeTypeDeclList2 = 14, // <xpidl-native-type-list> ::= <xpidl-native-type-decl>
+			XpidlNativeTypeDecl1 = 15, // <xpidl-native-type-decl> ::= <xpidl-native-type-name>
+			XpidlNativeTypeDecl2 = 16, // <xpidl-native-type-decl> ::= <xpidl-native-type-name> '<' xpidl-id '>'
+			XpidlNativeTypeDecl3 = 17, // <xpidl-native-type-decl> ::= <xpidl-native-type-name> '&'
+			XpidlNativeTypeDecl4 = 18, // <xpidl-native-type-decl> ::= <xpidl-native-type-name> '*'
+			XpidlNativeTypeDecl5 = 19, // <xpidl-native-type-decl> ::= <xpidl-native-type-name> '*' '*'
+			XpidlNativeTypeDef1 = 20, // <xpidl-native-type-name> ::= void
+			XpidlNativeTypeDef2 = 21, // <xpidl-native-type-name> ::= const
+			XpidlNativeTypeDef3 = 22, // <xpidl-native-type-name> ::= struct
+			XpidlNativeTypeDef4 = 23, // <xpidl-native-type-name> ::= union
+			XpidlNativeTypeDef5 = 24, // <xpidl-native-type-name> ::= unsigned
+			XpidlNativeTypeDef6 = 25, // <xpidl-native-type-name> ::= char
+			XpidlNativeTypeDef7 = 26, // <xpidl-native-type-name> ::= xpidl-id
+			XpidlNativeTypeModifiersDecl = 27, // <xpidl-native-type-modifiers-decl> ::= '[' <xpidl-native-type-modifiers-list> ']'
+			XpidlNativeTypeModifiersList1 = 28, // <xpidl-native-type-modifiers-list> ::= <xpidl-native-type-modifiers-list> ',' <xpidl-native-type-modifier>
+			XpidlNativeTypeModifiersList2 = 29, // <xpidl-native-type-modifiers-list> ::= <xpidl-native-type-modifier>
+			XpidlNativeTypeModifierRef = 30,        // <xpidl-native-type-modifier> ::= ref
+			XpidlNativeTypeModifierPtr = 31,        // <xpidl-native-type-modifier> ::= ptr
+			XpidlNativeTypeModifierNsId = 32,       // <xpidl-native-type-modifier> ::= nsid
+			XpidlNativeTypeModifierDomString = 33,  // <xpidl-native-type-modifier> ::= domstring
+			XpidlNativeTypeModifierUtf8String = 34, // <xpidl-native-type-modifier> ::= 'utf8string'
+			XpidlNativeTypeModifierCString = 35,    // <xpidl-native-type-modifier> ::= cstring
+			XpidlNativeTypeModifierAString = 36,    // <xpidl-native-type-modifier> ::= astring
 
 			XpidlInterface1 = 37, // <xpidl-interface> ::= <xpidl-interface-modifiers-decl> interface xpidl-id ':' xpidl-id '{' <xpidl-interface-members> '}' ';'
 			XpidlInterface2 = 38, // <xpidl-interface> ::= <xpidl-interface-modifiers-decl> interface xpidl-id ':' xpidl-id '{' '}' ';'
@@ -193,10 +147,10 @@
 
 			// Interface modifiers
 			XpidlInterfaceModifierScriptable = 45, // <xpidl-interface-modifier> ::= scriptable
-			XpidlInterfaceModifierFunction = 46, // <xpidl-interface-modifier> ::= function
-			XpidlInterfaceModifierObject = 47, // <xpidl-interface-modifier> ::= object
-			XpidlInterfaceModifierNotXpcom = 48, // <xpidl-interface-modifier> ::= notxpcom
-			XpidlInterfaceModifierNoScript = 49, // <xpidl-interface-modifier> ::= noscript
+			XpidlInterfaceModifierFunction = 46,   // <xpidl-interface-modifier> ::= function
+			XpidlInterfaceModifierObject = 47,     // <xpidl-interface-modifier> ::= object
+			XpidlInterfaceModifierNotXpcom = 48,   // <xpidl-interface-modifier> ::= notxpcom
+			XpidlInterfaceModifierNoScript = 49,   // <xpidl-interface-modifier> ::= noscript
 
 			// Interface UUID
 			XpidlInterfaceUuid = 50, // <xpidl-interface-uuid> ::= uuid '(' uuid-literal ')'
