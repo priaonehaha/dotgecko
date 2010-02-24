@@ -24,19 +24,24 @@ namespace Xpidl.Formatter.CodeDom
 
 		private static void BuildCodeNamespace(CodeNamespace codeNamespace, XpidlFile xpidlFile)
 		{
-			foreach (XpidlNode xpidlNode in xpidlFile.ChildNodes)
+			for (Int32 i = 0; i < xpidlFile.ChildNodes.Count; ++i)
 			{
-				//TODO: collect interface's comments
+				XpidlNode xpidlNode = xpidlFile.ChildNodes[i];
+
 				if (xpidlNode is XpidlInterface)
 				{
 					var xpidlInterface = (XpidlInterface) xpidlNode;
 
 					CodeTypeDeclaration codeConstClassDeclaration;
 					CodeTypeDeclaration codeInterfaceDeclaration = CraeteCodeInterfaceDeclaration(xpidlInterface, out codeConstClassDeclaration);
+
 					if (codeConstClassDeclaration != null)
 					{
+						codeConstClassDeclaration.Comments.AddComment(String.Format("Constants for {0} ( \"{1}\" ) interface", xpidlInterface.Name, xpidlInterface.Uuid));
 						codeNamespace.Types.Add(codeConstClassDeclaration);
 					}
+
+					codeInterfaceDeclaration.Comments.AddPrecedingComments(xpidlFile, i);
 					codeNamespace.Types.Add(codeInterfaceDeclaration);
 				}
 			}
@@ -86,9 +91,10 @@ namespace Xpidl.Formatter.CodeDom
 		private static CodeTypeDeclaration BuildCodeInterfaceDeclaration(CodeTypeDeclaration codeInterfaceDeclaration, XpidlInterface xpidlInterface)
 		{
 			CodeTypeDeclaration codeConstClassDeclaration = null;
-
-			foreach (XpidlNode xpidlNode in xpidlInterface.ChildNodes)
+			for (Int32 i = 0; i < xpidlInterface.ChildNodes.Count; ++i)
 			{
+				XpidlNode xpidlNode = xpidlInterface.ChildNodes[i];
+
 				if (xpidlNode is XpidlConstant)
 				{
 					var xpidlConstant = (XpidlConstant) xpidlNode;
@@ -105,7 +111,9 @@ namespace Xpidl.Formatter.CodeDom
 					}
 
 					// Create constant member
-					CodeMemberField codeConstantMember = CreateCodeConstantMember(xpidlConstant);
+					CodeMemberField codeConstantMember = CreateCodeMemberConstant(xpidlConstant);
+
+					codeConstantMember.Comments.AddPrecedingComments(xpidlInterface, i);
 					codeConstClassDeclaration.Members.Add(codeConstantMember);
 				}
 				else if (xpidlNode is XpidlAttribute)
@@ -113,7 +121,9 @@ namespace Xpidl.Formatter.CodeDom
 					var xpidlAttribute = (XpidlAttribute) xpidlNode;
 
 					CodeMemberMethod codeSetterMethod;
-					CodeMemberMethod codeGetterMethod = CreateCodeAttributeMember(xpidlAttribute, out codeSetterMethod);
+					CodeMemberMethod codeGetterMethod = CreateCodeMemberAttribute(xpidlAttribute, out codeSetterMethod);
+					
+					codeGetterMethod.Comments.AddPrecedingComments(xpidlInterface, i);
 					codeInterfaceDeclaration.Members.Add(codeGetterMethod);
 					if (codeSetterMethod != null)
 					{
@@ -124,15 +134,16 @@ namespace Xpidl.Formatter.CodeDom
 				{
 					var xpidlMethod = (XpidlMethod) xpidlNode;
 
-					CodeMemberMethod codeMethod = CreateCodeMethodMember(xpidlMethod);
+					CodeMemberMethod codeMethod = CreateCodeMemberMethod(xpidlMethod);
+
+					codeMethod.Comments.AddPrecedingComments(xpidlInterface, i);
 					codeInterfaceDeclaration.Members.Add(codeMethod);
 				}
 			}
-
 			return codeConstClassDeclaration;
 		}
 
-		private static CodeMemberField CreateCodeConstantMember(XpidlConstant xpidlConstant)
+		private static CodeMemberField CreateCodeMemberConstant(XpidlConstant xpidlConstant)
 		{
 			var codeConstDeclaration =
 				new CodeMemberField(CreateCodeTypeReference(xpidlConstant.Type), xpidlConstant.Name)
@@ -140,12 +151,6 @@ namespace Xpidl.Formatter.CodeDom
 					Attributes = MemberAttributes.Const | MemberAttributes.Public,
 					InitExpression = CreateCodeExpression(xpidlConstant.Value)
 				};
-
-			// If can't translate Expression to CodeExpression
-			if (codeConstDeclaration.InitExpression == null)
-			{
-				codeConstDeclaration.Comments.Add(new CodeCommentStatement(xpidlConstant.Value.ToString()));
-			}
 
 			return codeConstDeclaration;
 		}
@@ -197,14 +202,12 @@ namespace Xpidl.Formatter.CodeDom
 				case ExpressionType.Constant:
 					return new CodePrimitiveExpression(((ConstantExpression) expression).Value);
 
-				//TODO: return CodeSnippetExpression for some expressions
-
 				default:
-					return null;
+					return new CodeSnippetExpression(expression.ToString());
 			}
 		}
 
-		private static CodeMemberMethod CreateCodeAttributeMember(XpidlAttribute xpidlAttribute, out CodeMemberMethod codeSetterMethod)
+		private static CodeMemberMethod CreateCodeMemberAttribute(XpidlAttribute xpidlAttribute, out CodeMemberMethod codeSetterMethod)
 		{
 			// Create CodeTypeReference and custom attributes for XpidlAttribute.Type
 			CodeAttributeDeclaration codeMarshalAsAttribute;
@@ -214,7 +217,7 @@ namespace Xpidl.Formatter.CodeDom
 			var codeGetterMethod =
 				new CodeMemberMethod
 				{
-					Name = "Get" + Char.ToUpper(xpidlAttribute.Name[0]) + xpidlAttribute.Name.Substring(1)
+					Name = "Get" + xpidlAttribute.Name.ToUpperCamel()
 				};
 			// Create special getter for NS Strings
 			switch (xpidlAttribute.Type)
@@ -244,7 +247,7 @@ namespace Xpidl.Formatter.CodeDom
 				codeSetterMethod =
 					new CodeMemberMethod
 					{
-						Name = "Set" + Char.ToUpper(xpidlAttribute.Name[0]) + xpidlAttribute.Name.Substring(1),
+						Name = "Set" + xpidlAttribute.Name.ToUpperCamel(),
 						ReturnType = new CodeTypeReference(typeof(void))
 					};
 				var codeSetterParameter = new CodeParameterDeclarationExpression(codeAttributeType, "value");
@@ -255,10 +258,10 @@ namespace Xpidl.Formatter.CodeDom
 			return codeGetterMethod;
 		}
 
-		private static CodeMemberMethod CreateCodeMethodMember(XpidlMethod xpidlMethod)
+		private static CodeMemberMethod CreateCodeMemberMethod(XpidlMethod xpidlMethod)
 		{
 			var codeMethodMember =
-				new CodeMemberMethod { Name = Char.ToUpper(xpidlMethod.Name[0]) + xpidlMethod.Name.Substring(1) };
+				new CodeMemberMethod { Name = xpidlMethod.Name.ToUpperCamel() };
 
 			CodeParameterDeclarationExpression[] codeParameters = CreateMethodParameters(xpidlMethod);
 			codeMethodMember.Parameters.AddRange(codeParameters);
@@ -374,14 +377,14 @@ namespace Xpidl.Formatter.CodeDom
 
 		private static CodeTypeReference CreateCodeTypeReference(String xpidlType)
 		{
-			CodeAttributeDeclaration codeMarshalAsAttribute;
-			return CreateCodeTypeReference(xpidlType, out codeMarshalAsAttribute);
+			CodeAttributeDeclaration marshalAsAttributeDeclaration;
+			return CreateCodeTypeReference(xpidlType, out marshalAsAttributeDeclaration);
 		}
 
-		private static CodeTypeReference CreateCodeTypeReference(String xpidlType, out CodeAttributeDeclaration codeMarshalAsAttribute)
+		private static CodeTypeReference CreateCodeTypeReference(String xpidlType, out CodeAttributeDeclaration marshalAsAttributeDeclaration)
 		{
 			Type clrType = null;
-			codeMarshalAsAttribute = null;
+			marshalAsAttributeDeclaration = null;
 
 			switch (xpidlType)
 			{
@@ -451,7 +454,7 @@ namespace Xpidl.Formatter.CodeDom
 
 				case XpidlType.String:
 					clrType = typeof(String);
-					codeMarshalAsAttribute =
+					marshalAsAttributeDeclaration =
 						new CodeAttributeDeclaration(
 							new CodeTypeReference(typeof(MarshalAsAttribute)),
 							new CodeAttributeArgument(
@@ -460,7 +463,7 @@ namespace Xpidl.Formatter.CodeDom
 
 				case XpidlType.WString:
 					clrType = typeof(String);
-					codeMarshalAsAttribute =
+					marshalAsAttributeDeclaration =
 						new CodeAttributeDeclaration(
 							new CodeTypeReference(typeof(MarshalAsAttribute)),
 							new CodeAttributeArgument(
