@@ -80,7 +80,7 @@ namespace Xpidl.Formatter.CodeDom
 			var interfaceTypeAttributeDeclaration =
 				new CodeAttributeDeclaration(
 					new CodeTypeReference(typeof(InterfaceTypeAttribute)),
-					new CodeAttributeArgument(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(ComInterfaceType)), "InterfaceIsIUnknown")));
+					new CodeAttributeArgument(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(ComInterfaceType)), ComInterfaceType.InterfaceIsIUnknown.ToString())));
 			codeInterfaceDeclaration.CustomAttributes.Add(interfaceTypeAttributeDeclaration);
 
 			// Create interface members and get separate class for interface constants
@@ -335,7 +335,7 @@ namespace Xpidl.Formatter.CodeDom
 						new CodeAttributeDeclaration(
 							new CodeTypeReference(typeof(MarshalAsAttribute)),
 							new CodeAttributeArgument(
-								new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(UnmanagedType)), "LPArray")));
+								new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(UnmanagedType)), UnmanagedType.LPArray.ToString())));
 					if (marshalAsArgument != null)
 					{
 						marshalAsArgument.Name = "ArraySubType";
@@ -359,7 +359,7 @@ namespace Xpidl.Formatter.CodeDom
 						new CodeAttributeDeclaration(
 							new CodeTypeReference(typeof(MarshalAsAttribute)),
 							new CodeAttributeArgument(
-								new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(UnmanagedType)), "Interface")),
+								new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(UnmanagedType)), UnmanagedType.Interface.ToString())),
 							new CodeAttributeArgument(
 								"IidParameterIndex",
 								new CodePrimitiveExpression(xpidlMethod.GetParameterIndex(xpidlParameter.Modifiers[XpidlParamModifier.IidIs]))));
@@ -458,7 +458,7 @@ namespace Xpidl.Formatter.CodeDom
 						new CodeAttributeDeclaration(
 							new CodeTypeReference(typeof(MarshalAsAttribute)),
 							new CodeAttributeArgument(
-								new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(UnmanagedType)), "LPStr")));
+								new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(UnmanagedType)), UnmanagedType.LPStr.ToString())));
 					break;
 
 				case XpidlType.WString:
@@ -467,7 +467,7 @@ namespace Xpidl.Formatter.CodeDom
 						new CodeAttributeDeclaration(
 							new CodeTypeReference(typeof(MarshalAsAttribute)),
 							new CodeAttributeArgument(
-								new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(UnmanagedType)), "LPWStr")));
+								new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(UnmanagedType)), UnmanagedType.LPWStr.ToString())));
 					break;
 
 				case XpidlType.nsQIResult:
