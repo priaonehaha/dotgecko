@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{77F7C2BF-1597-4CB7-B14A-E3E0A49DB262}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DotGecko.Gecko</RootNamespace>
+    <AssemblyName>DotGecko.Gecko</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\Xpcom.Api.cs" />
+    <Compile Include="Interop\Xpcom.Api.Strings.cs" />
+    <Compile Include="Interop\Xpcom.cs" />
+    <Compile Include="Interop\XpcomString.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIComponentManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIServiceManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDirectoryService.cs" />
+    <Compile Include="Interop\nsIFile.cs" />
+    <Compile Include="Interop\nsIModule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsISimpleEnumerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIComponentRegistrar.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIMemory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsILocalFile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDebug.cs" />
+    <Compile Include="Interop\nsITraceRefcnt.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EventHandlers.cs" />
+    <Compile Include="Interop\nsIInterfaceRequestor.cs" />
+    <Compile Include="IWebBrowserContainer.cs" />
+    <Compile Include="WebBrowser.cs" />
+    <Compile Include="WebBrowser.Events.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIBaseWindow.cs" />
+    <Compile Include="Interop\nsIEmbeddingSiteWindow.cs" />
+    <Compile Include="Interop\nsIWebBrowser.cs" />
+    <Compile Include="Interop\nsIWebBrowserChrome.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIWeakReference.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIURIContentListener.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMWindow.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIURI.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMBarProp.cs" />
+    <Compile Include="Interop\nsIDOMWindowCollection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMNode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMDocument.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMElement.cs" />
+    <Compile Include="Interop\nsISelection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMRange.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMAttr.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMDocumentFragment.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMNodeList.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMNamedNodeMap.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIRequest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsILoadGroup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIRequestObserver.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIStreamListener.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIInputStream.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMDocumentType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMDOMImplementation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMText.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMCharacterData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMComment.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMCDATASection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMProcessingInstruction.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMEntityReference.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
