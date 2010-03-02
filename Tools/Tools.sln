@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpidl", "Xpidl\Xpidl.csproj", "{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldParser", "GoldParser\GoldParser.csproj", "{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpidl.Parser", "Xpidl.Parser\Xpidl.Parser.csproj", "{52638738-9620-449F-B374-3017501B7F10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{CBD060DD-EED8-47D6-A0DA-722055E77EA8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Parser", "Parser", "{9BA28D8C-D16C-4F93-8F79-4026690F7D29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xpidl.Formatter", "Xpidl.Formatter\Xpidl.Formatter.csproj", "{C9B3F90A-2B02-4228-AED7-E6552EEDFE25}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Formatter", "Formatter", "{33538106-B35A-45B1-B4EC-395F114421AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotGecko.Xpidl", "DotGecko.Xpidl\DotGecko.Xpidl.csproj", "{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotGecko.Xpidl.Formatter", "DotGecko.Xpidl.Formatter\DotGecko.Xpidl.Formatter.csproj", "{C9B3F90A-2B02-4228-AED7-E6552EEDFE25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotGecko.Xpidl.Parser", "DotGecko.Xpidl.Parser\DotGecko.Xpidl.Parser.csproj", "{52638738-9620-449F-B374-3017501B7F10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,30 +21,30 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C89660A9-0F8F-471B-B9C6-A43F2ECE161D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{52638738-9620-449F-B374-3017501B7F10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{52638738-9620-449F-B374-3017501B7F10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{52638738-9620-449F-B374-3017501B7F10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{52638738-9620-449F-B374-3017501B7F10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9B3F90A-2B02-4228-AED7-E6552EEDFE25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9B3F90A-2B02-4228-AED7-E6552EEDFE25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9B3F90A-2B02-4228-AED7-E6552EEDFE25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9B3F90A-2B02-4228-AED7-E6552EEDFE25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52638738-9620-449F-B374-3017501B7F10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52638738-9620-449F-B374-3017501B7F10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52638738-9620-449F-B374-3017501B7F10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52638738-9620-449F-B374-3017501B7F10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{49E61E05-1B2E-42CF-B50B-8DBB9742EFA1} = {CBD060DD-EED8-47D6-A0DA-722055E77EA8}
-		{52638738-9620-449F-B374-3017501B7F10} = {9BA28D8C-D16C-4F93-8F79-4026690F7D29}
 		{C89660A9-0F8F-471B-B9C6-A43F2ECE161D} = {9BA28D8C-D16C-4F93-8F79-4026690F7D29}
+		{52638738-9620-449F-B374-3017501B7F10} = {9BA28D8C-D16C-4F93-8F79-4026690F7D29}
 		{C9B3F90A-2B02-4228-AED7-E6552EEDFE25} = {33538106-B35A-45B1-B4EC-395F114421AB}
 	EndGlobalSection
 EndGlobal
