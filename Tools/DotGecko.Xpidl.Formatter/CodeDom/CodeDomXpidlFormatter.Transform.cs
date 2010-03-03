@@ -61,6 +61,17 @@ namespace DotGecko.Xpidl.Formatter.CodeDom
 			if (!String.IsNullOrEmpty(xpidlInterface.BaseName) && !String.Equals(xpidlInterface.BaseName, XpidlType.nsISupports))
 			{
 				codeInterfaceDeclaration.BaseTypes.Add(xpidlInterface.BaseName);
+
+				var baseInterfaceMembers = new CodeSnippetTypeMember();
+				baseInterfaceMembers.Comments.Add(
+					new CodeCommentStatement(new CodeComment(String.Format("TODO: declare {0} members here", xpidlInterface.BaseName), false)));
+
+				baseInterfaceMembers.StartDirectives.Add(
+					new CodeRegionDirective(CodeRegionMode.Start, String.Format("{0} Members", xpidlInterface.BaseName)));
+				baseInterfaceMembers.EndDirectives.Add(
+					new CodeRegionDirective(CodeRegionMode.End, null));
+
+				codeInterfaceDeclaration.Members.Add(baseInterfaceMembers);
 			}
 
 			// Add [ComImport] attribute

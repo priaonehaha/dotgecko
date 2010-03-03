@@ -161,7 +161,7 @@ namespace DotGecko.Xpidl
 
 			// Create parser
 			IXpidlParser xpidlParser;
-			using (BinaryReader grammarReader = CreateResourceReader("Xpidl.Properties.xpidl.cgt"))
+			using (BinaryReader grammarReader = CreateResourceReader("DotGecko.Xpidl.Properties.xpidl.cgt"))
 			{
 				xpidlParser = new GoldXpidlParser(grammarReader);
 			}
