@@ -33,6 +33,12 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AppFileLocation.cs" />
+    <Compile Include="BrowserChromeEventArgs.cs" />
+    <Compile Include="ChromeFlags.cs" />
+    <Compile Include="ClipboardCommands.cs" />
+    <Compile Include="ContextMenuEventArgs.cs" />
+    <Compile Include="CreateWindowEventArgs.cs" />
     <Compile Include="Dom\DomAttribute.cs" />
     <Compile Include="Dom\DomBarProp.cs" />
     <Compile Include="Dom\DomCDataSection.cs" />
@@ -60,6 +66,8 @@
     <Compile Include="Dom\DomText.cs" />
     <Compile Include="Dom\DomWindow.cs" />
     <Compile Include="Dom\DomWindowCollection.cs" />
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="FilePickerEventArgs.cs" />
     <Compile Include="Interop\ExtensionMethods.cs" />
     <Compile Include="Interop\Factory.cs" />
     <Compile Include="Interop\IAppFileLocation.cs" />
@@ -204,7 +212,54 @@
     <Compile Include="Interop\Xpcom.nsXPCOMCID.cs" />
     <Compile Include="Interop\XpcomString.cs" />
     <Compile Include="Interop\XpcomStringMarshalers.cs" />
+    <Compile Include="LoadFlags.cs" />
+    <Compile Include="PromptAppLaunchEventArgs.cs" />
+    <Compile Include="PromptEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProvideTooltipTextEventArgs.cs" />
+    <Compile Include="ProvideWindowEventArgs.cs" />
+    <Compile Include="StopFlags.cs" />
+    <Compile Include="TooltipEventArgs.cs" />
+    <Compile Include="WebBrowser.EmbeddingSiteWindow.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.FilePicker.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.HelperAppLauncherDialog.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.InterfaceRequestor.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.PromptService.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.TooltipListener.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.TooltipTextProvider.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.URIContentListener.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.WeakReference.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.WebBrowserChrome.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.WebProgressListener.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.WindowCreator.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebBrowser.WindowProvider.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WebProgressEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interop\nsIComponentManager.cs" />
@@ -240,8 +295,10 @@
     <Compile Include="EventHandlers.cs" />
     <Compile Include="Interop\nsIInterfaceRequestor.cs" />
     <Compile Include="IWebBrowserContainer.cs" />
+    <Compile Include="WebBrowser.ContextMenuListener.cs">
+      <DependentUpon>WebBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="WebBrowser.cs" />
-    <Compile Include="WebBrowser.Events.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interop\nsIBaseWindow.cs" />
