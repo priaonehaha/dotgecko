@@ -12,9 +12,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("94928AB3-8B63-11d3-989D-001083010E9B")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("94928AB3-8B63-11d3-989D-001083010E9B"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIURIContentListener //: nsISupports
 	{
 		/**

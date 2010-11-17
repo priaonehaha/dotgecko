@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
-using DOMString = DotGecko.Gecko.Interop.nsAString;
+using System.Text;
+using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -22,22 +23,20 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("a6cf90ce-15b3-11d2-932e-00805f8add32")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("a6cf90ce-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDOMRange //: nsISupports
 	{
-		nsIDOMNode GetStartContainer(); // raises(DOMException) on retrieval
+		nsIDOMNode StartContainer { get; } // raises(DOMException) on retrieval
 
-		Int32 GetStartOffset(); // raises(DOMException) on retrieval
+		Int32 StartOffset { get; } // raises(DOMException) on retrieval
 
-		nsIDOMNode GetEndContainer(); // raises(DOMException) on retrieval
+		nsIDOMNode EndContainer { get; } // raises(DOMException) on retrieval
 
-		Int32 GetEndOffset(); // raises(DOMException) on retrieval
+		Int32 EndOffset { get; } // raises(DOMException) on retrieval
 
-		Boolean GetCollapsed(); // raises(DOMException) on retrieval
+		Boolean Collapsed { get; } // raises(DOMException) on retrieval
 
-		nsIDOMNode GetCommonAncestorContainer(); // raises(DOMException) on retrieval
+		nsIDOMNode CommonAncestorContainer { get; } // raises(DOMException) on retrieval
 
 		void SetStart(nsIDOMNode refNode, Int32 offset); // raises(RangeException, DOMException);
 
@@ -71,7 +70,7 @@ namespace DotGecko.Gecko.Interop
 
 		nsIDOMRange CloneRange(); // raises(DOMException);
 
-		DOMString ToString(); // raises(DOMException);
+		void ToString([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result); // raises(DOMException);
 
 		void Detach(); // raises(DOMException);
 	}

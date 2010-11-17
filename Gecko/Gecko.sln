@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotGecko.Gecko", "DotGecko.Gecko\DotGecko.Gecko.csproj", "{77F7C2BF-1597-4CB7-B14A-E3E0A49DB262}"
 EndProject
 Global

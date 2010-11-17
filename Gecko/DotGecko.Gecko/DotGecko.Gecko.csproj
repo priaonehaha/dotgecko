@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DotGecko.Gecko</RootNamespace>
     <AssemblyName>DotGecko.Gecko</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,21 +33,145 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="Interop\IAppFileLocation.cs" />
+    <Compile Include="Interop\nsIAppShell.cs" />
+    <Compile Include="Interop\nsIArray.cs" />
+    <Compile Include="Interop\nsIAtom.cs" />
+    <Compile Include="Interop\nsIAuthInformation.cs" />
+    <Compile Include="Interop\nsIAuthPrompt.cs" />
+    <Compile Include="Interop\nsIAuthPrompt2.cs" />
+    <Compile Include="Interop\nsIAuthPromptCallback.cs" />
+    <Compile Include="Interop\nsIBinaryInputStream.cs" />
+    <Compile Include="Interop\nsIBinaryOutputStream.cs" />
+    <Compile Include="Interop\nsICancelable.cs" />
+    <Compile Include="Interop\nsIChannel.cs" />
+    <Compile Include="Interop\nsIClipboardCommands.cs" />
+    <Compile Include="Interop\nsICollection.cs" />
+    <Compile Include="Interop\nsICommandManager.cs" />
+    <Compile Include="Interop\nsICommandParams.cs" />
+    <Compile Include="Interop\nsIContainerBoxObject.cs" />
+    <Compile Include="Interop\nsIContentViewer.cs" />
+    <Compile Include="Interop\nsIContextMenuListener.cs" />
+    <Compile Include="Interop\nsIContextMenuListener2.cs" />
+    <Compile Include="Interop\nsIController.cs" />
+    <Compile Include="Interop\nsIControllers.cs" />
+    <Compile Include="Interop\nsIDocShell.cs" />
+    <Compile Include="Interop\nsIDocShellLoadInfo.cs" />
+    <Compile Include="Interop\nsIDocShellTreeItem.cs" />
+    <Compile Include="Interop\nsIDocShellTreeNode.cs" />
+    <Compile Include="Interop\nsIDocShellTreeOwner.cs" />
+    <Compile Include="Interop\nsIDocumentCharsetInfo.cs" />
+    <Compile Include="Interop\nsIDOMAbstractView.cs" />
+    <Compile Include="Interop\nsIDOMCanvasRenderingContext2D.cs" />
+    <Compile Include="Interop\nsIDOMCRMFObject.cs" />
+    <Compile Include="Interop\nsIDOMCrypto.cs" />
+    <Compile Include="Interop\nsIDOMDocumentView.cs" />
+    <Compile Include="Interop\nsIDOMDOMStringList.cs" />
+    <Compile Include="Interop\nsIDOMEntity.cs" />
+    <Compile Include="Interop\nsIDOMEvent.cs" />
+    <Compile Include="Interop\nsIDOMEventListener.cs" />
+    <Compile Include="Interop\nsIDOMEventTarget.cs" />
+    <Compile Include="Interop\nsIDOMHistory.cs" />
+    <Compile Include="Interop\nsIDOMHTMLCanvasElement.cs" />
+    <Compile Include="Interop\nsIDOMHTMLElement.cs" />
+    <Compile Include="Interop\nsIDOMLocation.cs" />
+    <Compile Include="Interop\nsIDOMMimeType.cs" />
+    <Compile Include="Interop\nsIDOMMimeTypeArray.cs" />
+    <Compile Include="Interop\nsIDOMNavigator.cs" />
+    <Compile Include="Interop\nsIDOMNotation.cs" />
+    <Compile Include="Interop\nsIDOMOfflineResourceList.cs" />
+    <Compile Include="Interop\nsIDOMPkcs11.cs" />
+    <Compile Include="Interop\nsIDOMPlugin.cs" />
+    <Compile Include="Interop\nsIDOMPluginArray.cs" />
+    <Compile Include="Interop\nsIDOMPopupBlockedEvent.cs" />
+    <Compile Include="Interop\nsIDOMScreen.cs" />
+    <Compile Include="Interop\nsIDOMStorage.cs" />
+    <Compile Include="Interop\nsIDOMWindow2.cs" />
+    <Compile Include="Interop\nsIDOMWindowInternal.cs" />
+    <Compile Include="Interop\nsIDOMWindowUtils.cs" />
+    <Compile Include="Interop\nsIDownload.cs" />
+    <Compile Include="Interop\nsIDownloader.cs" />
+    <Compile Include="Interop\nsIDownloadHistory.cs" />
+    <Compile Include="Interop\nsIDownloadManager.cs" />
+    <Compile Include="Interop\nsIDownloadManagerUI.cs" />
+    <Compile Include="Interop\nsIDownloadProgressListener.cs" />
+    <Compile Include="Interop\nsIEmbeddingSiteWindow2.cs" />
+    <Compile Include="Interop\nsIEnumerator.cs" />
+    <Compile Include="Interop\nsIExternalHelperAppService.cs" />
+    <Compile Include="Interop\nsIFaviconService.cs" />
+    <Compile Include="Interop\nsIFilePicker.cs" />
+    <Compile Include="Interop\nsIHelperAppLauncherDialog.cs" />
+    <Compile Include="Interop\nsIHistoryEntry.cs" />
+    <Compile Include="Interop\nsIIOService.cs" />
+    <Compile Include="Interop\nsIIOService2.cs" />
+    <Compile Include="Interop\nsIMarkupDocumentViewer.cs" />
+    <Compile Include="Interop\nsIMIMEInfo.cs" />
+    <Compile Include="Interop\nsIMutableArray.cs" />
+    <Compile Include="Interop\nsINonBlockingAlertService.cs" />
+    <Compile Include="Interop\nsIntMargin.cs" />
+    <Compile Include="Interop\nsIntRect.cs" />
+    <Compile Include="Interop\nsIObjectInputStream.cs" />
+    <Compile Include="Interop\nsIObjectOutputStream.cs" />
+    <Compile Include="Interop\nsIObserver.cs" />
+    <Compile Include="Interop\nsIObserverService.cs" />
+    <Compile Include="Interop\nsIOutputStream.cs" />
+    <Compile Include="Interop\nsIPermission.cs" />
+    <Compile Include="Interop\nsIPermissionManager.cs" />
+    <Compile Include="Interop\nsIPopupWindowManager.cs" />
+    <Compile Include="Interop\nsIPrefBranch.cs" />
+    <Compile Include="Interop\nsIPrefBranch2.cs" />
+    <Compile Include="Interop\nsIPrefService.cs" />
+    <Compile Include="Interop\nsIPrincipal.cs" />
+    <Compile Include="Interop\nsIPrintSettings.cs" />
+    <Compile Include="Interop\nsIProgressEventSink.cs" />
+    <Compile Include="Interop\nsIPrompt.cs" />
+    <Compile Include="Interop\nsIPromptFactory.cs" />
+    <Compile Include="Interop\nsIPromptService.cs" />
+    <Compile Include="Interop\nsIPromptService2.cs" />
+    <Compile Include="Interop\nsIProtocolHandler.cs" />
+    <Compile Include="Interop\nsIQueryContentEventResult.cs" />
+    <Compile Include="Interop\nsISecureBrowserUI.cs" />
+    <Compile Include="Interop\nsISerializable.cs" />
+    <Compile Include="Interop\nsISHEntry.cs" />
+    <Compile Include="Interop\nsISHistory.cs" />
+    <Compile Include="Interop\nsISHistoryListener.cs" />
+    <Compile Include="Interop\nsIStringEnumerator.cs" />
+    <Compile Include="Interop\nsISupportsArray.cs" />
+    <Compile Include="Interop\nsISupportsIterators.cs" />
+    <Compile Include="Interop\nsISupportsPrimitives.cs" />
+    <Compile Include="Interop\nsITooltipListener.cs" />
+    <Compile Include="Interop\nsITooltipTextProvider.cs" />
+    <Compile Include="Interop\nsITransfer.cs" />
+    <Compile Include="Interop\nsIVariant.cs" />
+    <Compile Include="Interop\nsIWebBrowserChrome2.cs" />
+    <Compile Include="Interop\nsIWebBrowserFocus.cs" />
+    <Compile Include="Interop\nsIWebBrowserPersist.cs" />
+    <Compile Include="Interop\nsIWebNavigation.cs" />
+    <Compile Include="Interop\nsIWebProgress.cs" />
+    <Compile Include="Interop\nsIWebProgressListener.cs" />
+    <Compile Include="Interop\nsIWebProgressListener2.cs" />
+    <Compile Include="Interop\nsIWindowCreator.cs" />
+    <Compile Include="Interop\nsIWindowCreator2.cs" />
+    <Compile Include="Interop\nsIWindowMediator.cs" />
+    <Compile Include="Interop\nsIWindowMediatorListener.cs" />
+    <Compile Include="Interop\nsIWindowProvider.cs" />
+    <Compile Include="Interop\nsIWindowWatcher.cs" />
+    <Compile Include="Interop\nsIXULAppInfo.cs" />
+    <Compile Include="Interop\nsIXULBrowserWindow.cs" />
+    <Compile Include="Interop\nsIXULWindow.cs" />
+    <Compile Include="Interop\nsResult.cs" />
     <Compile Include="Interop\Xpcom.Api.cs" />
     <Compile Include="Interop\Xpcom.Api.Strings.cs" />
     <Compile Include="Interop\Xpcom.cs" />
+    <Compile Include="Interop\Xpcom.DirectoryServiceProvider.cs" />
+    <Compile Include="Interop\Xpcom.IDs.cs" />
+    <Compile Include="Interop\Xpcom.nsAppDirectoryServiceDefs.cs" />
+    <Compile Include="Interop\Xpcom.nsEmbedCID.cs" />
+    <Compile Include="Interop\Xpcom.nsNetCID.cs" />
+    <Compile Include="Interop\Xpcom.nsToolkitCompsCID.cs" />
+    <Compile Include="Interop\Xpcom.nsXPCOMCID.cs" />
     <Compile Include="Interop\XpcomString.cs" />
+    <Compile Include="Interop\XpcomStringMarshalers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +296,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interop\nsIDOMEntityReference.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -36,9 +36,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("59e7e77a-38e4-11d4-8cf5-0060b0fc14a3")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("59e7e77a-38e4-11d4-8cf5-0060b0fc14a3"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIMemory //: nsISupports
 	{
 		/**

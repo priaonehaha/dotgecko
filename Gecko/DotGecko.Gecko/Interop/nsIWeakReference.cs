@@ -18,9 +18,7 @@ namespace DotGecko.Gecko.Interop
 	 * @see nsWeakReference
 	 * @see nsWeakPtr
 	 */
-	[ComImport]
-	[Guid("9188bc85-f92e-11d2-81ef-0060083a0bcf")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("9188bc85-f92e-11d2-81ef-0060083a0bcf"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIWeakReference //: nsISupports
 	{
 		/**
@@ -29,8 +27,8 @@ namespace DotGecko.Gecko.Interop
 		 * like (a proxied) |QueryInterface|.  Don't hold on to the produced interface permanently;
 		 * that would defeat the purpose of using a non-owning |nsIWeakReference| in the first place.
 		 */
-		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 0)]
-		Object QueryReferent(ref Guid uuid);
+		/*[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 0)]*/
+		IntPtr QueryReferent([In] ref Guid uuid);
 	}
 
 	/**
@@ -43,9 +41,7 @@ namespace DotGecko.Gecko.Interop
 	 * @see nsIWeakReference
 	 * @see nsSupportsWeakReference
 	 */
-	[ComImport]
-	[Guid("9188bc86-f92e-11d2-81ef-0060083a0bcf")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("9188bc86-f92e-11d2-81ef-0060083a0bcf"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsISupportsWeakReference //: nsISupports
 	{
 		/**

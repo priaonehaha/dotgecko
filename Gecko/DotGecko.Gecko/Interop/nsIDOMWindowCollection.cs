@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
-using DOMString = DotGecko.Gecko.Interop.nsAString;
+using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -10,15 +10,13 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("a6cf906f-15b3-11d2-932e-00805f8add32")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("a6cf906f-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDOMWindowCollection //: nsISupports
 	{
 		/**
 		 * Accessor for the number of windows in this collection.
 		 */
-		UInt32 GetLength();
+		UInt32 Length { get; }
 
 		/**
 		 * Method for accessing an item in this collection by index.
@@ -28,6 +26,6 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Method for accessing an item in this collection by window name.
 		 */
-		nsIDOMWindow NamedItem(DOMString name);
+		nsIDOMWindow NamedItem([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name);
 	}
 }

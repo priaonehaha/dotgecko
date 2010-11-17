@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using DOMString = DotGecko.Gecko.Interop.nsAString;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -13,40 +12,38 @@ namespace DotGecko.Gecko.Interop
 	 * @status FROZEN
 	 * @version 1.0
 	 */
-	[ComImport]
-	[Guid("B2C7ED59-8634-4352-9E37-5484C8B6E4E1")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("B2C7ED59-8634-4352-9E37-5484C8B6E4E1"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsISelection //: nsISupports
 	{
 		/**
 		 * Returns the node in which the selection begins.
 		 */
-		nsIDOMNode GetAnchorNode();
+		nsIDOMNode AnchorNode { get; }
 
 		/**
 		 * The offset within the (text) node where the selection begins.
 		 */
-		Int32 GetAnchorOffset();
+		Int32 AnchorOffset { get; }
 
 		/**
 		 * Returns the node in which the selection ends.
 		 */
-		nsIDOMNode GetFocusNode();
+		nsIDOMNode FocusNode { get; }
 
 		/**
 		 * The offset within the (text) node where the selection ends.
 		 */
-		Int32 GetFocusOffset();
+		Int32 FocusOffset { get; }
 
 		/**
 		 * Indicates if the selection is collapsed or not.
 		 */
-		Boolean GetIsCollapsed();
+		Boolean IsCollapsed { get; }
 
 		/**
 		 * Returns the number of ranges in the selection.
 		 */
-		Int32 GetRangeCount();
+		Int32 RangeCount { get; }
 
 		/**
 		 * Returns the range at the specified index.

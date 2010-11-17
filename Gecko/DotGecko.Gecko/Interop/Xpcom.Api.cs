@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace DotGecko.Gecko.Interop
 {
-	public static partial class Xpcom
+	internal static partial class Xpcom
 	{
 		/**
 		 * Every XPCOM component implements this function signature, which is the
@@ -11,7 +11,8 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		internal delegate UInt32 nsGetModuleProc(nsIComponentManager aCompMgr, nsIFile location, out nsIModule return_cobj); 
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal delegate nsResult nsGetModuleProc(nsIComponentManager aCompMgr, nsIFile location, out nsIModule return_cobj); 
 
 		/**
 		 * Initialises XPCOM. You must call one of the NS_InitXPCOM methods
@@ -46,9 +47,10 @@ namespace DotGecko.Gecko.Interop
 		 *         which can happen if XPCOM is reloaded, but did not completly
 		 *         shutdown. Other error codes indicate a failure during
 		 *         initialisation.
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_InitXPCOM2(out nsIServiceManager result, nsIFile binDirectory, nsIDirectoryServiceProvider appFileLocationProvider);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_InitXPCOM2(out nsIServiceManager result, nsIFile binDirectory, nsIDirectoryServiceProvider appFileLocationProvider);
 
 		/**
 		 * Some clients of XPCOM have statically linked components (not dynamically
@@ -103,9 +105,10 @@ namespace DotGecko.Gecko.Interop
 		 *         which can happen if XPCOM is reloaded, but did not completly
 		 *         shutdown. Other error codes indicate a failure during
 		 *         initialisation.
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_InitXPCOM3(out nsIServiceManager result, nsIFile binDirectory, nsIDirectoryServiceProvider appFileLocationProvider, ref nsStaticModuleInfo staticComponents, UInt32 componentCount);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_InitXPCOM3(out nsIServiceManager result, nsIFile binDirectory, nsIDirectoryServiceProvider appFileLocationProvider, ref nsStaticModuleInfo staticComponents, UInt32 componentCount);
 
 		/**
 		 * Shutdown XPCOM. You must call this method after you are finished
@@ -119,9 +122,10 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK for success;
 		 *         other error codes indicate a failure during initialisation.
 		 *
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_ShutdownXPCOM(nsIServiceManager servMgr);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_ShutdownXPCOM(nsIServiceManager servMgr);
 
 		/**
 		 * Public Method to access to the service manager.
@@ -132,9 +136,10 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK for success;
 		 *         other error codes indicate a failure during initialisation.
 		 *
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_GetServiceManager(out nsIServiceManager result);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_GetServiceManager(out nsIServiceManager result);
 
 		/**
 		 * Public Method to access to the component manager.
@@ -145,9 +150,10 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK for success;
 		 *         other error codes indicate a failure during initialisation.
 		 *
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_GetComponentManager(out nsIComponentManager result);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_GetComponentManager(out nsIComponentManager result);
 
 		/**
 		 * Public Method to access to the component registration manager.
@@ -158,9 +164,10 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK for success;
 		 *         other error codes indicate a failure during initialisation.
 		 *
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_GetComponentRegistrar(out nsIComponentRegistrar result);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_GetComponentRegistrar(out nsIComponentRegistrar result);
 
 		/**
 		 * Public Method to access to the memory manager.  See nsIMemory
@@ -171,9 +178,10 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK for success;
 		 *         other error codes indicate a failure during initialisation.
 		 *
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_GetMemoryManager(out nsIMemory result);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_GetMemoryManager(out nsIMemory result);
 
 		/**
 		 * Public Method to create an instance of a nsILocalFile.  This function
@@ -196,12 +204,14 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @return NS_OK for success;
 		 *         other error codes indicate a failure.
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_NewLocalFile(nsAString path, Boolean followLinks, out nsILocalFile result);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_NewLocalFile([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_NewNativeLocalFile(nsACString path, Boolean followLinks, out nsILocalFile result);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_NewNativeLocalFile([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
 
 		/**
 		 * Allocates a block of memory of a particular size. If the memory cannot
@@ -212,8 +222,8 @@ namespace DotGecko.Gecko.Interop
 		 * @param size   The size of the block to allocate
 		 * @result       The block of memory
 		 * @note         This function is thread-safe.
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		internal static extern IntPtr NS_Alloc(UInt32 size);
 
 		/**
@@ -233,8 +243,8 @@ namespace DotGecko.Gecko.Interop
 		 * succeeds, ptr is freed and a pointer to the new block is returned. If the
 		 * allocation fails, ptr is not freed and null is returned. The returned
 		 * value may be the same as ptr.
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		internal static extern IntPtr NS_Realloc(IntPtr ptr, UInt32 size);
 
 		/**
@@ -246,8 +256,8 @@ namespace DotGecko.Gecko.Interop
 		 * @param ptr   The block of memory to free. This block must originally have
 		 *              been allocated by NS_Alloc or NS_Realloc
 		 * @note        This function is thread-safe.
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		internal static extern void NS_Free(IntPtr ptr);
 
 		/**
@@ -272,8 +282,8 @@ namespace DotGecko.Gecko.Interop
 		 * @param aExpr  The expression evaluated (may be null)
 		 * @param aFile  The source file containing the assertion (may be null)
 		 * @param aLine  The source file line number (-1 indicates no line number)
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		internal static extern void NS_DebugBreak(UInt32 aSeverity, String aStr, String aExpr, String aFile, Int32 aLine);
 
 		/**
@@ -291,11 +301,11 @@ namespace DotGecko.Gecko.Interop
 		 * NS_LogTerm allow applications to enable logging earlier and delay
 		 * printing of logging statistics. They should always be used as a
 		 * matched pair.
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		internal static extern void NS_LogInit();
 
-		[DllImport(xpcom, ExactSpelling = true)]
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		internal static extern void NS_LogTerm();
 
 		/**
@@ -307,10 +317,10 @@ namespace DotGecko.Gecko.Interop
 		 * @param aTypeName     The class name of the type
 		 * @param aInstanceSize The size of the type
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		internal static extern void NS_LogCtor(IntPtr aPtr, String aTypeName, UInt32 aInstanceSize);
 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		internal static extern void NS_LogDtor(IntPtr aPtr, String aTypeName, UInt32 aInstanceSize);
 
 		/**
@@ -323,10 +333,10 @@ namespace DotGecko.Gecko.Interop
 		 * @param aTypeName     The class name of the type
 		 * @param aInstanceSize The size of the type
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		internal static extern void NS_LogAddRef(IntPtr aPtr, UInt32 aNewRefCnt, String aTypeName, UInt32 aInstanceSize);
 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		internal static extern void NS_LogRelease(IntPtr aPtr, UInt32 aNewRefCnt, String aTypeName);
 
 		/**
@@ -337,11 +347,11 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @param aCOMPtr the address of the COMPtr holding a strong reference
 		 * @param aObject the object being referenced by the COMPtr
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		internal static extern void NS_LogCOMPtrAddRef(IntPtr aCOMPtr, [MarshalAs(UnmanagedType.IUnknown)] Object aObject);
 
-		[DllImport(xpcom, ExactSpelling = true)]
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		internal static extern void NS_LogCOMPtrRelease(IntPtr aCOMPtr, [MarshalAs(UnmanagedType.IUnknown)] Object aObject);
 
 		//[DllImport(xpcom, ExactSpelling = true)]
@@ -356,11 +366,13 @@ namespace DotGecko.Gecko.Interop
 		//[DllImport(xpcom, ExactSpelling = true)]
 		//internal static extern X NS_CycleCollectorForget2();
 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_GetDebug(out nsIDebug result);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_GetDebug(out nsIDebug result);
 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_GetTraceRefcnt(out nsITraceRefcnt result);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_GetTraceRefcnt(out nsITraceRefcnt result);
 
 		private const String xpcom = "xpcom.dll";
 	}

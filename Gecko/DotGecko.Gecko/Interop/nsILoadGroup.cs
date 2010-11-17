@@ -1,5 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
+using nsISupports = System.Object;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -8,23 +10,19 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("3de0a31c-feaf-400f-9f1e-4ef71f8b20cc")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("3de0a31c-feaf-400f-9f1e-4ef71f8b20cc"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsILoadGroup : nsIRequest
 	{
 		#region nsIRequest Members
 
-		new void GetName(nsAUTF8String result);
+		new void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
 		new Boolean IsPending();
-		new UInt32 GetStatus();
-		new void Cancel(UInt32 aStatus);
+		new nsResult Status { [return: MarshalAs(UnmanagedType.U4)] get; }
+		new void Cancel([MarshalAs(UnmanagedType.U4)] nsResult aStatus);
 		new void Suspend();
 		new void Resume();
-		new nsILoadGroup GetLoadGroup();
-		new void SetLoadGroup(nsILoadGroup value);
-		new UInt32 GetLoadFlags();
-		new void SetLoadFlags(UInt32 value);
+		new nsILoadGroup LoadGroup { get; set; }
+		new UInt32 LoadFlags { get; set; }
 
 		#endregion
 
@@ -32,8 +30,7 @@ namespace DotGecko.Gecko.Interop
 		 * The group observer is notified when requests are added to and removed
 		 * from this load group.  The groupObserver is weak referenced.
 		 */
-		nsIRequestObserver GetGroupObserver();
-		void SetGroupObserver(nsIRequestObserver value);
+		nsIRequestObserver GroupObserver { get; set; }
 
 		/**
 		 * Accesses the default load request for the group.  Each time a number
@@ -44,8 +41,7 @@ namespace DotGecko.Gecko.Interop
 		 * If the default load request is NULL, then the group's load flags are
 		 * not changed.
 		 */
-		nsIRequest GetDefaultLoadRequest();
-		void SetDefaultLoadRequest(nsIRequest value);
+		nsIRequest DefaultLoadRequest { get; set; }
 
 		/**
 		 * Adds a new request to the group.  This will cause the default load
@@ -56,7 +52,7 @@ namespace DotGecko.Gecko.Interop
 		 * request is null, then the load group will inherit its load flags from
 		 * the request.
 		 */
-		void AddRequest(nsIRequest aRequest, [MarshalAs(UnmanagedType.IUnknown)] Object aContext);
+		void AddRequest(nsIRequest aRequest, [MarshalAs(UnmanagedType.IUnknown)] nsISupports aContext);
 
 		/**
 		 * Removes a request from the group.  If this is a foreground request
@@ -65,24 +61,23 @@ namespace DotGecko.Gecko.Interop
 		 * By the time this call ends, aRequest will have been removed from the
 		 * loadgroup, even if this function throws an exception.
 		 */
-		void RemoveRequest(nsIRequest aRequest, [MarshalAs(UnmanagedType.IUnknown)] Object aContext, UInt32 aStatus);
+		void RemoveRequest(nsIRequest aRequest, [MarshalAs(UnmanagedType.IUnknown)] nsISupports aContext, [MarshalAs(UnmanagedType.U4)] nsResult aStatus);
 
 		/**
 		 * Returns the requests contained directly in this group.
 		 * Enumerator element type: nsIRequest.
 		 */
-		nsISimpleEnumerator GetRequests();
+		nsISimpleEnumerator Requests { get; }
 
 		/**
 		 * Returns the count of "active" requests (ie. requests without the
 		 * LOAD_BACKGROUND bit set).
 		 */
-		UInt32 GetActiveCount();
+		UInt32 ActiveCount { get; }
 
 		/**
 		 * Notification callbacks for the load group.
 		 */
-		nsIInterfaceRequestor GetNotificationCallbacks();
-		void SetNotificationCallbacks(nsIInterfaceRequestor value);
+		nsIInterfaceRequestor NotificationCallbacks { get; set; }
 	}
 }

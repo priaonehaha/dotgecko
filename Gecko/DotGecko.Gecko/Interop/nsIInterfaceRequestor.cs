@@ -16,9 +16,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("033A1470-8B2A-11d3-AF88-00A024FFC08C")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("033A1470-8B2A-11d3-AF88-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIInterfaceRequestor //: nsISupports
 	{
 		/**
@@ -32,6 +30,7 @@ namespace DotGecko.Gecko.Interop
 		 *         NS_ERROR* - method failure.
 		 */
 		[PreserveSig]
-		UInt32 GetInterface(ref Guid uuid, [MarshalAs(UnmanagedType.Interface, IidParameterIndex = 0)] out Object result);
+		[return: MarshalAs(UnmanagedType.U4)]
+		nsResult GetInterface([In] ref Guid uuid, /*[MarshalAs(UnmanagedType.Interface, IidParameterIndex = 0)]*/ out IntPtr result);
 	}
 }

@@ -14,12 +14,10 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("a6cf907d-15b3-11d2-932e-00805f8add32")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("a6cf907d-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDOMNodeList //: nsISupports
 	{
 		nsIDOMNode Item(UInt32 index);
-		UInt32 GetLength();
+		UInt32 Length { get; }
 	}
 }

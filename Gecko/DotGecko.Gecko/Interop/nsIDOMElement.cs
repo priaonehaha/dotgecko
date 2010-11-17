@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
-using DOMString = DotGecko.Gecko.Interop.nsAString;
+using System.Text;
+using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -13,25 +14,23 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("a6cf9078-15b3-11d2-932e-00805f8add32")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("a6cf9078-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDOMElement : nsIDOMNode
 	{
 		#region nsIDOMNode Members
 
-		new void GetNodeName(DOMString result);
-		new void GetNodeValue(DOMString result);
-		new void SetNodeValue(DOMString value);
-		new UInt16 GetNodeType();
-		new nsIDOMNode GetParentNode();
-		new nsIDOMNodeList GetChildNodes();
-		new nsIDOMNode GetFirstChild();
-		new nsIDOMNode GetLastChild();
-		new nsIDOMNode GetPreviousSibling();
-		new nsIDOMNode GetNextSibling();
-		new nsIDOMNamedNodeMap GetAttributes();
-		new nsIDOMDocument GetOwnerDocument();
+		new void GetNodeName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		new void GetNodeValue([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		new void SetNodeValue([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		new UInt16 NodeType { get; }
+		new nsIDOMNode ParentNode { get; }
+		new nsIDOMNodeList ChildNodes { get; }
+		new nsIDOMNode FirstChild { get; }
+		new nsIDOMNode LastChild { get; }
+		new nsIDOMNode PreviousSibling { get; }
+		new nsIDOMNode NextSibling { get; }
+		new nsIDOMNamedNodeMap Attributes { get; }
+		new nsIDOMDocument OwnerDocument { get; }
 		new nsIDOMNode InsertBefore(nsIDOMNode newChild, nsIDOMNode refChild);
 		new nsIDOMNode ReplaceChild(nsIDOMNode newChild, nsIDOMNode oldChild);
 		new nsIDOMNode RemoveChild(nsIDOMNode oldChild);
@@ -39,53 +38,53 @@ namespace DotGecko.Gecko.Interop
 		new Boolean HasChildNodes();
 		new nsIDOMNode CloneNode(Boolean deep);
 		new void Normalize();
-		new Boolean IsSupported(DOMString feature, DOMString version);
-		new void GetNamespaceURI(DOMString result);
-		new void GetPrefix(DOMString result);
-		new void SetPrefix(DOMString value);
-		new void GetLocalName(DOMString result);
+		new Boolean IsSupported([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String feature, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String version);
+		new void GetNamespaceURI([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		new void GetPrefix([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		new void SetPrefix([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		new void GetLocalName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 		new Boolean HasAttributes();
 
 		#endregion
 
-		void GetTagName(DOMString result);
+		void GetTagName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 
-		void GetAttribute(DOMString name, DOMString result);
+		void GetAttribute([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 
-		void SetAttribute(DOMString name, DOMString value); // raises(DOMException);
+		void SetAttribute([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value); // raises(DOMException);
 
-		void RemoveAttribute(DOMString name); // raises(DOMException);
+		void RemoveAttribute([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name); // raises(DOMException);
 
-		nsIDOMAttr GetAttributeNode(DOMString name);
+		nsIDOMAttr GetAttributeNode([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name);
 
 		nsIDOMAttr SetAttributeNode(nsIDOMAttr newAttr); // raises(DOMException);
 
 		nsIDOMAttr RemoveAttributeNode(nsIDOMAttr oldAttr); // raises(DOMException);
 
-		nsIDOMNodeList GetElementsByTagName(DOMString name);
+		nsIDOMNodeList GetElementsByTagName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name);
 
 		// Introduced in DOM Level 2:
-		void GetAttributeNS(DOMString namespaceURI, DOMString localName, DOMString result);
+		void GetAttributeNS([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String namespaceURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String localName, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 
 		// Introduced in DOM Level 2:
-		void SetAttributeNS(DOMString namespaceURI, DOMString qualifiedName, DOMString value); // raises(DOMException);
+		void SetAttributeNS([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String namespaceURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String qualifiedName, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value); // raises(DOMException);
 
 		// Introduced in DOM Level 2:
-		void RemoveAttributeNS(DOMString namespaceURI, DOMString localName); // raises(DOMException);
+		void RemoveAttributeNS([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String namespaceURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String localName); // raises(DOMException);
 
 		// Introduced in DOM Level 2:
-		nsIDOMAttr GetAttributeNodeNS(DOMString namespaceURI, DOMString localName);
+		nsIDOMAttr GetAttributeNodeNS([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String namespaceURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String localName);
 
 		// Introduced in DOM Level 2:
 		nsIDOMAttr SetAttributeNodeNS(nsIDOMAttr newAttr); // raises(DOMException);
 
 		// Introduced in DOM Level 2:
-		nsIDOMNodeList GetElementsByTagNameNS(DOMString namespaceURI, DOMString localName);
+		nsIDOMNodeList GetElementsByTagNameNS([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String namespaceURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String localName);
 
 		// Introduced in DOM Level 2:
-		Boolean HasAttribute(DOMString name);
+		Boolean HasAttribute([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name);
 
 		// Introduced in DOM Level 2:
-		Boolean HasAttributeNS(DOMString namespaceURI, DOMString localName);
+		Boolean HasAttributeNS([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String namespaceURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String localName);
 	}
 }

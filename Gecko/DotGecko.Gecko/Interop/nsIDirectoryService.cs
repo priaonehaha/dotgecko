@@ -10,9 +10,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("bbf8cab0-d43a-11d3-8cc2-00609792278c")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("bbf8cab0-d43a-11d3-8cc2-00609792278c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDirectoryServiceProvider //: nsISupports
 	{
 		/**
@@ -42,9 +40,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("2f977d4b-5485-11d4-87e2-0010a4e75ef2")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("2f977d4b-5485-11d4-87e2-0010a4e75ef2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDirectoryServiceProvider2 : nsIDirectoryServiceProvider
 	{
 		#region nsIDirectoryServiceProvider Members
@@ -74,9 +70,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("57a66a60-d43a-11d3-8cc2-00609792278c")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("57a66a60-d43a-11d3-8cc2-00609792278c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDirectoryService //: nsISupports
 	{
 		/**

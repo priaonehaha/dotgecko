@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using nsISupports = System.Object;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -9,9 +10,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("00000001-0000-0000-c000-000000000046")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("00000001-0000-0000-c000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIFactory //: nsISupports
 	{
 		/**
@@ -31,7 +30,8 @@ namespace DotGecko.Gecko.Interop
 		 *         NS_ERROR* - Method failure.
 		 */
 		[PreserveSig]
-		UInt32 CreateInstance([MarshalAs(UnmanagedType.IUnknown)] Object aOuter, ref Guid iid, [MarshalAs(UnmanagedType.Interface, IidParameterIndex = 1)] out Object result);
+		[return: MarshalAs(UnmanagedType.U4)]
+		nsResult CreateInstance([MarshalAs(UnmanagedType.IUnknown)] nsISupports aOuter, [In] ref Guid iid, out IntPtr retval);
 
 		/**
 		 * LockFactory provides the client a way to keep the component

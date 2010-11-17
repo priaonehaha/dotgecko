@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -31,9 +32,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("c8c0a080-0868-11d3-915f-d9d889d48e3c")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("c8c0a080-0868-11d3-915f-d9d889d48e3c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIFile //: nsISupports
 	{
 		/**
@@ -47,9 +46,9 @@ namespace DotGecko.Gecko.Interop
 		 *       For the |appendNative| method, the node must be in the native
 		 *       filesystem charset.
 		 */
-		void Append(nsAString node);
+		void Append([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String node);
 
-		void AppendNative(nsACString node);
+		void AppendNative([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String node);
 
 		/**
 		 *  Normalize the pathName (e.g. removing .. and . components on Unix).
@@ -83,11 +82,11 @@ namespace DotGecko.Gecko.Interop
 		 *  For the |nativeLeafName| method, the nativeLeafName must 
 		 *  be in the native filesystem charset.
 		 */
-		void GetLeafName(nsAString result);
-		void SetLeafName(nsAString value);
+		void GetLeafName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder result);
+		void SetLeafName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
 
-		void GetNativeLeafName(nsACString result);
-		void SetNativeLeafName(nsACString value);
+		void GetNativeLeafName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
+		void SetNativeLeafName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String value);
 
 		/**
 		 *  copyTo[Native]
@@ -116,9 +115,9 @@ namespace DotGecko.Gecko.Interop
 		 *       the file to be copied. This param may be empty, in
 		 *       which case the current leaf name will be used.
 		 */
-		void CopyTo(nsIFile newParentDir, nsAString newName);
+		void CopyTo(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String newName);
 
-		void CopyToNative(nsIFile newParentDir, nsACString newName);
+		void CopyToNative(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String newName);
 
 		/**
 		 *  copyToFollowingLinks[Native]
@@ -129,9 +128,9 @@ namespace DotGecko.Gecko.Interop
 		 *  the |CopyToFollowingLinks| method, the newName must be in the 
 		 *  native filesystem charset.
 		 */
-		void CopyToFollowingLinks(nsIFile newParentDir, nsAString newName);
+		void CopyToFollowingLinks(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String newName);
 
-		void CopyToFollowingLinksNative(nsIFile newParentDir, nsACString newName);
+		void CopyToFollowingLinksNative(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String newName);
 
 		/**
 		 *  moveTo[Native]
@@ -164,10 +163,10 @@ namespace DotGecko.Gecko.Interop
 		 *       This param allows you to specify a new name for
 		 *       the file to be moved. This param may be empty, in
 		 *       which case the current leaf name will be used.
-		 */ 
-		void MoveTo(nsIFile newParentDir, nsAString newName);
+		 */
+		void MoveTo(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String newName);
 
-		void MoveToNative(nsIFile newParentDir, nsACString newName);
+		void MoveToNative(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String newName);
 
 		/**
 		 *  This will try to delete this file.  The 'recursive' flag
@@ -180,22 +179,18 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 *  Attributes of nsIFile.
 		 */
-		UInt32 GetPermissions();
-		void SetPermissions(UInt32 value);
+		UInt32 Permissions { get; set; }
 
-		UInt32 GetPermissionsOfLink();
-		void SetPermissionsOfLink(UInt32 value);
+		UInt32 PermissionsOfLink { get; set; }
 
 		/**
 		 *  File Times are to be in milliseconds from
 		 *  midnight (00:00:00), January 1, 1970 Greenwich Mean
 		 *  Time (GMT).
 		 */
-		Int64 GetLastModifiedTime();
-		void SetLastModifiedTime(Int64 value);
+		Int64 LastModifiedTime { get; set; }
 
-		Int64 GetLastModifiedTimeOfLink();
-		void SetLastModifiedTimeOfLink(Int64 value);
+		Int64 LastModifiedTimeOfLink { get; set; }
 
 		/**
 		 *  WARNING!  On the Mac, getting/setting the file size with nsIFile
@@ -203,10 +198,9 @@ namespace DotGecko.Gecko.Interop
 		 *  know the size of the combined data and resource forks use the
 		 *  GetFileSizeWithResFork() method defined on nsILocalFileMac.
 		 */
-		Int64 GetFileSize();
-		void SetFileSize(Int64 value);
+		Int64 FileSize { get; set; }
 
-		Int64 GetFileSizeOfLink();
+		Int64 FileSizeOfLink { get; }
 
 		/**
 		 *  target & path
@@ -233,13 +227,13 @@ namespace DotGecko.Gecko.Interop
 		 *  native filesystem charset.
 		 *
 		 */
-		void GetTarget(nsAString result);
+		void GetTarget([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder result);
 
-		void GetNativeTarget(nsACString result);
+		void GetNativeTarget([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
 
-		void GetPath(nsAString result);
+		void GetPath([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder result);
 
-		void GetNativePath(nsACString result);
+		void GetNativePath([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
 
 		Boolean Exists();
 
@@ -316,7 +310,7 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 *  Parent will be null when this is at the top of the volume.
 		 */
-		nsIFile GetParent();
+		nsIFile Parent { get; }
 
 		/**
 		 *  Returns an enumeration of the elements in a directory. Each

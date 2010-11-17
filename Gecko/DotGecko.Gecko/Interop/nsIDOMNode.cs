@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
-using DOMString = DotGecko.Gecko.Interop.nsAString;
+using System.Text;
+using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -31,34 +32,32 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("a6cf907c-15b3-11d2-932e-00805f8add32")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("a6cf907c-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDOMNode //: nsISupports
 	{
-		void GetNodeName(DOMString result);
+		void GetNodeName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 
-		void GetNodeValue(DOMString result); // raises(DOMException) on retrieval
-		void SetNodeValue(DOMString value);  // raises(DOMException) on setting
+		void GetNodeValue([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result); // raises(DOMException) on retrieval
+		void SetNodeValue([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);  // raises(DOMException) on setting
 
-		UInt16 GetNodeType();
+		UInt16 NodeType { get; }
 
-		nsIDOMNode GetParentNode();
+		nsIDOMNode ParentNode { get; }
 
-		nsIDOMNodeList GetChildNodes();
+		nsIDOMNodeList ChildNodes { get; }
 
-		nsIDOMNode GetFirstChild();
+		nsIDOMNode FirstChild { get; }
 
-		nsIDOMNode GetLastChild();
+		nsIDOMNode LastChild { get; }
 
-		nsIDOMNode GetPreviousSibling();
+		nsIDOMNode PreviousSibling { get; }
 
-		nsIDOMNode GetNextSibling();
+		nsIDOMNode NextSibling { get; }
 
-		nsIDOMNamedNodeMap GetAttributes();
+		nsIDOMNamedNodeMap Attributes { get; }
 
 		// Modified in DOM Level 2:
-		nsIDOMDocument GetOwnerDocument();
+		nsIDOMDocument OwnerDocument { get; }
 
 		nsIDOMNode InsertBefore(nsIDOMNode newChild, nsIDOMNode refChild); // raises(DOMException);
 
@@ -76,17 +75,17 @@ namespace DotGecko.Gecko.Interop
 		void Normalize();
 
 		// Introduced in DOM Level 2:
-		Boolean IsSupported(DOMString feature, DOMString version);
+		Boolean IsSupported([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String feature, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String version);
 
 		// Introduced in DOM Level 2:
-		void GetNamespaceURI(DOMString result);
+		void GetNamespaceURI([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 
 		// Introduced in DOM Level 2:
-		void GetPrefix(DOMString result);
-		void SetPrefix(DOMString value); // raises(DOMException) on setting
+		void GetPrefix([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		void SetPrefix([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value); // raises(DOMException) on setting
 
 		// Introduced in DOM Level 2:
-		void GetLocalName(DOMString result);
+		void GetLocalName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 
 		// Introduced in DOM Level 2:
 		Boolean HasAttributes();

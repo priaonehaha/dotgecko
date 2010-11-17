@@ -12,9 +12,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("69E5DF00-7B8B-11d3-AF61-00A024FFC08C")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("69E5DF00-7B8B-11d3-AF61-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIWebBrowser //: nsISupports
 	{
 		/**
@@ -46,7 +44,7 @@ namespace DotGecko.Gecko.Interop
 		 *         invalid or the object did not implement the interface
 		 *         specified by the IID.
 		 */
-		void AddWebBrowserListener(nsIWeakReference aListener, ref Guid aIID);
+		void AddWebBrowserListener(nsIWeakReference aListener, [In] ref Guid aIID);
 
 		/**
 		 * Removes a previously registered listener.
@@ -62,7 +60,7 @@ namespace DotGecko.Gecko.Interop
 		 * @see addWebBrowserListener
 		 * @see nsIWeakReference
 		 */
-		void RemoveWebBrowserListener(nsIWeakReference aListener, ref Guid aIID);
+		void RemoveWebBrowserListener(nsIWeakReference aListener, [In] ref Guid aIID);
 
 		/**
 		 * The chrome object associated with the browser instance. The embedder
@@ -101,8 +99,7 @@ namespace DotGecko.Gecko.Interop
 		 * @see nsIWeakReference
 		 * @see nsIWebProgressListener
 		 */
-		nsIWebBrowserChrome GetContainerWindow();
-		void SetContainerWindow(nsIWebBrowserChrome value);
+		nsIWebBrowserChrome ContainerWindow { get; set; }
 
 		/**
 		 * URI content listener parent. The embedder may set this property to
@@ -119,8 +116,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @see nsIURIContentListener
 		 */
-		nsIURIContentListener GetParentURIContentListener();
-		void SetParentURIContentListener(nsIURIContentListener value);
+		nsIURIContentListener ParentURIContentListener { get; set; }
 
 		/**
 		 * The top-level DOM window. The embedder may walk the entire
@@ -128,6 +124,6 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @see nsIDOMWindow
 		 */
-		nsIDOMWindow GetContentDOMWindow();
+		nsIDOMWindow ContentDOMWindow { get; }
 	}
 }

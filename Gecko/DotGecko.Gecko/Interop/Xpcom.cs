@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace DotGecko.Gecko.Interop
 {
-	public static partial class Xpcom
+	internal static partial class Xpcom
 	{
-		public static void InitEmbedding(String geckoPath)
+		internal static void InitEmbedding(String geckoPath, IAppFileLocation appFileLocation)
 		{
 			if (geckoPath == null)
 			{
@@ -22,37 +23,32 @@ namespace DotGecko.Gecko.Interop
 				Environment.ExpandEnvironmentVariables(String.Format("{0};%{1}%", geckoPath, pathEnvVar)),
 				EnvironmentVariableTarget.Process);
 
-			nsILocalFile binDirectory;
-			using (var path = new nsACString())
-			{
-				path.Assign(geckoPath);
-				NS_NewNativeLocalFile(path, true, out binDirectory);
-			}
-			nsIDirectoryServiceProvider appFileLocationProvider = null;
+			nsILocalFile binDirectory = NewNativeLocalFile(geckoPath);
+			ms_AppFileLocationProvider = new DirectoryServiceProvider(appFileLocation);
 
-			UInt32 nsresult = NS_InitXPCOM2(out ms_ServiceManager, binDirectory, appFileLocationProvider);
-			if (nsresult != 0)
+			nsResult nsresult = NS_InitXPCOM2(out ms_ServiceManager, binDirectory, ms_AppFileLocationProvider);
+			if (nsresult != nsResult.NS_OK)
 			{
-				throw new ApplicationException(String.Format("Failed on NS_InitXPCOM2: 0x{0:X8}", nsresult));
+				throw new ApplicationException(String.Format("Failed on NS_InitXPCOM2: {0}", nsresult));
 			}
 
 			nsresult = NS_GetComponentManager(out ms_ComponentManager);
-			if (nsresult != 0)
+			if (nsresult != nsResult.NS_OK)
 			{
-				throw new ApplicationException(String.Format("Failed on NS_GetComponentManager: 0x{0:X8}", nsresult));
+				throw new ApplicationException(String.Format("Failed on NS_GetComponentManager: {0}", nsresult));
 			}
 
 			nsresult = NS_GetComponentRegistrar(out ms_ComponentRegistrar);
-			if (nsresult != 0)
+			if (nsresult != nsResult.NS_OK)
 			{
-				throw new ApplicationException(String.Format("Failed on NS_GetComponentRegistrar: 0x{0:X8}", nsresult));
+				throw new ApplicationException(String.Format("Failed on NS_GetComponentRegistrar: {0}", nsresult));
 			}
 		}
 
-		public static void TermEmbedding()
+		internal static void TermEmbedding()
 		{
-			UInt32 nsresult = NS_ShutdownXPCOM(ServiceManager);
-			if (nsresult != 0)
+			nsResult nsresult = NS_ShutdownXPCOM(ServiceManager);
+			if (nsresult != nsResult.NS_OK)
 			{
 				throw new ApplicationException(String.Format("Failed on NS_ShutdownXPCOM: 0x{0:X8}", nsresult));
 			}
@@ -73,30 +69,239 @@ namespace DotGecko.Gecko.Interop
 			get { return ms_ComponentRegistrar; }
 		}
 
-		internal static T GetService<T>(Guid classID)
+		internal static T GetService<T>(Guid classID) where T : class
 		{
 			Guid aIID = typeof(T).GUID;
-			return (T)ServiceManager.GetService(ref classID, ref aIID);
+			return (T)ServiceManager.GetService(classID, aIID);
 		}
 
-		internal static T GetService<T>(String contractID)
+		internal static T GetService<T>(String contractID) where T : class
 		{
 			Guid aIID = typeof(T).GUID;
-			return (T)ServiceManager.GetServiceByContractID(contractID, ref aIID);
+			return (T)ServiceManager.GetServiceByContractID(contractID, aIID);
 		}
 
-		internal static T CreateInstance<T>(Guid classID)
+		internal static T CreateInstance<T>(Guid classID) where T : class
 		{
 			Guid aIID = typeof(T).GUID;
-			return (T)ComponentManager.CreateInstance(ref classID, null, ref aIID);
+			return (T)ComponentManager.CreateInstance(classID, null, aIID);
 		}
 
-		internal static T CreateInstance<T>(String contractID)
+		internal static T CreateInstance<T>(String contractID) where T : class
 		{
 			Guid aIID = typeof(T).GUID;
-			return (T)ComponentManager.CreateInstanceByContractID(contractID, null, ref aIID);
+			return (T)ComponentManager.CreateInstanceByContractID(contractID, null, aIID);
 		}
 
+		internal static nsILocalFile NewNativeLocalFile(String path, Boolean followLinks = true)
+		{
+			nsILocalFile nativeLocalFile;
+			return NS_NewNativeLocalFile(path, followLinks, out nativeLocalFile) == nsResult.NS_OK ? nativeLocalFile : null;
+		}
+
+		#region QueryInterface
+
+		internal static T QueryInterface<T>(Object source) where T : class
+		{
+			Guid iid = typeof(T).GUID;
+			return (T)QueryInterface(source, iid);
+		}
+
+		internal static Object QueryInterface(Object source, Guid iid)
+		{
+			Object result;
+			if (!TryQueryInterface(source, iid, out result))
+			{
+				throw new NotImplementedException();
+			}
+			return result;
+		}
+
+		internal static Boolean TryQueryInterface<T>(Object source, out T result) where T : class
+		{
+			Guid iid = typeof(T).GUID;
+			Object tmpResult;
+			if (TryQueryInterface(source, iid, out tmpResult))
+			{
+				result = (T)tmpResult;
+				return true;
+			}
+			result = null;
+			return false;
+		}
+
+		internal static Boolean TryQueryInterface(Object source, Guid iid, out Object result)
+		{
+			if (source != null)
+			{
+				IntPtr pUnk = Marshal.GetIUnknownForObject(source);
+				if (pUnk != IntPtr.Zero)
+				{
+					IntPtr ppv;
+					Marshal.QueryInterface(pUnk, ref iid, out ppv);
+					Marshal.Release(pUnk);
+
+					if (ppv != IntPtr.Zero)
+					{
+						result = Marshal.GetObjectForIUnknown(ppv);
+						Marshal.Release(ppv);
+
+						return true;
+					}
+				}
+			}
+
+			result = null;
+			return false;
+		}
+
+		#endregion
+
+		#region RequestInterface
+
+		internal static T RequestInterface<T>(Object source) where T : class
+		{
+			Guid iid = typeof(T).GUID;
+			return (T)RequestInterface(source, iid);
+		}
+
+		internal static Object RequestInterface(Object source, Guid iid)
+		{
+			Object result;
+			if (!TryRequestInterface(source, iid, out result))
+			{
+				throw new NotImplementedException();
+			}
+			return result;
+		}
+
+		internal static Boolean TryRequestInterface<T>(Object source, out T result) where T : class
+		{
+			Guid iid = typeof(T).GUID;
+			Object tmpResult;
+			if (TryRequestInterface(source, iid, out tmpResult))
+			{
+				result = (T)tmpResult;
+				return true;
+			}
+			result = null;
+			return false;
+		}
+
+		internal static Boolean TryRequestInterface(Object source, Guid iid, out Object result)
+		{
+			if (source != null)
+			{
+				IntPtr pUnk = Marshal.GetIUnknownForObject(source);
+				if (pUnk != IntPtr.Zero)
+				{
+					Guid interfaceRequestorIID = typeof (nsIInterfaceRequestor).GUID;
+					IntPtr pInterfaceRequestor;
+					Marshal.QueryInterface(pUnk, ref interfaceRequestorIID, out pInterfaceRequestor);
+					Marshal.Release(pUnk);
+
+					if (pInterfaceRequestor != IntPtr.Zero)
+					{
+						var interfaceRequestor = (nsIInterfaceRequestor)Marshal.GetObjectForIUnknown(pInterfaceRequestor);
+						Marshal.Release(pInterfaceRequestor);
+
+						IntPtr ppv;
+						interfaceRequestor.GetInterface(iid, out ppv);
+						Marshal.ReleaseComObject(interfaceRequestor);
+
+						if (ppv != IntPtr.Zero)
+						{
+							result = Marshal.GetObjectForIUnknown(ppv);
+							Marshal.Release(ppv);
+
+							return true;
+						}
+					}
+				}
+			}
+
+			result = null;
+			return false;
+		}
+
+		#endregion
+
+		#region GetInterface
+
+		internal static T GetInterface<T>(Object source)
+		{
+			Guid iid = typeof(T).GUID;
+			return (T)GetInterface(source, iid);
+		}
+
+		internal static Object GetInterface(Object source, Guid iid)
+		{
+			Object result;
+			if (!TryGetInterface(source, iid, out result))
+			{
+				throw new NotImplementedException();
+			}
+			return result;
+		}
+
+		internal static Boolean TryGetInterface<T>(Object source, out T result) where T : class
+		{
+			Guid iid = typeof(T).GUID;
+			Object tmpResult;
+			if (TryGetInterface(source, iid, out tmpResult))
+			{
+				result = (T)tmpResult;
+				return true;
+			}
+			result = null;
+			return false;
+		}
+
+		internal static Boolean TryGetInterface(Object source, Guid iid, out Object result)
+		{
+			if (source != null)
+			{
+				IntPtr pUnk = Marshal.GetIUnknownForObject(source);
+				if (pUnk != IntPtr.Zero)
+				{
+					IntPtr ppv;
+					Marshal.QueryInterface(pUnk, ref iid, out ppv);
+
+					if (ppv == IntPtr.Zero)
+					{
+						Guid interfaceRequestorIID = typeof (nsIInterfaceRequestor).GUID;
+						IntPtr pInterfaceRequestor;
+						Marshal.QueryInterface(pUnk, ref interfaceRequestorIID, out pInterfaceRequestor);
+
+						if (pInterfaceRequestor != IntPtr.Zero)
+						{
+							var interfaceRequestor = (nsIInterfaceRequestor)Marshal.GetObjectForIUnknown(pInterfaceRequestor);
+							Marshal.Release(pInterfaceRequestor);
+
+							interfaceRequestor.GetInterface(iid, out ppv);
+							Marshal.ReleaseComObject(interfaceRequestor);
+						}
+					}
+
+					Marshal.Release(pUnk);
+
+					if (ppv != IntPtr.Zero)
+					{
+						result = Marshal.GetObjectForIUnknown(ppv);
+						Marshal.Release(ppv);
+
+						return true;
+					}
+				}
+			}
+
+			result = null;
+			return false;
+		}
+
+		#endregion
+
+		private static nsIDirectoryServiceProvider ms_AppFileLocationProvider;
 		private static nsIServiceManager ms_ServiceManager;
 		private static nsIComponentManager ms_ComponentManager;
 		private static nsIComponentRegistrar ms_ComponentRegistrar;

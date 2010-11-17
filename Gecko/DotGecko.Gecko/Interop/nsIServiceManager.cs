@@ -18,9 +18,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("8bb35ed9-e332-462d-9155-4a002ab5c958")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("8bb35ed9-e332-462d-9155-4a002ab5c958"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIServiceManager //: nsISupports
 	{
 		/**
@@ -35,10 +33,10 @@ namespace DotGecko.Gecko.Interop
 		 * @param result : resulting service 
 		 */
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 1)]
-		Object GetService(ref Guid aClass, ref Guid aIID);
+		Object GetService([In] ref Guid aClass, [In] ref Guid aIID);
 
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 1)]
-		Object GetServiceByContractID([MarshalAs(UnmanagedType.LPStr)] String aContractID, ref Guid aIID);
+		Object GetServiceByContractID([MarshalAs(UnmanagedType.LPStr)] String aContractID, [In] ref Guid aIID);
 
 		/**
 		 * isServiceInstantiated
@@ -51,8 +49,8 @@ namespace DotGecko.Gecko.Interop
 		 * @param aIID : IID of interface requested
 		 * @param aIID : IID of interface requested
 		 */
-		Boolean IsServiceInstantiated(ref Guid aClass, ref Guid aIID);
+		Boolean IsServiceInstantiated([In] ref Guid aClass, [In] ref Guid aIID);
 
-		Boolean IsServiceInstantiatedByContractID([MarshalAs(UnmanagedType.LPStr)] String aContractID, ref Guid aIID);
+		Boolean IsServiceInstantiatedByContractID([MarshalAs(UnmanagedType.LPStr)] String aContractID, [In] ref Guid aIID);
 	}
 }

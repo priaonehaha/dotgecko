@@ -9,9 +9,7 @@ namespace DotGecko.Gecko.Interop
 	 * @status DEPRECATED  Replaced by the NS_Log* functions.
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("273dc92f-0fe6-4545-96a9-21be77828039")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("273dc92f-0fe6-4545-96a9-21be77828039"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsITraceRefcnt //: nsISupports
 	{
 		void LogAddRef(IntPtr aPtr, UInt32 aNewRefcnt, [MarshalAs(UnmanagedType.LPStr)] String aTypeName, UInt32 aInstanceSize);

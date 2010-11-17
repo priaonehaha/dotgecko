@@ -7,9 +7,7 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIModule interface.
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("7392D032-5371-11d3-994E-00805FD26FEE")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("7392D032-5371-11d3-994E-00805FD26FEE"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIModule //: nsISupports
 	{
 		/** 

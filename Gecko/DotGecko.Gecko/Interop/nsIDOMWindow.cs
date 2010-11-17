@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
-using DOMString = DotGecko.Gecko.Interop.nsAString;
+using System.Text;
+using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -15,22 +16,20 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("a6cf906b-15b3-11d2-932e-00805f8add32")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("a6cf906b-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDOMWindow //: nsISupports
 	{
 		/**
 		 * Accessor for the document in this window.
 		 */
-		nsIDOMDocument GetDocument();
+		nsIDOMDocument Document { get; }
 
 		/**
 		 * Accessor for this window's parent window, or the window itself if
 		 * there is no parent, or if the parent is of different type
 		 * (i.e. this does not cross chrome-content boundaries).
 		 */
-		nsIDOMWindow GetParent();
+		nsIDOMWindow Parent { get; }
 
 		/**
 		 * Accessor for the root of this hierarchy of windows. This root may
@@ -39,7 +38,7 @@ namespace DotGecko.Gecko.Interop
 		 * boundaries).
 		 *
 		 * This property is "replaceable" in JavaScript */
-		nsIDOMWindow GetTop();
+		nsIDOMWindow Top { get; }
 
 		/**
 		 * Accessor for the object that controls whether or not scrollbars
@@ -47,20 +46,20 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * This attribute is "replaceable" in JavaScript
 		 */
-		nsIDOMBarProp GetScrollbars();
+		nsIDOMBarProp Scrollbars { get; }
 
 		/**
 		 * Accessor for the child windows in this window.
 		 */
-		nsIDOMWindowCollection GetFrames();
+		nsIDOMWindowCollection Frames { get; }
 
 		/**
 		 * Set/Get the name of this window.
 		 *
 		 * This attribute is "replaceable" in JavaScript
 		 */
-		void GetName(DOMString result);
-		void SetName(DOMString value);
+		void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 
 		/**
 		 * Set/Get the document scale factor as a multiplier on the default
@@ -70,8 +69,7 @@ namespace DotGecko.Gecko.Interop
 		 * the time for the Get operation. 1.0 is equals normal size,
 		 * i.e. no zoom.
 		 */
-		Single GetTextZoom();
-		void SetTextZoom(Single value);
+		Single TextZoom { get; set; }
 
 		/**
 		 * Accessor for the current x scroll position in this window in
@@ -79,7 +77,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * This attribute is "replaceable" in JavaScript
 		 */
-		long GetScrollX();
+		Int32 ScrollX { get; }
 
 		/**
 		 * Accessor for the current y scroll position in this window in
@@ -87,7 +85,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * This attribute is "replaceable" in JavaScript
 		 */
-		long GetScrollY();
+		Int32 ScrollY { get; }
 
 		/**
 		 * Method for scrolling this window to an absolute pixel offset.

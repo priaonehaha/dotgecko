@@ -7,9 +7,7 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIComponentRegistrar interface.
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("2417cbfe-65ad-48a6-b4b6-eb84db174392")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("2417cbfe-65ad-48a6-b4b6-eb84db174392"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIComponentRegistrar //: nsISupports
 	{
 		/**
@@ -66,7 +64,7 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK        Registration was successful.
 		 *         NS_ERROR*    method failure.
 		 */
-		void RegisterFactory(ref Guid aClass, [MarshalAs(UnmanagedType.LPStr)] String aClassName, [MarshalAs(UnmanagedType.LPStr)] String aContractID, nsIFactory aFactory);
+		void RegisterFactory([In] ref Guid aClass, [MarshalAs(UnmanagedType.LPStr)] String aClassName, [MarshalAs(UnmanagedType.LPStr)] String aContractID, nsIFactory aFactory);
 
 		/**
 		 * unregisterFactory
@@ -80,7 +78,7 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK     Unregistration was successful.
 		 *         NS_ERROR* Method failure.
 		 */
-		void UnregisterFactory(ref Guid aClass, nsIFactory aFactory);
+		void UnregisterFactory([In] ref Guid aClass, nsIFactory aFactory);
 
 		/**
 		 * registerFactoryLocation
@@ -105,7 +103,7 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK        Registration was successful.
 		 *         NS_ERROR*    Method failure.
 		 */
-		void RegisterFactoryLocation(ref Guid aClass, [MarshalAs(UnmanagedType.LPStr)] String aClassName, [MarshalAs(UnmanagedType.LPStr)] String aContractID, nsIFile aFile, [MarshalAs(UnmanagedType.LPStr)] String aLoaderStr, [MarshalAs(UnmanagedType.LPStr)] String aType);
+		void RegisterFactoryLocation([In] ref Guid aClass, [MarshalAs(UnmanagedType.LPStr)] String aClassName, [MarshalAs(UnmanagedType.LPStr)] String aContractID, nsIFile aFile, [MarshalAs(UnmanagedType.LPStr)] String aLoaderStr, [MarshalAs(UnmanagedType.LPStr)] String aType);
 
 		/**
 		 * unregisterFactoryLocation
@@ -118,7 +116,7 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK     Unregistration was successful.
 		 *         NS_ERROR* Method failure.
 		 */
-		void UnregisterFactoryLocation(ref Guid aClass, nsIFile aFile);
+		void UnregisterFactoryLocation([In] ref Guid aClass, nsIFile aFile);
 
 		/**
 		 * isCIDRegistered
@@ -129,7 +127,7 @@ namespace DotGecko.Gecko.Interop
 		 * @return       : true if a factory is registered for CID 
 		 *                 false otherwise.
 		 */
-		Boolean IsCIDRegistered(ref Guid aClass);
+		Boolean IsCIDRegistered([In] ref Guid aClass);
 
 		/**
 		 * isContractIDRegistered
@@ -173,7 +171,7 @@ namespace DotGecko.Gecko.Interop
 		 * @return : Contract ID.
 		 */
 		[return: MarshalAs(UnmanagedType.LPStr)]
-		String CIDToContractID(ref Guid aClass);
+		String CIDToContractID([In] ref Guid aClass);
 
 		/**
 		 * contractIDToCID
@@ -182,6 +180,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @return : Contract ID.
 		 */
-		IntPtr ContractIDToCID([MarshalAs(UnmanagedType.LPStr)] String aContractID);
+		[return: MarshalAs(UnmanagedType.LPStruct)]
+		Guid ContractIDToCID([MarshalAs(UnmanagedType.LPStr)] String aContractID);
 	}
 }

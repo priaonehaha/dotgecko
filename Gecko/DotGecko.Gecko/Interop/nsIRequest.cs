@@ -1,10 +1,11 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace DotGecko.Gecko.Interop
 {
 	// Constants for nsIRequest ( "ef6bfbd2-fd46-48d8-96b7-9f8f0fd387fe" ) interface
-	internal sealed class nsIRequestConstants
+	internal static class nsIRequestConstants
 	{
 		/**************************************************************************
 		 * Listed below are the various load flags which may be or'd together.
@@ -97,15 +98,13 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("ef6bfbd2-fd46-48d8-96b7-9f8f0fd387fe")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("ef6bfbd2-fd46-48d8-96b7-9f8f0fd387fe"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIRequest //: nsISupports
 	{
 		/**
 		 * The name of the request.  Often this is the URI of the request.
 		 */
-		void GetName(nsAUTF8String result);
+		void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
 
 		/**
 		 * Indicates whether the request is pending. nsIRequest::isPending is
@@ -127,7 +126,7 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * The error status associated with the request.
 		 */
-		UInt32 GetStatus();
+		nsResult Status { [return: MarshalAs(UnmanagedType.U4)] get; }
 
 		/**
 		 * Cancels the current request.  This will close any open input or
@@ -150,7 +149,7 @@ namespace DotGecko.Gecko.Interop
 		 * be a success code such as NS_OK.  In general, aStatus should be
 		 * a failure code.
 		 */
-		void Cancel(UInt32 aStatus);
+		void Cancel([MarshalAs(UnmanagedType.U4)] nsResult aStatus);
 
 		/**
 		 * Suspends the current request.  This may have the effect of closing
@@ -180,8 +179,7 @@ namespace DotGecko.Gecko.Interop
 		 * member of the load group.  It is the responsibility of the request
 		 * to implement this policy.
 		 */
-		nsILoadGroup GetLoadGroup();
-		void SetLoadGroup(nsILoadGroup value);
+		nsILoadGroup LoadGroup { get; set; }
 
 		/**
 		 * The load flags of this request.  Bits 0-15 are reserved.
@@ -189,7 +187,6 @@ namespace DotGecko.Gecko.Interop
 		 * When added to a load group, this request's load flags are merged with
 		 * the load flags of the load group.
 		 */
-		UInt32 GetLoadFlags();
-		void SetLoadFlags(UInt32 value);
+		UInt32 LoadFlags { get; set; }
 	}
 }

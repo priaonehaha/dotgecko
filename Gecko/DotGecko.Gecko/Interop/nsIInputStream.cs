@@ -29,7 +29,9 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	internal delegate UInt32 nsWriteSegmentFun(nsIInputStream aInStream, IntPtr aClosure, IntPtr aFromSegment, UInt32 aToOffset, UInt32 aCount, ref UInt32 aWriteCount);
+	[UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
+	[return: MarshalAs(UnmanagedType.U4)]
+	internal delegate nsResult nsWriteSegmentFun(nsIInputStream aInStream, IntPtr aClosure, IntPtr aFromSegment, UInt32 aToOffset, UInt32 aCount, ref UInt32 aWriteCount);
 
 	/**
 	 * nsIInputStream
@@ -47,9 +49,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("fa9c7f6c-61b3-11d4-9877-00c04fa0cf4a")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("fa9c7f6c-61b3-11d4-9877-00c04fa0cf4a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIInputStream //: nsISupports
 	{
 		/** 
@@ -123,7 +123,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * NOTE: this method should not throw NS_BASE_STREAM_CLOSED.
 		 */
-		UInt32 ReadSegments(nsWriteSegmentFun aWriter, IntPtr aClosure, UInt32 aCount);
+		UInt32 ReadSegments([MarshalAs(UnmanagedType.FunctionPtr)] nsWriteSegmentFun aWriter, IntPtr aClosure, UInt32 aCount);
 
 		/**
 		 * @return true if stream is non-blocking

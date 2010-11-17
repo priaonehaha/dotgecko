@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
-using nsIWidget = System.IntPtr;
+using nsIWidget = System.Object;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -9,9 +9,7 @@ namespace DotGecko.Gecko.Interop
 	 * can be performed on it.  This is not to be a complete windowing interface
 	 * but rather a common set that nearly all windowed objects support.    
 	 */
-	[ComImport]
-	[Guid("046BC8A0-8015-11d3-AF70-00A024FFC08C")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("046BC8A0-8015-11d3-AF70-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIBaseWindow //: nsISupports
 	{
 		/*
@@ -48,7 +46,7 @@ namespace DotGecko.Gecko.Interop
 						or a parentWidget may return invalid arg when they do not 
 						receive what they are needing.
 		*/
-		void InitWindow(IntPtr parentNativeWindow, nsIWidget parentWidget, Int32 x, Int32 y, Int32 cx, Int32 cy);
+		void InitWindow(IntPtr parentNativeWindow, [In, MarshalAs(UnmanagedType.Interface)] nsIWidget parentWidget, Int32 x, Int32 y, Int32 cx, Int32 cy);
 
 		/*
 		Tells the window that intialization and setup is complete.  When this is
@@ -115,7 +113,7 @@ namespace DotGecko.Gecko.Interop
 		 */
 		void Repaint(Boolean force);
 
-		/*			  
+		/*
 		This is the parenting widget for the control.  This may be null if the
 		native window was handed in for the parent during initialization.
 		If this	is returned, it should refer to the same object as
@@ -127,8 +125,7 @@ namespace DotGecko.Gecko.Interop
 		On controls that don't support widgets, setting this will return a 
 		NS_ERROR_NOT_IMPLEMENTED error.
 		*/
-		nsIWidget GetParentWidget();
-		void SetParentWidget(nsIWidget value);
+		nsIWidget ParentWidget { [return: MarshalAs(UnmanagedType.Interface)] get; [param: MarshalAs(UnmanagedType.Interface)] set; }
 
 		/*
 		This is the native window parent of the control.
@@ -139,38 +136,34 @@ namespace DotGecko.Gecko.Interop
 		On controls that don't support setting nativeWindow parents, setting this
 		will return a NS_ERROR_NOT_IMPLEMENTED error.
 		*/
-		IntPtr GetParentNativeWindow();
-		void SetParentNativeWindow(IntPtr value);
+		IntPtr ParentNativeWindow { get; set; }
 
 		/*
 		Attribute controls the visibility of the object behind this interface.
 		Setting this attribute to false will hide the control.  Setting it to 
 		true will show it.
 		*/
-		Boolean GetVisibility();
-		void SetVisibility(Boolean value);
+		Boolean Visibility { get; set; }
 
 		/*
 		a disabled window should accept no user interaction; it's a dead window,
 		like the parent of a modal window.
 		*/
-		Boolean GetEnabled();
-		void SetEnabled(Boolean value);
+		Boolean Enabled { get; set; }
 
 		/** set blurSuppression to true to suppress handling of blur events.
 		 *  set it false to re-enable them. query it to determine whether
 		 *  blur events are suppressed. The implementation should allow
 		 *  for blur events to be suppressed multiple times.
 		 */
-		Boolean GetBlurSuppression();
-		void SetBlurSuppression(Boolean value);
+		Boolean BlurSuppression { get; set; }
 
 		/*
 		Allows you to find out what the widget is of a given object.  Depending
 		on the object, this may return the parent widget in which this object
 		lives if it has not had to create its own widget.
 		*/
-		nsIWidget GetMainWidget();
+		nsIWidget MainWidget { [return: MarshalAs(UnmanagedType.Interface)] get; }
 
 		/**
 		* Give the window focus.
@@ -180,8 +173,6 @@ namespace DotGecko.Gecko.Interop
 		/*
 		Title of the window.
 		*/
-		[return: MarshalAs(UnmanagedType.LPWStr)]
-		String GetTitle();
-		void SetTitle([MarshalAs(UnmanagedType.LPWStr)] String value);
+		String Title { [return: MarshalAs(UnmanagedType.LPWStr)] get; [param: MarshalAs(UnmanagedType.LPWStr)] set; }
 	}
 }

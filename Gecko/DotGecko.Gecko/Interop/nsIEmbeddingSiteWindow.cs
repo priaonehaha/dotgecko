@@ -46,9 +46,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("3E5432CD-9568-4bd1-8CBE-D50ABA110743")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("3E5432CD-9568-4bd1-8CBE-D50ABA110743"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIEmbeddingSiteWindow //: nsISupports
 	{
 		/**
@@ -102,15 +100,12 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Visibility of the window.
 		 */
-		Boolean GetVisibility();
-		void SetVisibility(Boolean value);
+		Boolean Visibility { get; set; }
 
 		/**
 		 * Title of the window.
 		 */
-		[return: MarshalAs(UnmanagedType.LPWStr)]
-		String GetTitle();
-		void SetTitle([MarshalAs(UnmanagedType.LPWStr)] String value);
+		String Title { [return: MarshalAs(UnmanagedType.LPWStr)] get; [param: MarshalAs(UnmanagedType.LPWStr)] set; }
 
 		/**
 		 * Native window for the site's window. The implementor should copy the
@@ -124,6 +119,6 @@ namespace DotGecko.Gecko.Interop
 		 *   <li>On GTK this is a <CODE>GtkWidget*</CODE>.</li>
 		 * </ul>
 		 */
-		IntPtr GetSiteWindow();
+		IntPtr SiteWindow { get; }
 	}
 }

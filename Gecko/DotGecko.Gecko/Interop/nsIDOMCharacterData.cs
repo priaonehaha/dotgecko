@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
-using DOMString = DotGecko.Gecko.Interop.nsAString;
+using System.Text;
+using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -13,25 +14,23 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("a6cf9072-15b3-11d2-932e-00805f8add32")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("a6cf9072-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIDOMCharacterData : nsIDOMNode
 	{
 		#region nsIDOMNode Members
 
-		new void GetNodeName(DOMString result);
-		new void GetNodeValue(DOMString result);
-		new void SetNodeValue(DOMString value);
-		new UInt16 GetNodeType();
-		new nsIDOMNode GetParentNode();
-		new nsIDOMNodeList GetChildNodes();
-		new nsIDOMNode GetFirstChild();
-		new nsIDOMNode GetLastChild();
-		new nsIDOMNode GetPreviousSibling();
-		new nsIDOMNode GetNextSibling();
-		new nsIDOMNamedNodeMap GetAttributes();
-		new nsIDOMDocument GetOwnerDocument();
+		new void GetNodeName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		new void GetNodeValue([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		new void SetNodeValue([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		new UInt16 NodeType { get; }
+		new nsIDOMNode ParentNode { get; }
+		new nsIDOMNodeList ChildNodes { get; }
+		new nsIDOMNode FirstChild { get; }
+		new nsIDOMNode LastChild { get; }
+		new nsIDOMNode PreviousSibling { get; }
+		new nsIDOMNode NextSibling { get; }
+		new nsIDOMNamedNodeMap Attributes { get; }
+		new nsIDOMDocument OwnerDocument { get; }
 		new nsIDOMNode InsertBefore(nsIDOMNode newChild, nsIDOMNode refChild);
 		new nsIDOMNode ReplaceChild(nsIDOMNode newChild, nsIDOMNode oldChild);
 		new nsIDOMNode RemoveChild(nsIDOMNode oldChild);
@@ -39,28 +38,28 @@ namespace DotGecko.Gecko.Interop
 		new Boolean HasChildNodes();
 		new nsIDOMNode CloneNode(Boolean deep);
 		new void Normalize();
-		new Boolean IsSupported(DOMString feature, DOMString version);
-		new void GetNamespaceURI(DOMString result);
-		new void GetPrefix(DOMString result);
-		new void SetPrefix(DOMString value);
-		new void GetLocalName(DOMString result);
+		new Boolean IsSupported([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String feature, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String version);
+		new void GetNamespaceURI([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		new void GetPrefix([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		new void SetPrefix([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		new void GetLocalName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 		new Boolean HasAttributes();
 
 		#endregion
 
-		void GetData(DOMString result); // raises(DOMException) on retrieval
-		void SetData(DOMString value); // raises(DOMException) on setting
+		void GetData([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result); // raises(DOMException) on retrieval
+		void SetData([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value); // raises(DOMException) on setting
 
-		UInt32 GetLength();
+		UInt32 Length { get; }
 
-		void SubstringData(UInt32 offset, UInt32 count, DOMString result); // raises(DOMException);
+		void SubstringData(UInt32 offset, UInt32 count, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result); // raises(DOMException);
 
-		void AppendData(DOMString arg); // raises(DOMException);
+		void AppendData([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String arg); // raises(DOMException);
 
-		void InsertData(UInt32 offset, DOMString arg); // raises(DOMException);
+		void InsertData(UInt32 offset, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String arg); // raises(DOMException);
 
 		void DeleteData(UInt32 offset, UInt32 count); // raises(DOMException);
 
-		void ReplaceData(UInt32 offset, UInt32 count, DOMString arg); // raises(DOMException);
+		void ReplaceData(UInt32 offset, UInt32 count, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String arg); // raises(DOMException);
 	}
 }

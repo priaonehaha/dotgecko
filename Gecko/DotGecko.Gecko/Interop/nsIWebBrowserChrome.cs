@@ -58,9 +58,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("BA434C60-9D52-11d3-AFB0-00A024FFC08C")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("BA434C60-9D52-11d3-AFB0-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIWebBrowserChrome //: nsISupports
 	{
 		/**
@@ -79,16 +77,14 @@ namespace DotGecko.Gecko.Interop
 		 * as if it had created the WebBrowser itself.  This includes positioning
 		 * setting up listeners etc.
 		 */
-		nsIWebBrowser GetWebBrowser();
-		void SetWebBrowser(nsIWebBrowser value);
+		nsIWebBrowser WebBrowser { get; set; }
 
 		/**
 		 * The chrome flags for this browser chrome. The implementation should
 		 * reflect the value of this attribute by hiding or showing its chrome
 		 * appropriately.
 		 */
-		UInt32 GetChromeFlags();
-		void SetChromeFlags(UInt32 value);
+		UInt32 ChromeFlags { get; set; }
 
 		/**
 		 * Asks the implementer to destroy the window associated with this

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using PRFileDescStar = System.IntPtr;
 using PRLibraryStar = System.IntPtr;
 using FILE = System.IntPtr;
@@ -24,43 +25,36 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("aa610f20-a889-11d3-8c81-000064657374")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("aa610f20-a889-11d3-8c81-000064657374"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsILocalFile : nsIFile
 	{
 		#region nsIFile Members
 
-		new void Append(nsAString node);
-		new void AppendNative(nsACString node);
+		new void Append([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String node);
+		new void AppendNative([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String node);
 		new void Normalize();
 		new void Create(UInt32 type, UInt32 permissions);
-		new void GetLeafName(nsAString result);
-		new void SetLeafName(nsAString value);
-		new void GetNativeLeafName(nsACString result);
-		new void SetNativeLeafName(nsACString value);
-		new void CopyTo(nsIFile newParentDir, nsAString newName);
-		new void CopyToNative(nsIFile newParentDir, nsACString newName);
-		new void CopyToFollowingLinks(nsIFile newParentDir, nsAString newName);
-		new void CopyToFollowingLinksNative(nsIFile newParentDir, nsACString newName);
-		new void MoveTo(nsIFile newParentDir, nsAString newName);
-		new void MoveToNative(nsIFile newParentDir, nsACString newName);
+		new void GetLeafName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder result);
+		new void SetLeafName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
+		new void GetNativeLeafName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
+		new void SetNativeLeafName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String value);
+		new void CopyTo(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String newName);
+		new void CopyToNative(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String newName);
+		new void CopyToFollowingLinks(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String newName);
+		new void CopyToFollowingLinksNative(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String newName);
+		new void MoveTo(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String newName);
+		new void MoveToNative(nsIFile newParentDir, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String newName);
 		new void Remove(Boolean recursive);
-		new UInt32 GetPermissions();
-		new void SetPermissions(UInt32 value);
-		new UInt32 GetPermissionsOfLink();
-		new void SetPermissionsOfLink(UInt32 value);
-		new Int64 GetLastModifiedTime();
-		new void SetLastModifiedTime(Int64 value);
-		new Int64 GetLastModifiedTimeOfLink();
-		new void SetLastModifiedTimeOfLink(Int64 value);
-		new Int64 GetFileSize();
-		new void SetFileSize(Int64 value);
-		new Int64 GetFileSizeOfLink();
-		new void GetTarget(nsAString result);
-		new void GetNativeTarget(nsACString result);
-		new void GetPath(nsAString result);
-		new void GetNativePath(nsACString result);
+		new UInt32 Permissions { get; set; }
+		new UInt32 PermissionsOfLink { get; set; }
+		new Int64 LastModifiedTime { get; set; }
+		new Int64 LastModifiedTimeOfLink { get; set; }
+		new Int64 FileSize { get; set; }
+		new Int64 FileSizeOfLink { get; }
+		new void GetTarget([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder result);
+		new void GetNativeTarget([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
+		new void GetPath([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder result);
+		new void GetNativePath([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
 		new Boolean Exists();
 		new Boolean IsWritable();
 		new Boolean IsReadable();
@@ -74,7 +68,7 @@ namespace DotGecko.Gecko.Interop
 		new nsIFile Clone();
 		new Boolean Equals(nsIFile inFile);
 		new Boolean Contains(nsIFile inFile, Boolean recur);
-		new nsIFile GetParent();
+		new nsIFile Parent { get; }
 		new nsISimpleEnumerator GetDirectoryEntries();
 
 		#endregion
@@ -92,9 +86,9 @@ namespace DotGecko.Gecko.Interop
 		 *       initWithNativePath, the filePath must be in the native
 		 *       filesystem charset.
 		 */
-		void InitWithPath(nsAString filePath);
+		void InitWithPath([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String filePath);
 
-		void InitWithNativePath(nsACString filePath);
+		void InitWithNativePath([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String filePath);
 
 		/**
 		 *  initWithFile
@@ -114,8 +108,7 @@ namespace DotGecko.Gecko.Interop
 		 *  on all non unix systems.  On unix, this attribute is effectively
 		 *  a noop.  
 		 */
-		Boolean GetFollowLinks();
-		void SetFollowLinks(Boolean value);
+		Boolean FollowLinks { get; set; }
 
 		/**
 		 * Return the result of PR_Open on the file.  The caller is
@@ -155,9 +148,9 @@ namespace DotGecko.Gecko.Interop
 		 *       For the |appendRelativeNativePath| method, the relativeFilePath 
 		 *       must be in the native filesystem charset.
 		 */
-		void AppendRelativePath(nsAString relativeFilePath);
+		void AppendRelativePath([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String relativeFilePath);
 
-		void AppendRelativeNativePath(nsACString relativeFilePath);
+		void AppendRelativeNativePath([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String relativeFilePath);
 
 		/**
 		 *  Accessor to a null terminated string which will specify
@@ -166,8 +159,8 @@ namespace DotGecko.Gecko.Interop
 		 *  The character set of this attribute is undefined.  DO NOT TRY TO
 		 *  INTERPRET IT AS HUMAN READABLE TEXT!
 		 */
-		void GetPersistentDescriptor(nsACString result);
-		void SetPersistentDescriptor(nsACString value);
+		void GetPersistentDescriptor([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
+		void SetPersistentDescriptor([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String value);
 
 		/** 
 		 *  reveal
@@ -200,7 +193,7 @@ namespace DotGecko.Gecko.Interop
 		 *       the file from which the descriptor is relative.
 		 *       There is no defined result if this param is null.
 		 */
-		void GetRelativeDescriptor(nsILocalFile fromFile, nsACString result);
+		void GetRelativeDescriptor(nsILocalFile fromFile, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
 
 		/**
 		 *  setRelativeDescriptor
@@ -213,6 +206,6 @@ namespace DotGecko.Gecko.Interop
 		 *   @param relative
 		 *       the relative descriptor obtained from getRelativeDescriptor
 		 */
-		void SetRelativeDescriptor(nsILocalFile fromFile, nsACString relativeDesc);
+		void SetRelativeDescriptor(nsILocalFile fromFile, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String relativeDesc);
 	}
 }

@@ -8,9 +8,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("fd91e2e0-1481-11d3-9333-00104ba0fd40")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("fd91e2e0-1481-11d3-9333-00104ba0fd40"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIRequestObserver //: nsISupports
 	{
 		/**

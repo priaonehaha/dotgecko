@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using AStringContainer = System.IntPtr;
+using AString = System.IntPtr;
+using ACStringContainer = System.IntPtr;
+using ACString = System.IntPtr;
+using AUTF8String = System.IntPtr;
 
 namespace DotGecko.Gecko.Interop
 {
-	public static partial class Xpcom
+	internal static partial class Xpcom
 	{
 		/**
 		 * Flags that may be OR'd together to pass to NS_StringContainerInit2:
@@ -36,8 +41,9 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern UInt32 NS_StringContainerInit(nsStringContainer aContainer);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_StringContainerInit(AStringContainer aContainer);
 
 		/**
 		 * NS_StringContainerInit2
@@ -60,8 +66,8 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern UInt32 NS_StringContainerInit2(nsStringContainer aContainer, String aData, UInt32 aDataLength, UInt32 aFlags);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		internal static extern UInt32 NS_StringContainerInit2(AStringContainer aContainer, String aData, UInt32 aDataLength, UInt32 aFlags);
 
 		/**
 		 * NS_StringContainerFinish
@@ -72,8 +78,8 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern void NS_StringContainerFinish(nsStringContainer aContainer);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		internal static extern void NS_StringContainerFinish(AStringContainer aContainer);
 
 		/**
 		 * NS_StringGetData
@@ -92,8 +98,8 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern UInt32 NS_StringGetData(nsAString aStr, out IntPtr aData, IntPtr aTerminated);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		internal static extern UInt32 NS_StringGetData(AString aStr, out IntPtr aData, IntPtr aTerminated);
 
 		/**
 		 * NS_StringGetMutableData
@@ -124,8 +130,8 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern UInt32 NS_StringGetMutableData(nsAString aStr, UInt32 aDataLength, out IntPtr aData);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		internal static extern UInt32 NS_StringGetMutableData(AString aStr, UInt32 aDataLength, out IntPtr aData);
 
 		/**
 		 * NS_StringCloneData
@@ -139,8 +145,8 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern String NS_StringCloneData(nsAString aStr);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		internal static extern String NS_StringCloneData(AString aStr);
 
 		/**
 		 * NS_StringSetData
@@ -161,8 +167,9 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern UInt32 NS_StringSetData(nsAString aStr, String aData, UInt32 aDataLength);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_StringSetData(AString aStr, String aData, UInt32 aDataLength);
 
 		/**
 		 * NS_StringSetDataRange
@@ -192,8 +199,9 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern UInt32 NS_StringSetDataRange(nsAString aStr, UInt32 aCutOffset, UInt32 aCutLength, String aData, UInt32 aDataLength);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_StringSetDataRange(AString aStr, UInt32 aCutOffset, UInt32 aCutLength, String aData, UInt32 aDataLength);
 
 		/**
 		 * NS_StringCopy
@@ -212,8 +220,9 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @status FROZEN
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern UInt32 NS_StringCopy(nsAString aDestStr, nsAString aSrcStr);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_StringCopy(AString aDestStr, AString aSrcStr);
 
 		/**
 		 * NS_StringSetIsVoid
@@ -221,8 +230,8 @@ namespace DotGecko.Gecko.Interop
 		 * This function marks a string as being a "void string".  Any data in the
 		 * string will be lost.
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern void NS_StringSetIsVoid(nsAString aStr, Boolean aIsVoid);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		internal static extern void NS_StringSetIsVoid(AString aStr, Boolean aIsVoid);
 
 		/**
 		 * NS_StringGetIsVoid
@@ -230,8 +239,8 @@ namespace DotGecko.Gecko.Interop
 		 * This function provides a way to test if a string is a "void string", as
 		 * marked by NS_StringSetIsVoid.
 		 */
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Unicode)]
-		internal static extern Boolean NS_StringGetIsVoid(nsAString aStr);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
+		internal static extern Boolean NS_StringGetIsVoid(AString aStr);
 
 		/**
 		 * Flags that may be OR'd together to pass to NS_StringContainerInit2:
@@ -263,9 +272,10 @@ namespace DotGecko.Gecko.Interop
 		 * aContainer is no longer needed, NS_CStringContainerFinish should be called.
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern UInt32 NS_CStringContainerInit(nsCStringContainer aContainer);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_CStringContainerInit(ACStringContainer aContainer);
 
 		/**
 		 * NS_CStringContainerInit2
@@ -287,9 +297,14 @@ namespace DotGecko.Gecko.Interop
 		 * NS_CStringContainerInit(container).
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern UInt32 NS_CStringContainerInit2(nsCStringContainer aContainer, String aData, UInt32 aDataLength, UInt32 aFlags);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_CStringContainerInit2(ACStringContainer aContainer, String aData, UInt32 aDataLength, UInt32 aFlags);
+
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_CStringContainerInit2(ACStringContainer aContainer, Byte[] aData, UInt32 aDataLength, UInt32 aFlags);
 
 		/**
 		 * NS_CStringContainerFinish
@@ -299,9 +314,9 @@ namespace DotGecko.Gecko.Interop
 		 * This function frees any memory owned by aContainer.
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern void NS_CStringContainerFinish(nsCStringContainer aContainer);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		internal static extern void NS_CStringContainerFinish(ACStringContainer aContainer);
 
 		/**
 		 * NS_CStringGetData
@@ -319,9 +334,9 @@ namespace DotGecko.Gecko.Interop
 		 * @return              length of aStr's internal buffer
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern UInt32 NS_CStringGetData(nsACString aStr, out IntPtr aData, IntPtr aTerminated);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		internal static extern UInt32 NS_CStringGetData(ACString aStr, out IntPtr aData, IntPtr aTerminated);
 
 		/**
 		 * NS_CStringGetMutableData
@@ -351,9 +366,9 @@ namespace DotGecko.Gecko.Interop
 		 * will be null-terminated by this function.
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern UInt32 NS_CStringGetMutableData(nsACString aStr, UInt32 aDataLength, out IntPtr aData);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		internal static extern UInt32 NS_CStringGetMutableData(ACString aStr, UInt32 aDataLength, out IntPtr aData);
 
 		/**
 		 * NS_CStringCloneData
@@ -366,9 +381,9 @@ namespace DotGecko.Gecko.Interop
 		 *                      (it must be free'd using using nsMemory::Free)
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern String NS_CStringCloneData(nsACString aStr);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		internal static extern String NS_CStringCloneData(ACString aStr);
 
 		/**
 		 * NS_CStringSetData
@@ -388,12 +403,14 @@ namespace DotGecko.Gecko.Interop
 		 * will be null-terminated by this function.
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern UInt32 NS_CStringSetData(nsACString aStr, String aData, UInt32 aDataLength);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_CStringSetData(ACString aStr, String aData, UInt32 aDataLength);
 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern UInt32 NS_CStringSetData(nsACString aStr, Byte[] aData, UInt32 aDataLength);
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_CStringSetData(ACString aStr, Byte[] aData, UInt32 aDataLength);
 
 		/**
 		 * NS_CStringSetDataRange
@@ -422,9 +439,10 @@ namespace DotGecko.Gecko.Interop
 		 * will be null-terminated by this function.
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern UInt32 NS_CStringSetDataRange(nsACString aStr, UInt32 aCutOffset, UInt32 aCutLength, String aData, UInt32 aDataLength);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_CStringSetDataRange(ACString aStr, UInt32 aCutOffset, UInt32 aCutLength, String aData, UInt32 aDataLength);
 
 		/**
 		 * NS_CStringCopy
@@ -442,27 +460,28 @@ namespace DotGecko.Gecko.Interop
 		 * nsStringContainer, then its data will be null-terminated by this function.
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern UInt32 NS_CStringCopy(nsACString aDestStr, nsACString aSrcStr);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_CStringCopy(ACString aDestStr, ACString aSrcStr);
 
 		/**
 		 * NS_CStringSetIsVoid
 		 *
 		 * This function marks a string as being a "void string".  Any data in the
 		 * string will be lost.
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern void NS_CStringSetIsVoid(nsACString aStr, Boolean aIsVoid);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		internal static extern void NS_CStringSetIsVoid(ACString aStr, Boolean aIsVoid);
 
 		/**
 		 * NS_CStringGetIsVoid
 		 *
 		 * This function provides a way to test if a string is a "void string", as
 		 * marked by NS_CStringSetIsVoid.
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true, CharSet = CharSet.Ansi)]
-		internal static extern Boolean NS_CStringGetIsVoid(nsACString aStr);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
+		internal static extern Boolean NS_CStringGetIsVoid(ACString aStr);
 
 		/**
 		 * Encodings that can be used with the following conversion routines.
@@ -498,9 +517,10 @@ namespace DotGecko.Gecko.Interop
 		 * @param aDest         abstract string reference to hold the result
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_CStringToUTF16(nsACString aSource, nsCStringEncoding aSrcEncoding, nsAString aDest);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_CStringToUTF16(ACString aSource, nsCStringEncoding aSrcEncoding, AString aDest);
 
 		/**
 		 * NS_UTF16ToCString
@@ -516,8 +536,9 @@ namespace DotGecko.Gecko.Interop
 		 * @param aDest         abstract string reference to hold the result
 		 *
 		 * @status FROZEN
-		 */ 
-		[DllImport(xpcom, ExactSpelling = true)]
-		internal static extern UInt32 NS_UTF16ToCString(nsAString aSource, nsCStringEncoding aDestEncoding, nsACString aDest);
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		[return: MarshalAs(UnmanagedType.U4)]
+		internal static extern nsResult NS_UTF16ToCString(AString aSource, nsCStringEncoding aDestEncoding, ACString aDest);
 	}
 }

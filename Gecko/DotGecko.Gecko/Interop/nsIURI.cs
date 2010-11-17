@@ -1,8 +1,40 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace DotGecko.Gecko.Interop
 {
+	internal static class nsIURIExtensions
+	{
+		internal static Uri ToUri(this nsIURI nsUri)
+		{
+			if (nsUri == null)
+			{
+				return null;
+			}
+
+			String spec = XpcomString.Get(nsUri.GetSpec);
+			if (String.IsNullOrEmpty(spec))
+			{
+				return null;
+			}
+
+			Uri result;
+			return Uri.TryCreate(spec, UriKind.Absolute, out result) ? result : null;
+		}
+
+		internal static nsIURI ToNsUri(this Uri uri)
+		{
+			if (uri == null)
+			{
+				return null;
+			}
+			var ioService = Xpcom.GetService<nsIIOService>(Xpcom.NS_IOSERVICE_CONTRACTID);
+			nsIURI nsUri = ioService.NewURI(uri.AbsoluteUri, null, null);
+			return nsUri;
+		}
+	}
+
 	/**
 	 * URIs are essentially structured names for things -- anything. This interface
 	 * provides accessors to set and query the most basic components of an URI.
@@ -52,9 +84,7 @@ namespace DotGecko.Gecko.Interop
 	 * 
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("07a22cc0-0ce5-11d3-9331-00104ba0fd40")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("07a22cc0-0ce5-11d3-9331-00104ba0fd40"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIURI //: nsISupports
 	{
 		/************************************************************************
@@ -73,8 +103,8 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * Some characters may be escaped.
 		 */
-		void GetSpec(nsAUTF8String result);
-		void SetSpec(nsAUTF8String value);
+		void GetSpec([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
+		void SetSpec([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String value);
 
 		/**
 		 * The prePath (eg. scheme://user:password@host:port) returns the string
@@ -82,7 +112,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * Some characters may be escaped.
 		 */
-		void GetPrePath(nsAUTF8String result);
+		void GetPrePath([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
 
 		/**
 		 * The Scheme is the protocol to which this URI refers.  The scheme is
@@ -90,16 +120,16 @@ namespace DotGecko.Gecko.Interop
 		 * highly discouraged outside of a protocol handler implementation, since
 		 * that will generally lead to incorrect results.
 		 */
-		void GetScheme(nsACString result);
-		void SetScheme(nsACString value);
+		void GetScheme([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
+		void SetScheme([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String value);
 
 		/**
 		 * The username:password (or username only if value doesn't contain a ':')
 		 *
 		 * Some characters may be escaped.
 		 */
-		void GetUserPass(nsAUTF8String result);
-		void SetUserPass(nsAUTF8String value);
+		void GetUserPass([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
+		void SetUserPass([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String value);
 
 		/**
 		 * The optional username and password, assuming the preHost consists of
@@ -107,19 +137,19 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * Some characters may be escaped.
 		 */
-		void GetUsername(nsAUTF8String result);
-		void SetUsername(nsAUTF8String value);
+		void GetUsername([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
+		void SetUsername([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String value);
 
-		void GetPassword(nsAUTF8String result);
-		void SetPassword(nsAUTF8String value);
+		void GetPassword([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
+		void SetPassword([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String value);
 
 		/**
 		 * The host:port (or simply the host, if port == -1).
 		 *
 		 * Characters are NOT escaped.
 		 */
-		void GetHostPort(nsAUTF8String result);
-		void SetHostPort(nsAUTF8String value);
+		void GetHostPort([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
+		void SetHostPort([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String value);
 
 		/**
 		 * The host is the internet domain name to which this URI refers.  It could
@@ -128,15 +158,14 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * Characters are NOT escaped.
 		 */
-		void GetHost(nsAUTF8String result);
-		void SetHost(nsAUTF8String value);
+		void GetHost([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
+		void SetHost([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String value);
 
 		/**
 		 * A port value of -1 corresponds to the protocol's default port (eg. -1
 		 * implies port 80 for http URIs).
 		 */
-		Int32 GetPort();
-		void SetPort(Int32 value);
+		Int32 Port { get; set; }
 
 		/**
 		 * The path, typically including at least a leading '/' (but may also be
@@ -144,8 +173,8 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * Some characters may be escaped.
 		 */
-		void GetPath(nsAUTF8String result);
-		void SetPath(nsAUTF8String value);
+		void GetPath([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
+		void SetPath([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String value);
 
 		/************************************************************************
 		 * An URI supports the following methods:
@@ -179,7 +208,9 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * NOTE: some implementations may have no concept of a relative URI.
 		 */
-		void Resolve(nsAUTF8String relativePath, nsAUTF8String result);
+		void Resolve(
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String relativePath,
+			[In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder result);
 
 		/************************************************************************
 		 * Additional attributes:
@@ -190,14 +221,14 @@ namespace DotGecko.Gecko.Interop
 		 * the IDNA draft spec.  Other parts are URL-escaped per the rules of
 		 * RFC2396.  The result is strictly ASCII.
 		 */
-		void GetAsciiSpec(nsACString result);
+		void GetAsciiSpec([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
 
 		/**
 		 * The URI host with an ASCII compatible encoding.  Follows the IDNA
 		 * draft spec for converting internationalized domain names (UTF-8) to
 		 * ASCII for compatibility with existing internet infrasture.
 		 */
-		void GetAsciiHost(nsACString result);
+		void GetAsciiHost([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
 
 		/**
 		 * The charset of the document from which this URI originated.  An empty
@@ -208,6 +239,6 @@ namespace DotGecko.Gecko.Interop
 		 * Otherwise, the URI components may contain unescaped multibyte UTF-8
 		 * characters.
 		 */
-		void GetOriginCharset(nsACString result);
+		void GetOriginCharset([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] StringBuilder result);
 	}
 }

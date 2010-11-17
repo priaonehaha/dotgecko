@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using nsISupports = System.Object;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -7,9 +8,7 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIComponentManager interface.
 	 * @status FROZEN
 	 */
-	[ComImport]
-	[Guid("a88e5a60-205a-4bb1-94e1-2628daf51eae")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("a88e5a60-205a-4bb1-94e1-2628daf51eae"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsIComponentManager //: nsISupports
 	{
 		/**
@@ -21,7 +20,7 @@ namespace DotGecko.Gecko.Interop
 		 * @param aClass The classid of the factory that is being requested
 		 */
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 1)]
-		Object GetClassObject(ref Guid aClass, ref Guid aIID);
+		Object GetClassObject([In] ref Guid aClass, [In] ref Guid aIID);
 
 		/**
 		 * getClassObjectByContractID
@@ -32,7 +31,7 @@ namespace DotGecko.Gecko.Interop
 		 * @param aClass The classid of the factory that is being requested
 		 */
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 1)]
-		Object GetClassObjectByContractID([MarshalAs(UnmanagedType.LPStr)] String aContractID, ref Guid aIID);
+		Object GetClassObjectByContractID([MarshalAs(UnmanagedType.LPStr)] String aContractID, [In] ref Guid aIID);
 
 		/**
 		 * createInstance
@@ -44,7 +43,7 @@ namespace DotGecko.Gecko.Interop
 		 * @param aIID : IID of interface requested
 		 */
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 2)]
-		Object CreateInstance(ref Guid aClass, [MarshalAs(UnmanagedType.IUnknown)] Object aDelegate, ref Guid aIID);
+		Object CreateInstance([In] ref Guid aClass, [MarshalAs(UnmanagedType.IUnknown)] nsISupports aDelegate, [In] ref Guid aIID);
 
 		/**
 		 * createInstanceByContractID
@@ -57,6 +56,6 @@ namespace DotGecko.Gecko.Interop
 		 * @param aIID : IID of interface requested
 		 */
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 2)]
-		Object CreateInstanceByContractID([MarshalAs(UnmanagedType.LPStr)] String aContractID, [MarshalAs(UnmanagedType.IUnknown)] Object aDelegate, ref Guid aIID);
+		Object CreateInstanceByContractID([MarshalAs(UnmanagedType.LPStr)] String aContractID, [MarshalAs(UnmanagedType.IUnknown)] nsISupports aDelegate, [In] ref Guid aIID);
 	}
 }

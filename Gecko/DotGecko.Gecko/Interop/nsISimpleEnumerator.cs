@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using nsISupports = System.Object;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -12,9 +13,7 @@ namespace DotGecko.Gecko.Interop
 	 * @status FROZEN
 	 * @version 1.0
 	 */
-	[ComImport]
-	[Guid("D1899240-F9D2-11D2-BDD6-000064657374")]
-	[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("D1899240-F9D2-11D2-BDD6-000064657374"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	internal interface nsISimpleEnumerator //: nsISupports
 	{
 		/**
@@ -45,7 +44,8 @@ namespace DotGecko.Gecko.Interop
 		 *                          to enumerate.
 		 * @return the next element in the enumeration.
 		 */
-		[return: MarshalAs(UnmanagedType.IUnknown)]
-		Object GetNext();
+		[PreserveSig]
+		[return: MarshalAs(UnmanagedType.U4)]
+		nsResult GetNext([MarshalAs(UnmanagedType.IUnknown)] out nsISupports retval);
 	}
 }
