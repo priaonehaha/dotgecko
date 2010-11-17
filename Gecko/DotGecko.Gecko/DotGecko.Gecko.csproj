@@ -33,7 +33,37 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dom\DomAttribute.cs" />
+    <Compile Include="Dom\DomBarProp.cs" />
+    <Compile Include="Dom\DomCDataSection.cs" />
+    <Compile Include="Dom\DomCharacterData.cs" />
+    <Compile Include="Dom\DomComment.cs" />
+    <Compile Include="Dom\DomDocument.cs" />
+    <Compile Include="Dom\DomDocumentFragment.cs" />
+    <Compile Include="Dom\DomDocumentType.cs" />
+    <Compile Include="Dom\DomDomImplementation.cs" />
+    <Compile Include="Dom\DomElement.cs" />
+    <Compile Include="Dom\DomEntity.cs" />
+    <Compile Include="Dom\DomEntityReference.cs" />
+    <Compile Include="Dom\DomEvent.cs" />
+    <Compile Include="Dom\DomHistory.cs" />
+    <Compile Include="Dom\DomHtmlElement.cs" />
+    <Compile Include="Dom\DomLocation.cs" />
+    <Compile Include="Dom\DomNamedNodeMap.cs" />
+    <Compile Include="Dom\DomNode.cs" />
+    <Compile Include="Dom\DomNodeList.cs" />
+    <Compile Include="Dom\DomNotation.cs" />
+    <Compile Include="Dom\DomProcessingInstruction.cs" />
+    <Compile Include="Dom\DomRange.cs" />
+    <Compile Include="Dom\DomScreen.cs" />
+    <Compile Include="Dom\DomSelection.cs" />
+    <Compile Include="Dom\DomText.cs" />
+    <Compile Include="Dom\DomWindow.cs" />
+    <Compile Include="Dom\DomWindowCollection.cs" />
+    <Compile Include="Interop\ExtensionMethods.cs" />
+    <Compile Include="Interop\Factory.cs" />
     <Compile Include="Interop\IAppFileLocation.cs" />
+    <Compile Include="Interop\InputStream.cs" />
     <Compile Include="Interop\nsIAppShell.cs" />
     <Compile Include="Interop\nsIArray.cs" />
     <Compile Include="Interop\nsIAtom.cs" />
@@ -160,6 +190,8 @@
     <Compile Include="Interop\nsIXULBrowserWindow.cs" />
     <Compile Include="Interop\nsIXULWindow.cs" />
     <Compile Include="Interop\nsResult.cs" />
+    <Compile Include="Interop\SimpleEnumerator.cs" />
+    <Compile Include="Interop\SnapshotCapture.cs" />
     <Compile Include="Interop\Xpcom.Api.cs" />
     <Compile Include="Interop\Xpcom.Api.Strings.cs" />
     <Compile Include="Interop\Xpcom.cs" />
