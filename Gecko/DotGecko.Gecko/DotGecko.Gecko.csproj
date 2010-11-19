@@ -55,18 +55,24 @@
     <Compile Include="Dom\DomEvent.cs" />
     <Compile Include="Dom\DomHistory.cs" />
     <Compile Include="Dom\DomHtmlElement.cs" />
+    <Compile Include="Dom\DomKeyEvent.cs" />
     <Compile Include="Dom\DomLocation.cs" />
+    <Compile Include="Dom\DomMouseEvent.cs" />
     <Compile Include="Dom\DomNamedNodeMap.cs" />
     <Compile Include="Dom\DomNode.cs" />
     <Compile Include="Dom\DomNodeList.cs" />
     <Compile Include="Dom\DomNotation.cs" />
+    <Compile Include="Dom\DomPopupBlockedEvent.cs" />
     <Compile Include="Dom\DomProcessingInstruction.cs" />
     <Compile Include="Dom\DomRange.cs" />
     <Compile Include="Dom\DomScreen.cs" />
     <Compile Include="Dom\DomSelection.cs" />
     <Compile Include="Dom\DomText.cs" />
+    <Compile Include="Dom\DomUIEvent.cs" />
     <Compile Include="Dom\DomWindow.cs" />
+    <Compile Include="Dom\DomWindow2.cs" />
     <Compile Include="Dom\DomWindowCollection.cs" />
+    <Compile Include="Dom\DomWindowInternal.cs" />
     <Compile Include="DownloadManager.cs" />
     <Compile Include="DownloadManager.Download.cs">
       <DependentUpon>DownloadManager.cs</DependentUpon>
@@ -396,6 +402,16 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIClassInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMUIEvent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interop\nsIDOMKeyEvent.cs" />
+    <Compile Include="Interop\nsIDOMMouseEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

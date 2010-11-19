@@ -110,6 +110,14 @@ namespace DotGecko.Gecko.Interop
 
 		internal const String NS_TOOLTIPTEXTPROVIDER_CONTRACTID = "@mozilla.org/embedcomp/tooltiptextprovider;1";
 
+		/**
+		 * Calling QueryInterface with this special IID will return a null-terminated
+		 * table of QITableEntry's. Not all objects support this.
+		 * Note that this breaks XPCOM rules a bit (the table doesn't derive from
+		 * nsISupports).
+		 */
+		internal static readonly Guid NS_THISPTROFFSETS_SID = new Guid(0x23e017cc, 0x5d6f, 0x430c, 0xb3, 0xe6, 0x9d, 0x32, 0x65, 0x70, 0xd6, 0xb8);
+
 		internal const String CMD_UNDO = "cmd_undo";
 		internal const String CMD_REDO = "cmd_redo";
 		internal const String CMD_CUT = "cmd_cut";

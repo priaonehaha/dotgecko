@@ -4,9 +4,9 @@ using DotGecko.Gecko.Interop;
 
 namespace DotGecko.Gecko.Dom
 {
-	public sealed class DomWindow
+	public class DomWindow
 	{
-		private DomWindow(nsIDOMWindow domWindow)
+		internal DomWindow(nsIDOMWindow domWindow)
 		{
 			Debug.Assert(domWindow != null);
 			m_DomWindow = domWindow;
@@ -14,7 +14,17 @@ namespace DotGecko.Gecko.Dom
 
 		internal static DomWindow Create(nsIDOMWindow domWindow)
 		{
-			return domWindow != null ? new DomWindow(domWindow) : null;
+			if (domWindow == null)
+			{
+				return null;
+			}
+
+			if (domWindow is nsIDOMWindow2)
+			{
+				return DomWindow2.Create((nsIDOMWindow2)domWindow);
+			}
+
+			return new DomWindow(domWindow);
 		}
 
 		public DomDocument Document
@@ -108,6 +118,8 @@ namespace DotGecko.Gecko.Dom
 		{
 			m_DomWindow.SizeToContent();
 		}
+
+		internal nsIDOMWindow DomObj { get { return m_DomWindow; } }
 
 		private readonly nsIDOMWindow m_DomWindow;
 	}

@@ -4,7 +4,7 @@ using DotGecko.Gecko.Interop;
 
 namespace DotGecko.Gecko.Dom
 {
-	public sealed class DomEvent
+	public class DomEvent : EventArgs
 	{
 		public enum Phase : ushort
 		{
@@ -13,7 +13,7 @@ namespace DotGecko.Gecko.Dom
 			Bubbling = nsIDOMEventConstants.BUBBLING_PHASE
 		}
 
-		private DomEvent(nsIDOMEvent domEvent)
+		internal DomEvent(nsIDOMEvent domEvent)
 		{
 			Debug.Assert(domEvent != null);
 			m_DomEvent = domEvent;
@@ -21,14 +21,29 @@ namespace DotGecko.Gecko.Dom
 
 		internal static DomEvent Create(nsIDOMEvent domEvent)
 		{
-			return domEvent != null ? new DomEvent(domEvent) : null;
+			if (domEvent == null)
+			{
+				return null;
+			}
+
+			if (domEvent is nsIDOMUIEvent)
+			{
+				return DomUIEvent.Create((nsIDOMUIEvent)domEvent);
+			}
+
+			if (domEvent is nsIDOMPopupBlockedEvent)
+			{
+				return DomPopupBlockedEvent.Create((nsIDOMPopupBlockedEvent)domEvent);
+			}
+
+			return new DomEvent(domEvent);
 		}
 
 		public String Type { get { return XpcomString.Get(m_DomEvent.GetType); } }
 
-		//nsIDOMEventTarget Target { get; }
+		public Object Target { get { return m_DomEvent.Target; } }
 
-		//nsIDOMEventTarget CurrentTarget { get; }
+		public Object CurrentTarget { get { return m_DomEvent.CurrentTarget; } }
 
 		public Phase EventPhase { get { return (Phase)m_DomEvent.EventPhase; } }
 
@@ -46,11 +61,6 @@ namespace DotGecko.Gecko.Dom
 		public void PreventDefault()
 		{
 			m_DomEvent.PreventDefault();
-		}
-
-		public void InitEvent(String eventTypeArg, Boolean canBubbleArg, Boolean cancelableArg)
-		{
-			m_DomEvent.InitEvent(eventTypeArg, canBubbleArg, cancelableArg);
 		}
 
 		private readonly nsIDOMEvent m_DomEvent;

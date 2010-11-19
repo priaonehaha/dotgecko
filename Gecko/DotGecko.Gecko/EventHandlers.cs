@@ -5,26 +5,28 @@ namespace DotGecko.Gecko
 {
 	internal sealed class EventHandlers<TEventKey>
 	{
-		public EventHandlers(Object owner)
+		public EventHandlers(Object owner, IEqualityComparer<TEventKey> keyComparer = null)
 		{
 			m_Owner = owner;
+			m_Events = new Dictionary<TEventKey, Delegate>(keyComparer);
 		}
 
-		public void Add<TEventArgs>(TEventKey eventKey, EventHandler<TEventArgs> value) where TEventArgs : EventArgs
+		public Boolean Add<TEventArgs>(TEventKey eventKey, EventHandler<TEventArgs> value) where TEventArgs : EventArgs
 		{
 			lock (m_Events)
 			{
 				Delegate handler;
-				m_Events.TryGetValue(eventKey, out handler);
+				Boolean exists = m_Events.TryGetValue(eventKey, out handler);
 				handler = Delegate.Combine(handler, value);
 				if (handler != null)
 				{
 					m_Events[eventKey] = handler;
 				}
+				return !exists;
 			}
 		}
 
-		public void Remove<TEventArgs>(TEventKey eventKey, EventHandler<TEventArgs> value) where TEventArgs : EventArgs
+		public Boolean Remove<TEventArgs>(TEventKey eventKey, EventHandler<TEventArgs> value) where TEventArgs : EventArgs
 		{
 			lock (m_Events)
 			{
@@ -35,12 +37,11 @@ namespace DotGecko.Gecko
 					if (handler != null)
 					{
 						m_Events[eventKey] = handler;
+						return false;
 					}
-					else
-					{
-						m_Events.Remove(eventKey);
-					}
+					m_Events.Remove(eventKey);
 				}
+				return true;
 			}
 		}
 
@@ -51,14 +52,14 @@ namespace DotGecko.Gecko
 			{
 				m_Events.TryGetValue(eventKey, out handler);
 			}
-			var eventHandler = (EventHandler<TEventArgs>)handler;
-			if (eventHandler != null)
+			if (handler != null)
 			{
+				var eventHandler = (EventHandler<TEventArgs>)handler;
 				eventHandler(m_Owner, e);
 			}
 		}
 
 		private readonly Object m_Owner;
-		private readonly Dictionary<TEventKey, Delegate> m_Events = new Dictionary<TEventKey, Delegate>();
+		private readonly Dictionary<TEventKey, Delegate> m_Events;
 	}
 }
