@@ -1,15 +1,26 @@
 ﻿//#define USE_IOSERVICE
 
 using System;
+using System.Drawing;
+
 #if USE_IOSERVICE
 using System.Runtime.InteropServices;
 #endif
 
 namespace DotGecko.Gecko.Interop
 {
+	[Flags]
+	internal enum CaptureFlags : uint
+	{
+		None = 0,
+		DrawCaret = 1,
+		DoNotFlush = 2,
+		DrawView = 4
+	}
+
 	internal static class SnapshotCapture
 	{
-		internal static Byte[] CaptureWindow(nsIDOMWindow domWindow)
+		internal static Byte[] CaptureWindow(nsIDOMWindow domWindow, CaptureFlags captureFlags = CaptureFlags.None)
 		{
 			var domWindowInternal = (nsIDOMWindowInternal)domWindow;
 
@@ -17,7 +28,7 @@ namespace DotGecko.Gecko.Interop
 			canvas.Width = domWindowInternal.InnerWidth;// + domWindowInternal.ScrollMaxX;
 			canvas.Height = domWindowInternal.InnerHeight;// + domWindowInternal.ScrollMaxY;
 
-			DrawWindow(canvas, domWindow);
+			DrawWindow(canvas, domWindow, Color.Empty, captureFlags);
 
 			Byte[] imageData = GetImageData(canvas);
 			return imageData;
@@ -29,10 +40,11 @@ namespace DotGecko.Gecko.Interop
 			return canvas;
 		}
 
-		private static void DrawWindow(nsIDOMHTMLCanvasElement canvasElement, nsIDOMWindow domWindow)
+		private static void DrawWindow(nsIDOMHTMLCanvasElement canvasElement, nsIDOMWindow domWindow, Color bgColor, CaptureFlags captureFlags)
 		{
 			var context = (nsIDOMCanvasRenderingContext2D)canvasElement.GetContext("2d");
-			context.DrawWindow(domWindow, 0, 0, canvasElement.Width, canvasElement.Height, "rgba(0,0,0,0)", 0);
+			String cssBgColor = String.Format(CssColorFormatInfo.CurrentInfo, "{0:rgba}", bgColor);
+			context.DrawWindow(domWindow, 0, 0, canvasElement.Width, canvasElement.Height, cssBgColor, (UInt32)captureFlags);
 		}
 
 		private static Byte[] GetImageData(nsIDOMHTMLCanvasElement canvasElement)
