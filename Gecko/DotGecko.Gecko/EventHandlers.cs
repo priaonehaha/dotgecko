@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace DotGecko.Gecko
 {
+	public delegate void EventHandler<in TEventArgs>(Object sender, TEventArgs e) where TEventArgs : EventArgs;
+
 	internal sealed class EventHandlers<TEventKey>
 	{
 		public EventHandlers(Object owner, IEqualityComparer<TEventKey> keyComparer = null)
@@ -42,6 +44,19 @@ namespace DotGecko.Gecko
 					m_Events.Remove(eventKey);
 				}
 				return true;
+			}
+		}
+
+		public void Raise(TEventKey eventKey, EventArgs e)
+		{
+			Delegate handler;
+			lock (m_Events)
+			{
+				m_Events.TryGetValue(eventKey, out handler);
+			}
+			if (handler != null)
+			{
+				handler.DynamicInvoke(m_Owner, e);
 			}
 		}
 

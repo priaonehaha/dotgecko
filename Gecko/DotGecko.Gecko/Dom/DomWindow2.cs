@@ -205,7 +205,7 @@ namespace DotGecko.Gecko.Dom
 		void nsIDOMEventListener.HandleEvent(nsIDOMEvent aEvent)
 		{
 			String eventType = XpcomString.Get(aEvent.GetType);
-			var e = DomEvent.Create(aEvent);
+			EventArgs e = DomEvent.Create(aEvent);
 			Events.Raise(eventType, e);
 		}
 
