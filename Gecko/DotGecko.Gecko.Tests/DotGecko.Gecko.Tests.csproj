@@ -62,6 +62,10 @@
     <Compile Include="XpcomTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DotGecko.Gecko.Interop\DotGecko.Gecko.Interop.csproj">
+      <Project>{F476D22E-11E6-4AC5-9243-034E068CBE82}</Project>
+      <Name>DotGecko.Gecko.Interop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DotGecko.Gecko\DotGecko.Gecko.csproj">
       <Project>{77F7C2BF-1597-4CB7-B14A-E3E0A49DB262}</Project>
       <Name>DotGecko.Gecko</Name>

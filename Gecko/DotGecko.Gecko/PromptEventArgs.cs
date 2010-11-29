@@ -218,11 +218,11 @@ namespace DotGecko.Gecko
 		{
 			m_AuthLevel = authLevel;
 			m_AuthFlags = (AuthFlags)authInformation.Flags;
-			m_Realm = XpcomString.Get(authInformation.GetRealm);
-			m_AuthScheme = XpcomString.Get(authInformation.GetAuthenticationScheme);
-			Username = XpcomString.Get(authInformation.GetUsername);
-			Password = XpcomString.Get(authInformation.GetPassword);
-			Domain = XpcomString.Get(authInformation.GetDomain);
+			m_Realm = XpcomStringHelper.Get(authInformation.GetRealm);
+			m_AuthScheme = XpcomStringHelper.Get(authInformation.GetAuthenticationScheme);
+			Username = XpcomStringHelper.Get(authInformation.GetUsername);
+			Password = XpcomStringHelper.Get(authInformation.GetPassword);
+			Domain = XpcomStringHelper.Get(authInformation.GetDomain);
 			m_CheckMsg = checkMsg;
 			CheckState = checkState;
 		}

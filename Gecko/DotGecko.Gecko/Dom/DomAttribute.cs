@@ -18,13 +18,13 @@ namespace DotGecko.Gecko.Dom
 			return domAttribute != null ? new DomAttribute(domAttribute) : null;
 		}
 
-		public String Name { get { return XpcomString.Get(m_DomAttribute.GetName); } }
+		public String Name { get { return XpcomStringHelper.Get(m_DomAttribute.GetName); } }
 
 		public Boolean Specified { get { return m_DomAttribute.Specified; } }
 
 		public String Value
 		{
-			get { return XpcomString.Get(m_DomAttribute.GetValue); }
+			get { return XpcomStringHelper.Get(m_DomAttribute.GetValue); }
 			set { m_DomAttribute.SetValue(value); }
 		}
 

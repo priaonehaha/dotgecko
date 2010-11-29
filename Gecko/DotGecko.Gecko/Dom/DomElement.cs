@@ -31,12 +31,12 @@ namespace DotGecko.Gecko.Dom
 
 		public String TagName
 		{
-			get { return XpcomString.Get(m_DomElement.GetTagName); }
+			get { return XpcomStringHelper.Get(m_DomElement.GetTagName); }
 		}
 
 		public String GetAttribute(String name)
 		{
-			String retval = XpcomString.Get(m_DomElement.GetAttribute, name);
+			String retval = XpcomStringHelper.Get(m_DomElement.GetAttribute, name);
 			return retval;
 		}
 
@@ -76,7 +76,7 @@ namespace DotGecko.Gecko.Dom
 
 		public String GetAttributeNS(String namespaceURI, String localName)
 		{
-			String retval = XpcomString.Get(m_DomElement.GetAttributeNS, namespaceURI, localName);
+			String retval = XpcomStringHelper.Get(m_DomElement.GetAttributeNS, namespaceURI, localName);
 			return retval;
 		}
 

@@ -23,7 +23,7 @@ namespace DotGecko.Gecko
 	{
 		static PreferencesService()
 		{
-			ms_PrefService = new Lazy<nsIPrefService>(() => Xpcom.GetService<nsIPrefService>(Xpcom.NS_PREFSERVICE_CONTRACTID));
+			ms_PrefService = new Lazy<nsIPrefService>(() => XpcomHelper.GetService<nsIPrefService>(Xpcom.NS_PREFSERVICE_CONTRACTID));
 			ms_UserRoot = new Lazy<PreferencesBranch>(() => GetUserBranch(String.Empty));
 			ms_DefaultRoot = new Lazy<PreferencesBranch>(() => GetDefaultBranch(String.Empty));
 		}

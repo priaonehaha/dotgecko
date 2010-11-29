@@ -143,7 +143,7 @@ namespace DotGecko.Gecko.Dom
 
 		public override String ToString()
 		{
-			return XpcomString.Get(m_DomRange.ToString);
+			return XpcomStringHelper.Get(m_DomRange.ToString);
 		}
 
 		public void Detach()

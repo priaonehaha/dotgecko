@@ -15,12 +15,12 @@ namespace DotGecko.Gecko
 			Boolean useHelperAppLauncherDialog = true,
 			Boolean useTooltipTextProvider = false)
 		{
-			Xpcom.InitEmbedding(binDirectory, appFileLocation);
+			XpcomHelper.InitEmbedding(binDirectory, appFileLocation);
 
 			if (useWindowCreator)
 			{
 				ms_WindowCreator = new WindowCreator();
-				var windowWatcher = Xpcom.GetService<nsIWindowWatcher>(Xpcom.NS_WINDOWWATCHER_CONTRACTID);
+				var windowWatcher = XpcomHelper.GetService<nsIWindowWatcher>(Xpcom.NS_WINDOWWATCHER_CONTRACTID);
 				windowWatcher.SetWindowCreator(ms_WindowCreator);
 			}
 
@@ -71,7 +71,7 @@ namespace DotGecko.Gecko
 				ms_TooltipTextProviderFactory.Dispose();
 			}
 
-			Xpcom.TermEmbedding();
+			XpcomHelper.TermEmbedding();
 		}
 
 		public WebBrowser(IWebBrowserContainer container)
@@ -79,7 +79,7 @@ namespace DotGecko.Gecko
 			m_Container = container;
 			m_Events = new EventHandlers<EventKey>(this);
 
-			var webBrowser = Xpcom.CreateInstance<nsIWebBrowser>(Xpcom.NS_WEBBROWSER_CONTRACTID);
+			var webBrowser = XpcomHelper.CreateInstance<nsIWebBrowser>(Xpcom.NS_WEBBROWSER_CONTRACTID);
 			this.AssignWebBrowser(webBrowser);
 
 			Container.GotFocus += ContainerGotFocus;
@@ -345,11 +345,11 @@ namespace DotGecko.Gecko
 			m_WebBrowser = webBrowser;
 			m_BaseWindow = (nsIBaseWindow)m_WebBrowser;
 			m_WebNavigation = new Lazy<nsIWebNavigation>(() => (nsIWebNavigation)m_WebBrowser);
-			m_WebProgress = new Lazy<nsIWebProgress>(() => Xpcom.RequestInterface<nsIWebProgress>(m_WebBrowser));
+			m_WebProgress = new Lazy<nsIWebProgress>(() => XpcomHelper.RequestInterface<nsIWebProgress>(m_WebBrowser));
 			m_WebBrowserFocus = new Lazy<nsIWebBrowserFocus>(() => (nsIWebBrowserFocus)m_WebBrowser);
-			m_CommandManager = new Lazy<nsICommandManager>(() => Xpcom.RequestInterface<nsICommandManager>(m_WebBrowser));
-			m_ClipboardCommands = new Lazy<ClipboardCommands>(() => new ClipboardCommands(Xpcom.RequestInterface<nsIClipboardCommands>(m_WebBrowser)));
-			m_DocShell = new Lazy<nsIDocShell>(() => Xpcom.RequestInterface<nsIDocShell>(m_WebBrowser));
+			m_CommandManager = new Lazy<nsICommandManager>(() => XpcomHelper.RequestInterface<nsICommandManager>(m_WebBrowser));
+			m_ClipboardCommands = new Lazy<ClipboardCommands>(() => new ClipboardCommands(XpcomHelper.RequestInterface<nsIClipboardCommands>(m_WebBrowser)));
+			m_DocShell = new Lazy<nsIDocShell>(() => XpcomHelper.RequestInterface<nsIDocShell>(m_WebBrowser));
 
 			m_WebBrowser.ContainerWindow = this;
 
@@ -423,7 +423,7 @@ namespace DotGecko.Gecko
 		{
 			if (domWindow != null)
 			{
-				var windowWatcher = Xpcom.GetService<nsIWindowWatcher>(Xpcom.NS_WINDOWWATCHER_CONTRACTID);
+				var windowWatcher = XpcomHelper.GetService<nsIWindowWatcher>(Xpcom.NS_WINDOWWATCHER_CONTRACTID);
 				if (windowWatcher != null)
 				{
 					nsIWebBrowserChrome webBrowserChrome = windowWatcher.GetChromeForWindow(domWindow);

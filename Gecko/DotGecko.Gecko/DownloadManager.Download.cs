@@ -47,7 +47,7 @@ namespace DotGecko.Gecko
 
 			public String DisplayName
 			{
-				get { return XpcomString.Get(m_Download.GetDisplayName); }
+				get { return XpcomStringHelper.Get(m_Download.GetDisplayName); }
 			}
 
 			public DateTime StartTime
@@ -65,7 +65,7 @@ namespace DotGecko.Gecko
 				get
 				{
 					nsIMIMEInfo mimeInfo = m_Download.MIMEInfo;
-					return XpcomString.Get(mimeInfo.GetMIMEType);
+					return XpcomStringHelper.Get(mimeInfo.GetMIMEType);
 				}
 			}
 

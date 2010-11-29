@@ -29,7 +29,7 @@ namespace DotGecko.Gecko
 			m_Context = context;
 			m_DomEvent = DomEvent.Create(contextMenuInfo.MouseEvent);
 			m_DomNode = DomNode.Create(contextMenuInfo.TargetNode);
-			String associaledLink = XpcomString.Get(contextMenuInfo.GetAssociatedLink);
+			String associaledLink = XpcomStringHelper.Get(contextMenuInfo.GetAssociatedLink);
 			Uri.TryCreate(associaledLink, UriKind.RelativeOrAbsolute, out m_AssociatedLink);
 		}
 

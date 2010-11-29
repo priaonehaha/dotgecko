@@ -20,9 +20,9 @@ namespace DotGecko.Gecko.Dom
 
 		public Uri PopupWindowUri { get { return m_DomPopupBlockedEvent.PopupWindowURI.ToUri(); } }
 
-		public String PopupWindowFeatures { get { return XpcomString.Get(m_DomPopupBlockedEvent.GetPopupWindowFeatures); } }
+		public String PopupWindowFeatures { get { return XpcomStringHelper.Get(m_DomPopupBlockedEvent.GetPopupWindowFeatures); } }
 
-		public String PopupWindowName { get { return XpcomString.Get(m_DomPopupBlockedEvent.GetPopupWindowName); } }
+		public String PopupWindowName { get { return XpcomStringHelper.Get(m_DomPopupBlockedEvent.GetPopupWindowName); } }
 
 		private readonly nsIDOMPopupBlockedEvent m_DomPopupBlockedEvent;
 	}

@@ -33,7 +33,7 @@ namespace DotGecko.Gecko
 
 		Boolean nsIURIContentListener.OnStartURIOpen(nsIURI aURI)
 		{
-			String uriSpec = XpcomString.Get(aURI.GetSpec);
+			String uriSpec = XpcomStringHelper.Get(aURI.GetSpec);
 
 			Trace.TraceInformation("nsIURIContentListener.OnStartURIOpen: \"{0}\"", uriSpec);
 
@@ -129,7 +129,7 @@ namespace DotGecko.Gecko
 			}
 
 			nsISupportsWeakReference supportsWeakReference;
-			if (Xpcom.TryQueryInterface(value, out supportsWeakReference))
+			if (XpcomHelper.TryQueryInterface(value, out supportsWeakReference))
 			{
 				m_ParentContentListener = null;
 				m_ParentContentListenerWeak = supportsWeakReference.GetWeakReference();

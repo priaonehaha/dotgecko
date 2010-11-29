@@ -18,11 +18,11 @@ namespace DotGecko.Gecko.Dom
 			return domProcessingInstruction != null ? new DomProcessingInstruction(domProcessingInstruction) : null;
 		}
 
-		public String Target { get { return XpcomString.Get(m_DomProcessingInstruction.GetTarget); } }
+		public String Target { get { return XpcomStringHelper.Get(m_DomProcessingInstruction.GetTarget); } }
 
 		public String Data
 		{
-			get { return XpcomString.Get(m_DomProcessingInstruction.GetData); }
+			get { return XpcomStringHelper.Get(m_DomProcessingInstruction.GetData); }
 			set { m_DomProcessingInstruction.SetData(value); }
 		}
 

@@ -34,7 +34,7 @@ namespace DotGecko.Gecko.Dom
 
 		public String Data
 		{
-			get { return XpcomString.Get(m_DomCharacterData.GetData); }
+			get { return XpcomStringHelper.Get(m_DomCharacterData.GetData); }
 			set { m_DomCharacterData.SetData(value); }
 		}
 		
@@ -42,7 +42,7 @@ namespace DotGecko.Gecko.Dom
 
 		public String SubstringData(UInt32 offset, UInt32 count)
 		{
-			String retval = XpcomString.Get(m_DomCharacterData.SubstringData, offset, count);
+			String retval = XpcomStringHelper.Get(m_DomCharacterData.SubstringData, offset, count);
 			return retval;
 		}
 

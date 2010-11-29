@@ -19,49 +19,49 @@ namespace DotGecko.Gecko.Dom
 
 		public String Hash
 		{
-			get { return XpcomString.Get(m_DomLocation.GetHash); }
+			get { return XpcomStringHelper.Get(m_DomLocation.GetHash); }
 			set { m_DomLocation.SetHash(value); }
 		}
 
 		public String Host
 		{
-			get { return XpcomString.Get(m_DomLocation.GetHost); }
+			get { return XpcomStringHelper.Get(m_DomLocation.GetHost); }
 			set { m_DomLocation.SetHost(value); }
 		}
 
 		public String Hostname
 		{
-			get { return XpcomString.Get(m_DomLocation.GetHostname); }
+			get { return XpcomStringHelper.Get(m_DomLocation.GetHostname); }
 			set { m_DomLocation.SetHostname(value); }
 		}
 
 		public String Href
 		{
-			get { return XpcomString.Get(m_DomLocation.GetHref); }
+			get { return XpcomStringHelper.Get(m_DomLocation.GetHref); }
 			set { m_DomLocation.SetHref(value); }
 		}
 
 		public String Pathname
 		{
-			get { return XpcomString.Get(m_DomLocation.GetPathname); }
+			get { return XpcomStringHelper.Get(m_DomLocation.GetPathname); }
 			set { m_DomLocation.SetPathname(value); }
 		}
 
 		public String Port
 		{
-			get { return XpcomString.Get(m_DomLocation.GetPort); }
+			get { return XpcomStringHelper.Get(m_DomLocation.GetPort); }
 			set { m_DomLocation.SetPort(value); }
 		}
 
 		public String Protocol
 		{
-			get { return XpcomString.Get(m_DomLocation.GetProtocol); }
+			get { return XpcomStringHelper.Get(m_DomLocation.GetProtocol); }
 			set { m_DomLocation.SetProtocol(value); }
 		}
 
 		public String Search
 		{
-			get { return XpcomString.Get(m_DomLocation.GetSearch); }
+			get { return XpcomStringHelper.Get(m_DomLocation.GetSearch); }
 			set { m_DomLocation.SetSearch(value); }
 		}
 
@@ -82,7 +82,7 @@ namespace DotGecko.Gecko.Dom
 
 		public override String ToString()
 		{
-			return XpcomString.Get(m_DomLocation.ToString);
+			return XpcomStringHelper.Get(m_DomLocation.ToString);
 		}
 
 		private readonly nsIDOMLocation m_DomLocation;

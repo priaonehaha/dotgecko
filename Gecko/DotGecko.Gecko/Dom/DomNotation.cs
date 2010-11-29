@@ -18,9 +18,9 @@ namespace DotGecko.Gecko.Dom
 			return domNotation != null ? new DomNotation(domNotation) : null;
 		}
 
-		public String PublicId { get { return XpcomString.Get(m_DomNotation.GetPublicId); } }
+		public String PublicId { get { return XpcomStringHelper.Get(m_DomNotation.GetPublicId); } }
 
-		public String SystemId { get { return XpcomString.Get(m_DomNotation.GetSystemId); } }
+		public String SystemId { get { return XpcomStringHelper.Get(m_DomNotation.GetSystemId); } }
 
 		private readonly nsIDOMNotation m_DomNotation;
 	}

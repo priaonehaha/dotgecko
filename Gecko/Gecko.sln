@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3198FC40
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotGecko.Gecko.Tests", "DotGecko.Gecko.Tests\DotGecko.Gecko.Tests.csproj", "{C1327526-7473-4085-A00B-66C00075AD9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotGecko.Gecko.Interop", "DotGecko.Gecko.Interop\DotGecko.Gecko.Interop.csproj", "{F476D22E-11E6-4AC5-9243-034E068CBE82}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Gecko.vsmdi
@@ -38,6 +40,10 @@ Global
 		{C1327526-7473-4085-A00B-66C00075AD9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1327526-7473-4085-A00B-66C00075AD9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1327526-7473-4085-A00B-66C00075AD9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F476D22E-11E6-4AC5-9243-034E068CBE82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F476D22E-11E6-4AC5-9243-034E068CBE82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F476D22E-11E6-4AC5-9243-034E068CBE82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F476D22E-11E6-4AC5-9243-034E068CBE82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -37,11 +37,11 @@ namespace DotGecko.Gecko
 	{
 		static DownloadManager()
 		{
-			ms_DownloadManager = Xpcom.GetService<nsIDownloadManager>(Xpcom.NS_DOWNLOADMANAGER_CONTRACTID);
+			ms_DownloadManager = XpcomHelper.GetService<nsIDownloadManager>(Xpcom.NS_DOWNLOADMANAGER_CONTRACTID);
 			ms_DownloadProgressListener = new DownloadProgressListener();
 			ms_DownloadManager.AddListener(ms_DownloadProgressListener);
 
-			var observerService = Xpcom.GetService<nsIObserverService>(Xpcom.NS_OBSERVERSERVICE_CONTRACTID);
+			var observerService = XpcomHelper.GetService<nsIObserverService>(Xpcom.NS_OBSERVERSERVICE_CONTRACTID);
 			observerService.AddObserver(ms_DownloadProgressListener, "download-manager-remove-download", false);
 
 			ms_DownloadManagerPreferences = new Lazy<PreferencesBranch>(() => PreferencesService.GetUserBranch("browser.download.manager"));

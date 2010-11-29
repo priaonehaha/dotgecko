@@ -23,11 +23,11 @@ namespace DotGecko.Gecko.Dom
 
 		public Int32 Length { get { return m_DomHistory.Length; } }
 
-		public String Current { get { return XpcomString.Get(m_DomHistory.GetCurrent); } }
+		public String Current { get { return XpcomStringHelper.Get(m_DomHistory.GetCurrent); } }
 
-		public String Previous { get { return XpcomString.Get(m_DomHistory.GetPrevious); } }
+		public String Previous { get { return XpcomStringHelper.Get(m_DomHistory.GetPrevious); } }
 
-		public String Next { get { return XpcomString.Get(m_DomHistory.GetNext); } }
+		public String Next { get { return XpcomStringHelper.Get(m_DomHistory.GetNext); } }
 
 		public void Back()
 		{
@@ -49,7 +49,7 @@ namespace DotGecko.Gecko.Dom
 		{
 			get
 			{
-				String retval = XpcomString.Get(m_DomHistory.Item, index);
+				String retval = XpcomStringHelper.Get(m_DomHistory.Item, index);
 				return retval;
 			}
 		}

@@ -39,7 +39,7 @@ namespace DotGecko.Gecko.Dom
 			return new DomEvent(domEvent);
 		}
 
-		public String Type { get { return XpcomString.Get(m_DomEvent.GetType); } }
+		public String Type { get { return XpcomStringHelper.Get(m_DomEvent.GetType); } }
 
 		public Object Target { get { return m_DomEvent.Target; } }
 

@@ -26,7 +26,7 @@ namespace DotGecko.Gecko.Interop
 			if (!IsRegistered)
 			{
 				Type targetType = typeof(T);
-				Xpcom.ComponentRegistrar.RegisterFactory(targetType.GUID, targetType.FullName, ContractId, this);
+				XpcomHelper.ComponentRegistrar.RegisterFactory(targetType.GUID, targetType.FullName, ContractId, this);
 				m_IsRegistered = true;
 			}
 		}
@@ -36,7 +36,7 @@ namespace DotGecko.Gecko.Interop
 			if (IsRegistered)
 			{
 				Type targetType = typeof(T);
-				Xpcom.ComponentRegistrar.UnregisterFactory(targetType.GUID, this);
+				XpcomHelper.ComponentRegistrar.UnregisterFactory(targetType.GUID, this);
 				m_IsRegistered = false;
 			}
 		}

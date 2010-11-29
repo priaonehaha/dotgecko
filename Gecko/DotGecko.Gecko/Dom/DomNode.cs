@@ -77,12 +77,12 @@ namespace DotGecko.Gecko.Dom
 
 		public String NodeName
 		{
-			get { return XpcomString.Get(m_DomNode.GetNodeName); }
+			get { return XpcomStringHelper.Get(m_DomNode.GetNodeName); }
 		}
 
 		public String NodeValue
 		{
-			get { return XpcomString.Get(m_DomNode.GetNodeValue); }
+			get { return XpcomStringHelper.Get(m_DomNode.GetNodeValue); }
 			set { m_DomNode.SetNodeValue(value); }
 		}
 
@@ -154,18 +154,18 @@ namespace DotGecko.Gecko.Dom
 
 		public String NamespaceURI
 		{
-			get { return XpcomString.Get(m_DomNode.GetNamespaceURI); }
+			get { return XpcomStringHelper.Get(m_DomNode.GetNamespaceURI); }
 		}
 
 		public String Prefix
 		{
-			get { return XpcomString.Get(m_DomNode.GetPrefix); }
+			get { return XpcomStringHelper.Get(m_DomNode.GetPrefix); }
 			set { m_DomNode.SetPrefix(value); }
 		}
 
 		public String LocalName
 		{
-			get { return XpcomString.Get(m_DomNode.GetLocalName); }
+			get { return XpcomStringHelper.Get(m_DomNode.GetLocalName); }
 		}
 
 		public Boolean HasAttributes

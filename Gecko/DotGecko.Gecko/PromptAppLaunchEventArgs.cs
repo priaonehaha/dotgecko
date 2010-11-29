@@ -12,21 +12,21 @@ namespace DotGecko.Gecko
 
 		public Uri Source { get { return m_Launcher.Source.ToUri(); } }
 
-		public String SuggestedFileName { get { return XpcomString.Get(m_Launcher.GetSuggestedFileName); } }
+		public String SuggestedFileName { get { return XpcomStringHelper.Get(m_Launcher.GetSuggestedFileName); } }
 
-		public String TargetFile { get { return XpcomString.Get(m_Launcher.TargetFile.GetPath); } }
+		public String TargetFile { get { return XpcomStringHelper.Get(m_Launcher.TargetFile.GetPath); } }
 
 		public Boolean TargetFileIsExecutable { get { return m_Launcher.TargetFileIsExecutable; } }
 
 		public void SaveToDisk(String fileName)
 		{
-			nsILocalFile file = Xpcom.NewNativeLocalFile(fileName);
+			nsILocalFile file = XpcomHelper.NewNativeLocalFile(fileName);
 			m_Launcher.SaveToDisk(file, false);
 		}
 
 		public void LaunchWithApplication(String appFileName)
 		{
-			nsILocalFile appFile = Xpcom.NewNativeLocalFile(appFileName);
+			nsILocalFile appFile = XpcomHelper.NewNativeLocalFile(appFileName);
 			m_Launcher.LaunchWithApplication(appFile, false);
 		}
 

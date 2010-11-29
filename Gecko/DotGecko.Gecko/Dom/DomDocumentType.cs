@@ -18,17 +18,17 @@ namespace DotGecko.Gecko.Dom
 			return domDocumentType != null ? new DomDocumentType(domDocumentType) : null;
 		}
 
-		public String Name { get { return XpcomString.Get(m_DomDocumentType.GetName); } }
+		public String Name { get { return XpcomStringHelper.Get(m_DomDocumentType.GetName); } }
 
 		public DomNamedNodeMap Entities { get { return DomNamedNodeMap.Create(m_DomDocumentType.Entities); } }
 
 		public DomNamedNodeMap Notations { get { return DomNamedNodeMap.Create(m_DomDocumentType.Notations); } }
 
-		public String PublicId { get { return XpcomString.Get(m_DomDocumentType.GetPublicId); } }
+		public String PublicId { get { return XpcomStringHelper.Get(m_DomDocumentType.GetPublicId); } }
 
-		public String SystemId { get { return XpcomString.Get(m_DomDocumentType.GetSystemId); } }
+		public String SystemId { get { return XpcomStringHelper.Get(m_DomDocumentType.GetSystemId); } }
 
-		public String InternalSubset { get { return XpcomString.Get(m_DomDocumentType.GetInternalSubset); } }
+		public String InternalSubset { get { return XpcomStringHelper.Get(m_DomDocumentType.GetInternalSubset); } }
 
 		new internal nsIDOMDocumentType DomObj { get { return m_DomDocumentType; } }
 

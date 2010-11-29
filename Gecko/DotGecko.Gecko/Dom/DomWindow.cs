@@ -74,7 +74,7 @@ namespace DotGecko.Gecko.Dom
 
 		public String Name
 		{
-			get { return XpcomString.Get(m_DomWindow.GetName); }
+			get { return XpcomStringHelper.Get(m_DomWindow.GetName); }
 			set { m_DomWindow.SetName(value); }
 		}
 

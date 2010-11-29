@@ -20,31 +20,31 @@ namespace DotGecko.Gecko.Dom
 
 		public String Id
 		{
-			get { return XpcomString.Get(m_DomHtmlElement.GetId); }
+			get { return XpcomStringHelper.Get(m_DomHtmlElement.GetId); }
 			set { m_DomHtmlElement.SetId(value); }
 		}
 
 		public String Title
 		{
-			get { return XpcomString.Get(m_DomHtmlElement.GetTitle); }
+			get { return XpcomStringHelper.Get(m_DomHtmlElement.GetTitle); }
 			set { m_DomHtmlElement.SetTitle(value); }
 		}
 
 		public String Lang
 		{
-			get { return XpcomString.Get(m_DomHtmlElement.GetLang); }
+			get { return XpcomStringHelper.Get(m_DomHtmlElement.GetLang); }
 			set { m_DomHtmlElement.SetLang(value); }
 		}
 
 		public String Dir
 		{
-			get { return XpcomString.Get(m_DomHtmlElement.GetDir); }
+			get { return XpcomStringHelper.Get(m_DomHtmlElement.GetDir); }
 			set { m_DomHtmlElement.SetDir(value); }
 		}
 
 		public String ClassName
 		{
-			get { return XpcomString.Get(m_DomHtmlElement.GetClassName); }
+			get { return XpcomStringHelper.Get(m_DomHtmlElement.GetClassName); }
 			set { m_DomHtmlElement.SetClassName(value); }
 		}
 

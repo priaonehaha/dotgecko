@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F476D22E-11E6-4AC5-9243-034E068CBE82}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DotGecko.Gecko.Interop</RootNamespace>
+    <AssemblyName>DotGecko.Gecko.Interop</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\DotGecko.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIAppShell.cs" />
+    <Compile Include="nsIArray.cs" />
+    <Compile Include="nsIAtom.cs" />
+    <Compile Include="nsIAuthInformation.cs" />
+    <Compile Include="nsIAuthPrompt.cs" />
+    <Compile Include="nsIAuthPrompt2.cs" />
+    <Compile Include="nsIAuthPromptCallback.cs" />
+    <Compile Include="nsIBaseWindow.cs" />
+    <Compile Include="nsIBinaryInputStream.cs" />
+    <Compile Include="nsIBinaryOutputStream.cs" />
+    <Compile Include="nsICancelable.cs" />
+    <Compile Include="nsIChannel.cs" />
+    <Compile Include="nsIClassInfo.cs" />
+    <Compile Include="nsIClipboardCommands.cs" />
+    <Compile Include="nsICollection.cs" />
+    <Compile Include="nsICommandManager.cs" />
+    <Compile Include="nsICommandParams.cs" />
+    <Compile Include="nsIComponentManager.cs" />
+    <Compile Include="nsIComponentRegistrar.cs" />
+    <Compile Include="nsIContainerBoxObject.cs" />
+    <Compile Include="nsIContentViewer.cs" />
+    <Compile Include="nsIContextMenuListener.cs" />
+    <Compile Include="nsIContextMenuListener2.cs" />
+    <Compile Include="nsIController.cs" />
+    <Compile Include="nsIControllers.cs" />
+    <Compile Include="nsIDebug.cs" />
+    <Compile Include="nsIDirectoryService.cs" />
+    <Compile Include="nsIDocShell.cs" />
+    <Compile Include="nsIDocShellLoadInfo.cs" />
+    <Compile Include="nsIDocShellTreeItem.cs" />
+    <Compile Include="nsIDocShellTreeNode.cs" />
+    <Compile Include="nsIDocShellTreeOwner.cs" />
+    <Compile Include="nsIDocumentCharsetInfo.cs" />
+    <Compile Include="nsIDOMAbstractView.cs" />
+    <Compile Include="nsIDOMAttr.cs" />
+    <Compile Include="nsIDOMBarProp.cs" />
+    <Compile Include="nsIDOMCanvasRenderingContext2D.cs" />
+    <Compile Include="nsIDOMCDATASection.cs" />
+    <Compile Include="nsIDOMCharacterData.cs" />
+    <Compile Include="nsIDOMComment.cs" />
+    <Compile Include="nsIDOMCRMFObject.cs" />
+    <Compile Include="nsIDOMCrypto.cs" />
+    <Compile Include="nsIDOMDocument.cs" />
+    <Compile Include="nsIDOMDocumentFragment.cs" />
+    <Compile Include="nsIDOMDocumentType.cs" />
+    <Compile Include="nsIDOMDocumentView.cs" />
+    <Compile Include="nsIDOMDOMImplementation.cs" />
+    <Compile Include="nsIDOMDOMStringList.cs" />
+    <Compile Include="nsIDOMElement.cs" />
+    <Compile Include="nsIDOMEntity.cs" />
+    <Compile Include="nsIDOMEntityReference.cs" />
+    <Compile Include="nsIDOMEvent.cs" />
+    <Compile Include="nsIDOMEventListener.cs" />
+    <Compile Include="nsIDOMEventTarget.cs" />
+    <Compile Include="nsIDOMHistory.cs" />
+    <Compile Include="nsIDOMHTMLCanvasElement.cs" />
+    <Compile Include="nsIDOMHTMLElement.cs" />
+    <Compile Include="nsIDOMKeyEvent.cs" />
+    <Compile Include="nsIDOMLocation.cs" />
+    <Compile Include="nsIDOMMimeType.cs" />
+    <Compile Include="nsIDOMMimeTypeArray.cs" />
+    <Compile Include="nsIDOMMouseEvent.cs" />
+    <Compile Include="nsIDOMNamedNodeMap.cs" />
+    <Compile Include="nsIDOMNavigator.cs" />
+    <Compile Include="nsIDOMNode.cs" />
+    <Compile Include="nsIDOMNodeList.cs" />
+    <Compile Include="nsIDOMNotation.cs" />
+    <Compile Include="nsIDOMOfflineResourceList.cs" />
+    <Compile Include="nsIDOMPkcs11.cs" />
+    <Compile Include="nsIDOMPlugin.cs" />
+    <Compile Include="nsIDOMPluginArray.cs" />
+    <Compile Include="nsIDOMPopupBlockedEvent.cs" />
+    <Compile Include="nsIDOMProcessingInstruction.cs" />
+    <Compile Include="nsIDOMRange.cs" />
+    <Compile Include="nsIDOMScreen.cs" />
+    <Compile Include="nsIDOMStorage.cs" />
+    <Compile Include="nsIDOMText.cs" />
+    <Compile Include="nsIDOMUIEvent.cs" />
+    <Compile Include="nsIDOMWindow.cs" />
+    <Compile Include="nsIDOMWindow2.cs" />
+    <Compile Include="nsIDOMWindowCollection.cs" />
+    <Compile Include="nsIDOMWindowInternal.cs" />
+    <Compile Include="nsIDOMWindowUtils.cs" />
+    <Compile Include="nsIDownload.cs" />
+    <Compile Include="nsIDownloader.cs" />
+    <Compile Include="nsIDownloadHistory.cs" />
+    <Compile Include="nsIDownloadManager.cs" />
+    <Compile Include="nsIDownloadManagerUI.cs" />
+    <Compile Include="nsIDownloadProgressListener.cs" />
+    <Compile Include="nsIEmbeddingSiteWindow.cs" />
+    <Compile Include="nsIEmbeddingSiteWindow2.cs" />
+    <Compile Include="nsIEnumerator.cs" />
+    <Compile Include="nsIExternalHelperAppService.cs" />
+    <Compile Include="nsIFactory.cs" />
+    <Compile Include="nsIFaviconService.cs" />
+    <Compile Include="nsIFile.cs" />
+    <Compile Include="nsIFilePicker.cs" />
+    <Compile Include="nsIHelperAppLauncherDialog.cs" />
+    <Compile Include="nsIHistoryEntry.cs" />
+    <Compile Include="nsIInputStream.cs" />
+    <Compile Include="nsIInterfaceRequestor.cs" />
+    <Compile Include="nsIIOService.cs" />
+    <Compile Include="nsIIOService2.cs" />
+    <Compile Include="nsILoadGroup.cs" />
+    <Compile Include="nsILocalFile.cs" />
+    <Compile Include="nsIMarkupDocumentViewer.cs" />
+    <Compile Include="nsIMemory.cs" />
+    <Compile Include="nsIMIMEInfo.cs" />
+    <Compile Include="nsIModule.cs" />
+    <Compile Include="nsIMutableArray.cs" />
+    <Compile Include="nsINonBlockingAlertService.cs" />
+    <Compile Include="nsIntMargin.cs" />
+    <Compile Include="nsIntRect.cs" />
+    <Compile Include="nsIObjectInputStream.cs" />
+    <Compile Include="nsIObjectOutputStream.cs" />
+    <Compile Include="nsIObserver.cs" />
+    <Compile Include="nsIObserverService.cs" />
+    <Compile Include="nsIOutputStream.cs" />
+    <Compile Include="nsIPermission.cs" />
+    <Compile Include="nsIPermissionManager.cs" />
+    <Compile Include="nsIPopupWindowManager.cs" />
+    <Compile Include="nsIPrefBranch.cs" />
+    <Compile Include="nsIPrefBranch2.cs" />
+    <Compile Include="nsIPrefService.cs" />
+    <Compile Include="nsIPrincipal.cs" />
+    <Compile Include="nsIPrintSettings.cs" />
+    <Compile Include="nsIProgressEventSink.cs" />
+    <Compile Include="nsIPrompt.cs" />
+    <Compile Include="nsIPromptFactory.cs" />
+    <Compile Include="nsIPromptService.cs" />
+    <Compile Include="nsIPromptService2.cs" />
+    <Compile Include="nsIProtocolHandler.cs" />
+    <Compile Include="nsIQueryContentEventResult.cs" />
+    <Compile Include="nsIRequest.cs" />
+    <Compile Include="nsIRequestObserver.cs" />
+    <Compile Include="nsISecureBrowserUI.cs" />
+    <Compile Include="nsISelection.cs" />
+    <Compile Include="nsISerializable.cs" />
+    <Compile Include="nsIServiceManager.cs" />
+    <Compile Include="nsISHEntry.cs" />
+    <Compile Include="nsISHistory.cs" />
+    <Compile Include="nsISHistoryListener.cs" />
+    <Compile Include="nsISimpleEnumerator.cs" />
+    <Compile Include="nsIStreamListener.cs" />
+    <Compile Include="nsIStringEnumerator.cs" />
+    <Compile Include="nsISupportsArray.cs" />
+    <Compile Include="nsISupportsIterators.cs" />
+    <Compile Include="nsISupportsPrimitives.cs" />
+    <Compile Include="nsITooltipListener.cs" />
+    <Compile Include="nsITooltipTextProvider.cs" />
+    <Compile Include="nsITraceRefcnt.cs" />
+    <Compile Include="nsITransfer.cs" />
+    <Compile Include="nsIURI.cs" />
+    <Compile Include="nsIURIContentListener.cs" />
+    <Compile Include="nsIVariant.cs" />
+    <Compile Include="nsIWeakReference.cs" />
+    <Compile Include="nsIWebBrowser.cs" />
+    <Compile Include="nsIWebBrowserChrome.cs" />
+    <Compile Include="nsIWebBrowserChrome2.cs" />
+    <Compile Include="nsIWebBrowserFocus.cs" />
+    <Compile Include="nsIWebBrowserPersist.cs" />
+    <Compile Include="nsIWebNavigation.cs" />
+    <Compile Include="nsIWebProgress.cs" />
+    <Compile Include="nsIWebProgressListener.cs" />
+    <Compile Include="nsIWebProgressListener2.cs" />
+    <Compile Include="nsIWindowCreator.cs" />
+    <Compile Include="nsIWindowCreator2.cs" />
+    <Compile Include="nsIWindowMediator.cs" />
+    <Compile Include="nsIWindowMediatorListener.cs" />
+    <Compile Include="nsIWindowProvider.cs" />
+    <Compile Include="nsIWindowWatcher.cs" />
+    <Compile Include="nsIXULAppInfo.cs" />
+    <Compile Include="nsIXULBrowserWindow.cs" />
+    <Compile Include="nsIXULWindow.cs" />
+    <Compile Include="nsResult.cs" />
+    <Compile Include="nsStringExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Xpcom.cs" />
+    <Compile Include="Xpcom.IDs.cs" />
+    <Compile Include="Xpcom.nsAppDirectoryServiceDefs.cs" />
+    <Compile Include="Xpcom.nsEmbedCID.cs" />
+    <Compile Include="Xpcom.nsNetCID.cs" />
+    <Compile Include="Xpcom.nsToolkitCompsCID.cs" />
+    <Compile Include="Xpcom.nsXPCOMCID.cs" />
+    <Compile Include="Xpcom.Strings.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XpcomString.cs" />
+    <Compile Include="XpcomStringMarshalers.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

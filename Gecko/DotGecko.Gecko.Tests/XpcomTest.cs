@@ -9,31 +9,31 @@ namespace DotGecko.Gecko.Tests
 		[AssemblyInitialize]
 		public static void InitializeXpcom(TestContext testContext)
 		{
-			Xpcom.InitEmbedding(@"c:\xulrunner", null);
+			XpcomHelper.InitEmbedding(@"c:\xulrunner", null);
 		}
 
 		[AssemblyCleanup]
 		public static void TerminateXpcom()
 		{
-			Xpcom.TermEmbedding();
+			XpcomHelper.TermEmbedding();
 		}
 
 		[TestMethod]
 		public void HasServiceManager()
 		{
-			Assert.IsNotNull(Xpcom.ServiceManager);
+			Assert.IsNotNull(XpcomHelper.ServiceManager);
 		}
 
 		[TestMethod]
 		public void HasComponentManager()
 		{
-			Assert.IsNotNull(Xpcom.ComponentManager);
+			Assert.IsNotNull(XpcomHelper.ComponentManager);
 		}
 
 		[TestMethod]
 		public void HasComponentRegistrar()
 		{
-			Assert.IsNotNull(Xpcom.ComponentRegistrar);
+			Assert.IsNotNull(XpcomHelper.ComponentRegistrar);
 		}
 	}
 }

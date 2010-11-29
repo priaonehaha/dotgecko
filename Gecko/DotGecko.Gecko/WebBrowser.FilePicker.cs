@@ -86,13 +86,13 @@ namespace DotGecko.Gecko
 			{
 				get
 				{
-					return this.m_FilePickerEventArgs != null ? Xpcom.NewNativeLocalFile(this.m_FilePickerEventArgs.InitialDirectory) : null;
+					return this.m_FilePickerEventArgs != null ? XpcomHelper.NewNativeLocalFile(this.m_FilePickerEventArgs.InitialDirectory) : null;
 				}
 				set
 				{
 					if (m_FilePickerEventArgs != null)
 					{
-						this.m_FilePickerEventArgs.InitialDirectory = value != null ? XpcomString.Get(value.GetPath) : null;
+						this.m_FilePickerEventArgs.InitialDirectory = value != null ? XpcomStringHelper.Get(value.GetPath) : null;
 					}
 				}
 			}
@@ -101,7 +101,7 @@ namespace DotGecko.Gecko
 			{
 				get
 				{
-					return this.m_FilePickerEventArgs != null ? Xpcom.NewNativeLocalFile(this.m_FilePickerEventArgs.File) : null;
+					return this.m_FilePickerEventArgs != null ? XpcomHelper.NewNativeLocalFile(this.m_FilePickerEventArgs.File) : null;
 				}
 			}
 
@@ -123,7 +123,7 @@ namespace DotGecko.Gecko
 				{
 					if (m_FilePickerEventArgs != null)
 					{
-						return new SimpleEnumerator<String, nsILocalFile>(m_FilePickerEventArgs.Files, input => Xpcom.NewNativeLocalFile(input));
+						return new SimpleEnumerator<String, nsILocalFile>(m_FilePickerEventArgs.Files, input => XpcomHelper.NewNativeLocalFile(input));
 					}
 					return null;
 				}

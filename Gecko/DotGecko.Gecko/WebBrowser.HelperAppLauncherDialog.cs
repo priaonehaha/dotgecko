@@ -63,7 +63,7 @@ namespace DotGecko.Gecko
 				}
 
 				nsIDocShellTreeOwner docShellTreeOwner = ((nsIDocShellTreeItem)windowContext).TreeOwner;
-				var browser = Xpcom.RequestInterface<nsIEmbeddingSiteWindow>(docShellTreeOwner) as WebBrowser;
+				var browser = XpcomHelper.RequestInterface<nsIEmbeddingSiteWindow>(docShellTreeOwner) as WebBrowser;
 				return browser;
 			}
 		}
