@@ -44,11 +44,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="nsIAppShell.cs" />
@@ -240,6 +235,150 @@
     </Compile>
     <Compile Include="XpcomString.cs" />
     <Compile Include="XpcomStringMarshalers.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="mozIJSSubScriptLoader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIASN1Object.cs" />
+    <Compile Include="nsIASN1Sequence.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsICategoryManager.cs" />
+    <Compile Include="nsICertificateDialogs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIX509Cert.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIX509CertValidity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsICRLInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsICookie.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIStandardURL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIMutable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIURL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIDOMLoadStatus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIAlertsService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsICookiePromptService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIStyleSheetService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsICookieManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIDOMCSSPrimitiveValue.cs" />
+    <Compile Include="nsIDOMCounter.cs" />
+    <Compile Include="nsIDOMCSSRule.cs" />
+    <Compile Include="nsIDOMCSSRuleList.cs" />
+    <Compile Include="nsIDOMCSSStyleDeclaration.cs" />
+    <Compile Include="nsIDOMCSSStyleSheet.cs" />
+    <Compile Include="nsIDOMCSSValue.cs" />
+    <Compile Include="nsIDOMCSSValueList.cs" />
+    <Compile Include="nsIDOMDocumentEvent.cs" />
+    <Compile Include="nsIDOMDocumentRange.cs" />
+    <Compile Include="nsIDOMDocumentStyle.cs" />
+    <Compile Include="nsIDOMDOMException.cs" />
+    <Compile Include="nsIDOMElementCSSInlineStyle.cs" />
+    <Compile Include="nsIDOMHTMLAnchorElement.cs" />
+    <Compile Include="nsIDOMHTMLAppletElement.cs" />
+    <Compile Include="nsIDOMHTMLAreaElement.cs" />
+    <Compile Include="nsIDOMHTMLBaseElement.cs" />
+    <Compile Include="nsIDOMHTMLBaseFontElement.cs" />
+    <Compile Include="nsIDOMHTMLBodyElement.cs" />
+    <Compile Include="nsIDOMHTMLBRElement.cs" />
+    <Compile Include="nsIDOMHTMLButtonElement.cs" />
+    <Compile Include="nsIDOMHTMLCollection.cs" />
+    <Compile Include="nsIDOMHTMLDirectoryElement.cs" />
+    <Compile Include="nsIDOMHTMLDivElement.cs" />
+    <Compile Include="nsIDOMHTMLDListElement.cs" />
+    <Compile Include="nsIDOMHTMLDocument.cs" />
+    <Compile Include="nsIDOMHTMLEmbedElement.cs" />
+    <Compile Include="nsIDOMHTMLFieldSetElement.cs" />
+    <Compile Include="nsIDOMHTMLFontElement.cs" />
+    <Compile Include="nsIDOMHTMLFormElement.cs" />
+    <Compile Include="nsIDOMHTMLFrameElement.cs" />
+    <Compile Include="nsIDOMHTMLFrameSetElement.cs" />
+    <Compile Include="nsIDOMHTMLHeadElement.cs" />
+    <Compile Include="nsIDOMHTMLHeadingElement.cs" />
+    <Compile Include="nsIDOMHTMLHRElement.cs" />
+    <Compile Include="nsIDOMHTMLHtmlElement.cs" />
+    <Compile Include="nsIDOMHTMLIFrameElement.cs" />
+    <Compile Include="nsIDOMHTMLImageElement.cs" />
+    <Compile Include="nsIDOMHTMLInputElement.cs" />
+    <Compile Include="nsIDOMHTMLIsIndexElement.cs" />
+    <Compile Include="nsIDOMHTMLLabelElement.cs" />
+    <Compile Include="nsIDOMHTMLLegendElement.cs" />
+    <Compile Include="nsIDOMHTMLLIElement.cs" />
+    <Compile Include="nsIDOMHTMLLinkElement.cs" />
+    <Compile Include="nsIDOMHTMLMapElement.cs" />
+    <Compile Include="nsIDOMHTMLMenuElement.cs" />
+    <Compile Include="nsIDOMHTMLMetaElement.cs" />
+    <Compile Include="nsIDOMHTMLModElement.cs" />
+    <Compile Include="nsIDOMHTMLObjectElement.cs" />
+    <Compile Include="nsIDOMHTMLOListElement.cs" />
+    <Compile Include="nsIDOMHTMLOptGroupElement.cs" />
+    <Compile Include="nsIDOMHTMLOptionElement.cs" />
+    <Compile Include="nsIDOMHTMLOptionsCollection.cs" />
+    <Compile Include="nsIDOMHTMLParagraphElement.cs" />
+    <Compile Include="nsIDOMHTMLParamElement.cs" />
+    <Compile Include="nsIDOMHTMLPreElement.cs" />
+    <Compile Include="nsIDOMHTMLQuoteElement.cs" />
+    <Compile Include="nsIDOMHTMLScriptElement.cs" />
+    <Compile Include="nsIDOMHTMLSelectElement.cs" />
+    <Compile Include="nsIDOMHTMLStyleElement.cs" />
+    <Compile Include="nsIDOMHTMLTableCaptionElem.cs" />
+    <Compile Include="nsIDOMHTMLTableCellElement.cs" />
+    <Compile Include="nsIDOMHTMLTableColElement.cs" />
+    <Compile Include="nsIDOMHTMLTableElement.cs" />
+    <Compile Include="nsIDOMHTMLTableRowElement.cs" />
+    <Compile Include="nsIDOMHTMLTableSectionElem.cs" />
+    <Compile Include="nsIDOMHTMLTextAreaElement.cs" />
+    <Compile Include="nsIDOMHTMLTitleElement.cs" />
+    <Compile Include="nsIDOMHTMLUListElement.cs" />
+    <Compile Include="nsIDOMMediaList.cs" />
+    <Compile Include="nsIDOMStyleSheet.cs" />
+    <Compile Include="nsIDOMStyleSheetList.cs" />
+    <Compile Include="nsIFileURL.cs" />
+    <Compile Include="nsIGlobalHistory.cs" />
+    <Compile Include="nsIHashable.cs" />
+    <Compile Include="nsIGlobalHistory2.cs" />
+    <Compile Include="nsIGlobalHistory3.cs" />
+    <Compile Include="nsIHttpChannel.cs" />
+    <Compile Include="nsIHttpHeaderVisitor.cs" />
+    <Compile Include="nsIPrefLocalizedString.cs" />
+    <Compile Include="nsIProfile.cs" />
+    <Compile Include="nsIProgrammingLanguage.cs" />
+    <Compile Include="nsIProperties.cs" />
+    <Compile Include="nsIScriptableInputStream.cs" />
+    <Compile Include="nsISecurityWarningDialogs.cs" />
+    <Compile Include="nsIUnicharStreamListener.cs" />
+    <Compile Include="nsIUploadChannel.cs" />
+    <Compile Include="nsIWebBrowserChromeFocus.cs" />
+    <Compile Include="nsIWebBrowserFind.cs" />
+    <Compile Include="nsIWebBrowserPrint.cs" />
+    <Compile Include="nsIWebBrowserSetup.cs" />
+    <Compile Include="nsIWebBrowserStream.cs" />
+    <Compile Include="nsIX509CertDB.cs" />
+    <Compile Include="nsIDOMRect.cs" />
+    <Compile Include="nsIDOMRGBColor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
