@@ -62,6 +62,24 @@ namespace DotGecko.Gecko.Tests
 		}
 
 		[TestMethod]
+		public void CheckInterfaceMembers()
+		{
+			foreach (Type interfaceType in ms_Interfaces)
+			{
+				MethodInfo[] interfaceMethods = interfaceType
+					.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance)
+					.OrderBy(Marshal.GetComSlotForMethodInfo)
+					.ToArray();
+				foreach (MethodInfo interfaceMethod in interfaceMethods)
+				{
+					String methodName = interfaceMethod.Name;
+					Int32 firstSymbolIndex = interfaceMethod.IsSpecialName ? 4 : 0;
+					Assert.IsTrue(Char.IsUpper(methodName, firstSymbolIndex), "First name symbol must be upper case ({0}.{1})", interfaceType.Name, methodName);
+				}
+			}
+		}
+
+		[TestMethod]
 		public void CheckInheritedInterfaceMembers()
 		{
 			foreach (Type interfaceType in ms_Interfaces)

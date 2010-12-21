@@ -221,6 +221,7 @@
     <Compile Include="nsIXULBrowserWindow.cs" />
     <Compile Include="nsIXULWindow.cs" />
     <Compile Include="nsResult.cs" />
+    <Compile Include="nsSize.cs" />
     <Compile Include="nsStringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xpcom.cs" />
@@ -379,6 +380,71 @@
     <Compile Include="nsIX509CertDB.cs" />
     <Compile Include="nsIDOMRect.cs" />
     <Compile Include="nsIDOMRGBColor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIAccessible.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIAccessibleRelation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIPersistentProperties2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsINavHistoryService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIWritablePropertyBag.cs" />
+    <Compile Include="nsIWritablePropertyBag2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIPropertyBag.cs" />
+    <Compile Include="nsIPropertyBag2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="mozIStorageService.cs" />
+    <Compile Include="mozIStorageConnection.cs" />
+    <Compile Include="mozIStorageStatement.cs" />
+    <Compile Include="mozIStorageValueArray.cs" />
+    <Compile Include="mozIStorageBindingParamsArray.cs" />
+    <Compile Include="mozIStorageBindingParams.cs" />
+    <Compile Include="mozIStorageFunction.cs" />
+    <Compile Include="mozIStoragePendingStatement.cs" />
+    <Compile Include="mozIStorageAggregateFunction.cs" />
+    <Compile Include="mozIStorageProgressHandler.cs" />
+    <Compile Include="mozIStorageStatementCallback.cs" />
+    <Compile Include="mozIStorageError.cs" />
+    <Compile Include="mozIStorageResultSet.cs" />
+    <Compile Include="mozIStorageRow.cs" />
+    <Compile Include="nsIAppShellService.cs" />
+    <Compile Include="nsIAtomService.cs" />
+    <Compile Include="nsIBlocklistService.cs" />
+    <Compile Include="nsICookieService.cs" />
+    <Compile Include="nsIDNSService.cs" />
+    <Compile Include="nsIDNSListener.cs" />
+    <Compile Include="nsIDNSRecord.cs" />
+    <Compile Include="nsIDragService.cs" />
+    <Compile Include="nsIDOMDragEvent.cs" />
+    <Compile Include="nsIDOMDataTransfer.cs" />
+    <Compile Include="nsIDOMFileList.cs" />
+    <Compile Include="nsIDOMFile.cs" />
+    <Compile Include="nsIDragSession.cs" />
+    <Compile Include="nsIErrorService.cs" />
+    <Compile Include="nsIEventTarget.cs" />
+    <Compile Include="nsIFindService.cs" />
+    <Compile Include="nsIHandlerService.cs" />
+    <Compile Include="nsIIdleService.cs" />
+    <Compile Include="nsIFormatConverter.cs" />
+    <Compile Include="nsILivemarkService.cs" />
+    <Compile Include="nsIParentalControlsService.cs" />
+    <Compile Include="nsIPluginTag.cs" />
+    <Compile Include="nsIRunnable.cs" />
+    <Compile Include="nsIScriptableRegion.cs" />
+    <Compile Include="nsISocketProviderService.cs" />
+    <Compile Include="nsISocketProvider.cs" />
+    <Compile Include="nsITextServicesFilter.cs" />
+    <Compile Include="nsITransferable.cs" />
+    <Compile Include="nsIXULSortService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

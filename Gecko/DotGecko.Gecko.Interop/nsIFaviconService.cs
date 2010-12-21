@@ -284,6 +284,6 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * The default favicon URI
 		 */
-		nsIURI defaultFavicon { get; }
+		nsIURI DefaultFavicon { get; }
 	}
 }

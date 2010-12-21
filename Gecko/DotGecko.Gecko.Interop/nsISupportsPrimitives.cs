@@ -290,7 +290,7 @@ namespace DotGecko.Gecko.Interop
 
 		#endregion
 
-		Int64 data { get; set; }
+		Int64 Data { get; set; }
 		[return: MarshalAs(UnmanagedType.LPStr)]
 		String ToString();
 	}
