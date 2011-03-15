@@ -1,0 +1,8 @@
+glob:obj
+glob:bin
+glob:*.pfx
+glob:*.user
+glob:*.suo
+glob:_ReSharper.*
+glob:SignAssemblies.cmd
+glob:TestResults
