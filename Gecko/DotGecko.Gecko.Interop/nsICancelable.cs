@@ -4,8 +4,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/**
 	 * This interface provides a means to cancel an operation that is in progress.
-	 *
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("d94ac0a0-bb18-46b8-844e-84159064b0bd"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsICancelable //: nsISupports

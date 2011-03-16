@@ -4,6 +4,7 @@ using nsISupports = System.Object;
 using nsPresContext = System.IntPtr;
 using nsIPresShell = System.IntPtr;
 using nsILayoutHistoryState = System.IntPtr;
+using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -45,12 +46,13 @@ namespace DotGecko.Gecko.Interop
 		public const UInt32 LOAD_CMD_NORMAL = 0x1; // Normal load
 		public const UInt32 LOAD_CMD_RELOAD = 0x2; // Reload
 		public const UInt32 LOAD_CMD_HISTORY = 0x4; // Load from history
+		public const UInt32 LOAD_CMD_PUSHSTATE = 0x8; // History.pushState()
 	}
 
 	/**
 	 * The nsIDocShell interface.
 	 */
-	[ComImport, Guid("8ADFB831-1053-4A19-884D-BCDAD7277B4B"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("98cdbcc4-2d81-4191-a63f-b6c52085edbc"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDocShell //: nsISupports
 	{
 		/**
@@ -134,6 +136,15 @@ namespace DotGecko.Gecko.Interop
 			Boolean firstParty,
 			out nsIDocShell aDocShell,
 			out nsIRequest aRequest);
+
+		/**
+		 * Do either a history.pushState() or history.replaceState() operation,
+		 * depending on the value of aReplace.
+		 */
+		void AddState(nsIVariant aData,
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String aTitle,
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String aURL,
+			Boolean aReplace);
 
 		/**
 		 * Creates a DocShellLoadInfo object that you can manipulate and then pass
@@ -368,17 +379,23 @@ namespace DotGecko.Gecko.Interop
 		 * If it doesn't already exist, a new one will be created.
 		 *
 		 * @param uri the uri of the storage object to retrieve
+		 * @param documentURI new storage will be created with reference to this
+		 *                    document.documentURI that will appear in storage event
 		 */
-		nsIDOMStorage GetSessionStorageForURI(nsIURI uri);
+		nsIDOMStorage GetSessionStorageForURI(nsIURI uri, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String documentURI);
 
 		/*
 		 * Retrieves the WebApps session storage object for the supplied principal.
 		 *
 		 * @param principal returns a storage for this principal
+		 * @param documentURI new storage will be created with reference to this
+		 *                    document.documentURI that will appear in storage event
 		 * @param create If true and a session storage object doesn't
 		 *               already exist, a new one will be created.
 		 */
-		nsIDOMStorage GetSessionStorageForPrincipal(nsIPrincipal principal, Boolean create);
+		nsIDOMStorage GetSessionStorageForPrincipal(nsIPrincipal principal,
+													[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String documentURI,
+													Boolean create);
 
 		/*
 		 * Add a WebApps session storage object to the docshell.
@@ -426,5 +443,51 @@ namespace DotGecko.Gecko.Interop
 		 * and should be treated accordingly.
 		 **/
 		Boolean IsOffScreenBrowser { get; set; }
+
+		/**
+		 * If the current content viewer isn't initialized for print preview,
+		 * it is replaced with one which is and to which an about:blank document
+		 * is loaded.
+		 */
+		nsIWebBrowserPrint PrintPreview { get; }
+
+		/**
+		 * Whether this docshell can execute scripts based on its hierarchy.
+		 * The rule of thumb here is that we disable js if this docshell or any
+		 * of its parents disallow scripting, unless the only reason for js being
+		 * disabled in this docshell is a parent docshell having a document that
+		 * is in design mode.  In that case, we explicitly allow scripting on the
+		 * current docshell.
+		 */
+		Boolean CanExecuteScripts { get; }
+
+		/**
+		 * Sets whether a docshell is active. An active docshell is one that is
+		 * visible, and thus is not a good candidate for certain optimizations
+		 * like image frame discarding. Docshells are active unless told otherwise.
+		 */
+		Boolean IsActive { get; set; }
+
+		/**
+		 * The ID of the docshell in the session history.
+		 */
+		UInt64 HistoryID { get; }
+
+		/**
+		 * Sets whether a docshell is an app tab. An app tab docshell may behave
+		 * differently than a non-app tab docshell in some cases, such as when
+		 * handling link clicks. Docshells are not app tabs unless told otherwise.
+		 */
+		Boolean IsAppTab { get; set; }
+	}
+
+	[ComImport, Guid("5f7a2184-31b6-4d67-9c75-0c17477766e2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsIDocShell_MOZILLA_2_0_BRANCH //: nsISupports
+	{
+		/**
+		 * Create a new about:blank document and content viewer.
+		 * @param aPrincipal the principal to use for the new document.
+		 */
+		void CreateAboutBlankContentViewer(nsIPrincipal aPrincipal);
 	}
 }

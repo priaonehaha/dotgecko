@@ -7,8 +7,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * Information on a Certificate Revocation List (CRL)
 	 * issued by a Aertificate Authority (CA).
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("c185d920-4a3e-11d5-ba27-00108303b117"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsICRLInfo //: nsISupports

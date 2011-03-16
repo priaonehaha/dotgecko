@@ -2,10 +2,11 @@ using System;
 using System.Runtime.InteropServices;
 using nsISupports = System.Object;
 using nsIWidgetPtr = System.IntPtr;
+using nsIDocumentPtr = System.IntPtr;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("08665a60-b398-11de-8a39-0800200c9a66"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("e2e5dd7d-8140-4fc5-b2c3-3a3b4f946fc7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIContentViewer //: nsISupports
 	{
 		void Init(nsIWidgetPtr aParentWidget, [In] ref nsIntRect aBounds);
@@ -65,6 +66,12 @@ namespace DotGecko.Gecko.Interop
 
 		nsIDOMDocument DOMDocument { get; set; }
 
+		/**
+		 * Returns DOMDocument as nsIDocument and without addrefing.
+		 */
+		nsIDocumentPtr GetDocument();
+
+
 		void GetBounds(ref nsIntRect aBounds);
 		void SetBounds([In] ref nsIntRect aBounds);
 
@@ -78,8 +85,6 @@ namespace DotGecko.Gecko.Interop
 
 		void Show();
 		void Hide();
-
-		Boolean EnableRendering { get; set; }
 
 		Boolean Sticky { get; set; }
 
@@ -117,5 +122,18 @@ namespace DotGecko.Gecko.Interop
 		 * destroyed.  Can return null
 		 */
 		nsISHEntry HistoryEntry { get; }
+	}
+
+	[ComImport, Guid("4710ef6e-6de3-47fe-88f4-e49b48c87fc9"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsIContentViewer_MOZILLA_2_0_BRANCH //: nsISupports
+	{
+		/*
+		 * Indicates when we're in a state where content shouldn't be allowed to
+		 * trigger a tab-modal prompt (as opposed to a window-modal prompt) because
+		 * we're part way through some operation (eg beforeunload) that shouldn't be
+		 * rentrant if the user closes the tab while the prompt is showing.
+		 * See bug 613800.
+		 */
+		Boolean IsTabModalPromptAllowed { get; }
 	}
 }

@@ -25,6 +25,7 @@ namespace DotGecko.Gecko.Interop
 		public const Int32 loadNormalBypassCache = 14;
 		public const Int32 loadNormalBypassProxy = 15;
 		public const Int32 loadNormalBypassProxyAndCache = 16;
+		public const Int32 loadPushState = 17;                 // history.pushState or replaceState
 	}
 
 	/**

@@ -5,7 +5,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/**
 	 * The nsIComponentRegistrar interface.
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("2417cbfe-65ad-48a6-b4b6-eb84db174392"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIComponentRegistrar //: nsISupports
@@ -13,42 +12,21 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * autoRegister
 		 *
-		 * Register a component file or all component files in a directory.  
+		 * Register a .manifest file, or an entire directory containing
+		 * these files. Registration lasts for this run only, and is not cached.
 		 *
-		 * Component files must have an associated loader and export the required
-		 * symbols which this loader defines.  For example, if the given file is a
-		 * native library (which is built into XPCOM), it must export the symbol 
-		 * "NSGetModule".  Other loaders may have different semantics.
-		 *
-		 * This method may only be called from the main thread.
-		 * 
-		 * @param aSpec    : Filename spec for component file's location. If aSpec 
-		 *                   is a directory, then every component file in the
-		 *                   directory will be registered. 
-		 *                   If aSpec is null, static components, GRE components,
-		 *                   and the application's component directories will be
-		 *                   registered. See NS_GRE_DIR, NS_XPCOM_COMPONENT_DIR,
-		 *                   and NS_XPCOM_COMPONENT_DIR_LIST in
-		 *                   nsDirectoryServiceDefs.h.
+		 * @note Formerly this method would register component files directly. This
+		 *       is no longer supported.
 		 */
 		void AutoRegister(nsIFile aSpec);
 
 		/**
 		 * autoUnregister
-		 *
-		 * Unregister a component file or all component files in a directory.  
-		 * This method may only be called from the main thread.
-		 *
-		 * @param aSpec    : Filename spec for component file's location. If aSpec 
-		 *                   is a directory, the every component file in the directory 
-		 *                   will be registered.  
-		 *                   If aSpec is null, then the application component's 
-		 *                   directory as defined by NS_XPCOM_COMPONENT_DIR will be 
-		 *                   registered. (see nsIDirectoryService.idl)
-		 *
-		 * @return NS_OK     Unregistration was successful.
-		 *         NS_ERROR* Method failure.
+		 * @status OBSOLETE: This method is no longer implemented, but preserved
+		 *                   in this interface for binary compatibility with
+		 *                   Mozilla 1.9.2.
 		 */
+		[Obsolete]
 		void AutoUnregister(nsIFile aSpec);
 
 		/**
@@ -57,12 +35,12 @@ namespace DotGecko.Gecko.Interop
 		 * Register a factory with a given ContractID, CID and Class Name.
 		 *
 		 * @param aClass      : CID of object
-		 * @param aClassName  : Class Name of CID
-		 * @param aContractID : ContractID associated with CID aClass
-		 * @param aFactory    : Factory that will be registered for CID aClass
-		 *
-		 * @return NS_OK        Registration was successful.
-		 *         NS_ERROR*    method failure.
+		 * @param aClassName  : Class Name of CID (unused)
+		 * @param aContractID : ContractID associated with CID aClass. May be null
+		 *                      if no contract ID is needed.
+		 * @param aFactory    : Factory that will be registered for CID aClass.
+		 *                      If aFactory is null, the contract will be associated
+		 *                      with a previously registered CID.
 		 */
 		void RegisterFactory([In] ref Guid aClass, [MarshalAs(UnmanagedType.LPStr)] String aClassName, [MarshalAs(UnmanagedType.LPStr)] String aContractID, nsIFactory aFactory);
 
@@ -82,40 +60,20 @@ namespace DotGecko.Gecko.Interop
 
 		/**
 		 * registerFactoryLocation
-		 *
-		 * Register a factory with a given ContractID, CID and Class Name
-		 *
-		 * @param aClass      : CID of object
-		 * @param aClassName  : Class Name of CID
-		 * @param aContractID : ContractID associated with CID aClass
-		 * @param aFile       : Component File. This file must have an associated 
-		 *                      loader and export the required symbols which this 
-		 *                      loader specifies.
-		 * @param aLoaderStr  : Opaque loader specific string.  This value is
-		 *                      passed into the nsIModule's registerSelf
-		 *                      callback and must be fowarded unmodified when
-		 *                      registering factories via their location.
-		 * @param aType       : Component Type of CID aClass.  This value is
-		 *                      passed into the nsIModule's registerSelf
-		 *                      callback and must be fowarded unmodified when
-		 *                      registering factories via their location.
-		 *
-		 * @return NS_OK        Registration was successful.
-		 *         NS_ERROR*    Method failure.
+		 * @status OBSOLETE: This method is no longer implemented, but preserved
+		 *                   in this interface for binary compatibility with
+		 *                   Mozilla 1.9.2.
 		 */
+		[Obsolete]
 		void RegisterFactoryLocation([In] ref Guid aClass, [MarshalAs(UnmanagedType.LPStr)] String aClassName, [MarshalAs(UnmanagedType.LPStr)] String aContractID, nsIFile aFile, [MarshalAs(UnmanagedType.LPStr)] String aLoaderStr, [MarshalAs(UnmanagedType.LPStr)] String aType);
 
 		/**
 		 * unregisterFactoryLocation
-		 *
-		 * Unregister a factory associated with CID aClass.
-		 *
-		 * @param aClass   : CID being unregistered
-		 * @param aFile    : Component File previously registered
-		 *
-		 * @return NS_OK     Unregistration was successful.
-		 *         NS_ERROR* Method failure.
+		 * @status OBSOLETE: This method is no longer implemented, but preserved
+		 *                   in this interface for binary compatibility with
+		 *                   Mozilla 1.9.2.
 		 */
+		[Obsolete]
 		void UnregisterFactoryLocation([In] ref Guid aClass, nsIFile aFile);
 
 		/**
@@ -165,11 +123,11 @@ namespace DotGecko.Gecko.Interop
 
 		/**
 		 * CIDToContractID
-		 *
-		 * Returns the Contract ID for a given CID, if one exists and is registered.
-		 *
-		 * @return : Contract ID.
+		 * @status OBSOLETE: This method is no longer implemented, but preserved
+		 *                   in this interface for binary compatibility with
+		 *                   Mozilla 1.9.2.
 		 */
+		[Obsolete]
 		[return: MarshalAs(UnmanagedType.LPStr)]
 		String CIDToContractID([In] ref Guid aClass);
 

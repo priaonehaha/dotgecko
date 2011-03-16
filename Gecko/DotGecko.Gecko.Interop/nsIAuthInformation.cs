@@ -35,6 +35,15 @@ namespace DotGecko.Gecko.Interop
 		 * This flag is mutually exclusive with #NEED_DOMAIN.
 		 */
 		public const UInt32 ONLY_PASSWORD = 8;
+
+		/**
+		 * We have already tried to log in for this channel
+		 * (with auth values from a previous promptAuth call),
+		 * but it failed, so we now ask the user to provide a new, correct login.
+		 *
+		 * @see also RFC 2616, Section 10.4.2
+		 */
+		public const UInt32 PREVIOUS_FAILED = 16;
 		/* @} */
 	}
 

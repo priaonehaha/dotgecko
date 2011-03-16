@@ -13,8 +13,6 @@ namespace DotGecko.Gecko.Interop
 	 * nodes in the DOM tree -- such as documents, focusable elements and text.
 	 * Mozilla creates the implementations of nsIAccessible on demand.
 	 * See http://www.mozilla.org/projects/ui/accessibility for more information.
-	 *
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("c81d8f8c-8585-4094-bc7c-71dd01494906"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIAccessible //: nsISupports

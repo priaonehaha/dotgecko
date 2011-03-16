@@ -446,6 +446,47 @@
     <Compile Include="nsITransferable.cs" />
     <Compile Include="nsIXULSortService.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="mozIStorageBaseStatement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="mozIStorageCompletionCallback.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="mozIStorageAsyncStatement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIDOMXULElement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIRDFCompositeDataSource.cs" />
+    <Compile Include="nsIRDFDataSource.cs" />
+    <Compile Include="nsIRDFNode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIRDFResource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIRDFObserver.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULTemplateBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIBoxObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULTemplateResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULTemplateRuleFilter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULBuilderListener.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULTemplateQueryProcessor.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

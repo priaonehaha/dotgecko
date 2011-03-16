@@ -7,8 +7,6 @@ namespace DotGecko.Gecko.Interop
 	 * nsIDirectoryServiceProvider
 	 *
 	 * Used by Directory Service to get file locations.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("bbf8cab0-d43a-11d3-8cc2-00609792278c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDirectoryServiceProvider //: nsISupports
@@ -37,8 +35,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * An extension of nsIDirectoryServiceProvider which allows
 	 * multiple files to be returned for the given key.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("2f977d4b-5485-11d4-87e2-0010a4e75ef2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDirectoryServiceProvider2 : nsIDirectoryServiceProvider
@@ -67,8 +63,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * nsIDirectoryService
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("57a66a60-d43a-11d3-8cc2-00609792278c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDirectoryService //: nsISupports

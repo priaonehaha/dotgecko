@@ -14,7 +14,6 @@ namespace DotGecko.Gecko.Interop
 		public const UInt32 MAIN_THREAD_ONLY = 1 << 2;
 		public const UInt32 DOM_OBJECT = 1 << 3;
 		public const UInt32 PLUGIN_OBJECT = 1 << 4;
-		public const UInt32 EAGER_CLASSINFO = 1 << 5;
 		/**
 		 * 'flags' attribute bitflag: whether objects of this type implement
 		 * nsIContent.
@@ -29,7 +28,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Provides information about a specific implementation class
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("986c11d0-f340-11d4-9075-0010a4e73d9a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIClassInfo //: nsISupports

@@ -11,9 +11,6 @@ namespace DotGecko.Gecko.Interop
 		public const UInt32 SAVE_PASSWORD_PERMANENTLY = 2;
 	}
 
-	/**
-	 * @status UNDER_REVIEW
-	 */
 	[ComImport, Guid("358089f9-ee4b-4711-82fd-bcd07fc62061"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIAuthPrompt //: nsISupports
 	{

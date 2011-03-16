@@ -25,8 +25,6 @@ namespace DotGecko.Gecko.Interop
 	/** 
 	 * An optional interface for accessing the HTTP or
 	 * javascript cookie object
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("E9FCB9A4-D376-458f-B720-E65E7DF593BC"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsICookie //: nsISupports
