@@ -208,7 +208,8 @@ namespace DotGecko.Gecko
 		AuthHost = nsIAuthInformationConstants.AUTH_HOST,
 		AuthProxy = nsIAuthInformationConstants.AUTH_PROXY,
 		NeedDomain = nsIAuthInformationConstants.NEED_DOMAIN,
-		OnlyPassword = nsIAuthInformationConstants.ONLY_PASSWORD
+		OnlyPassword = nsIAuthInformationConstants.ONLY_PASSWORD,
+		PreviousFailed = nsIAuthInformationConstants.PREVIOUS_FAILED
 	}
 
 	public class PromptAuthEventArgs : CancelEventArgs

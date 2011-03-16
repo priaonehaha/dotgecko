@@ -117,6 +117,12 @@ namespace DotGecko.Gecko.Interop
 		public const Int32 FORMAT = 24;
 
 		/**
+		 * Attempt to bind a parameter using an out-of-range index or nonexistent
+		 * named parameter name.
+		 */
+		public const Int32 RANGE = 25;
+
+		/**
 		 * File opened that is not a database file.
 		 */
 		public const Int32 NOTADB = 26;

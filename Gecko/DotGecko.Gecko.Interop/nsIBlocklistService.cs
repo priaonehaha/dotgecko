@@ -81,4 +81,32 @@ namespace DotGecko.Gecko.Interop
 									   [Optional] [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String appVersion,
 									   [Optional] [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String toolkitVersion);
 	}
+
+	/**
+	 * nsIBlocklistPrompt is used, if available, by the default implementation of 
+	 * nsIBlocklistService to display a confirmation UI to the user before blocking
+	 * extensions/plugins.
+	 */
+	[ComImport, Guid("36f97f40-b0c9-11df-94e2-0800200c9a66"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsIBlocklistPrompt //: nsISupports
+	{
+		/**
+		 * Prompt the user about newly blocked addons. The prompt is then resposible
+		 * for soft-blocking any addons that need to be afterwards
+		 *
+		 * @param  aAddons
+		 *         An array of addons and plugins that are blocked. These are javascript
+		 *         objects with properties:
+		 *          name    - the plugin or extension name,
+		 *          version - the version of the extension or plugin,
+		 *          icon    - the plugin or extension icon,
+		 *          disable - can be used by the nsIBlocklistPrompt to allows users to decide
+		 *                    whether a soft-blocked add-on should be disabled,
+		 *          blocked - true if the item is hard-blocked, false otherwise,
+		 *          item    - the nsIPluginTag or Addon object
+		 * @param  aCount
+		 *         The number of addons
+		 */
+		void Prompt([MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 1)] nsIVariant[] aAddons, [Optional] UInt32 aCount);
+	}
 }

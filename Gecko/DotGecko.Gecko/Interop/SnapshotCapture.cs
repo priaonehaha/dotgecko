@@ -42,14 +42,14 @@ namespace DotGecko.Gecko.Interop
 
 		private static void DrawWindow(nsIDOMHTMLCanvasElement canvasElement, nsIDOMWindow domWindow, Color bgColor, CaptureFlags captureFlags)
 		{
-			var context = (nsIDOMCanvasRenderingContext2D)canvasElement.GetContext("2d");
+			var context = (nsIDOMCanvasRenderingContext2D)canvasElement.GetContext("2d", IntPtr.Zero);
 			String cssBgColor = String.Format(CssColorFormatInfo.CurrentInfo, "{0:rgba}", bgColor);
 			context.DrawWindow(domWindow, 0, 0, canvasElement.Width, canvasElement.Height, cssBgColor, (UInt32)captureFlags);
 		}
 
 		private static Byte[] GetImageData(nsIDOMHTMLCanvasElement canvasElement)
 		{
-			String data = XpcomStringHelper.Get(canvasElement.ToDataURLAs, "image/png", "");
+			String data = XpcomStringHelper.Get(canvasElement.ToDataURLAs, "image/png", String.Empty);
 			if (String.IsNullOrWhiteSpace(data))
 			{
 				return null;

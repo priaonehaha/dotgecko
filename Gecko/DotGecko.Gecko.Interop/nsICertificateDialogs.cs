@@ -6,8 +6,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/**
 	 * Functions that implement user interface dialogs to manage certificates.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("a03ca940-09be-11d5-ac5d-000064657374"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsICertificateDialogs //: nsISupports

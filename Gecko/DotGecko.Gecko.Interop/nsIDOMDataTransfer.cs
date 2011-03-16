@@ -5,7 +5,6 @@ using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
-
 	[ComImport, Guid("34042440-60A8-4992-AE5C-798E69148955"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMDataTransfer //: nsISupports
 	{
@@ -131,7 +130,7 @@ namespace DotGecko.Gecko.Interop
 		void AddElement(nsIDOMElement element);
 	}
 
-	[ComImport, Guid("990758e9-fd38-4444-a1e8-395195802bda"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("AE6DF4E2-FA37-4701-A33E-A5678F826EED"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMNSDataTransfer //: nsISupports
 	{
 		/*
@@ -235,5 +234,11 @@ namespace DotGecko.Gecko.Interop
 		 * This property is only relevant for the dragend event.
 		 */
 		Boolean MozUserCancelled { get; }
+
+		/**
+		 * The node that the mouse was pressed over to begin the drag. For external
+		 * drags, or if the caller cannot access this node, this will be null.
+		 */
+		nsIDOMNode MozSourceNode { get; }
 	}
 }

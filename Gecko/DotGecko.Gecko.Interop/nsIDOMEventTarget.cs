@@ -10,8 +10,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * For more information on this interface please see 
 	 * http://www.w3.org/TR/DOM-Level-2-Events/
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("1c773b30-d1cf-11d2-bd95-00805f8ae3f4"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMEventTarget //: nsISupports

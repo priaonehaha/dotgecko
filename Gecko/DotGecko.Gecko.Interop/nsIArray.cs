@@ -28,8 +28,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * null is a valid entry in the array, and as such any nsISupports
 	 * parameters may be null, except where noted.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("114744d9-c369-456e-b55a-52fe52880d2d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIArray //: nsISupports

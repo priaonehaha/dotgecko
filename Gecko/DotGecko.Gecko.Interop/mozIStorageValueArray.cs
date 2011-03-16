@@ -19,8 +19,8 @@ namespace DotGecko.Gecko.Interop
 	}
 
 	/**
-	 * mozIStorageValueArray wraps an array of SQL values,
-	 * such as a single database row.
+	 * mozIStorageValueArray wraps an array of SQL values, such as a single database
+	 * row.
 	 */
 	[ComImport, Guid("07b5b93e-113c-4150-863c-d247b003a55d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface mozIStorageValueArray //: nsISupports

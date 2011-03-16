@@ -10,7 +10,7 @@ namespace DotGecko.Gecko.Interop
 		/**************************************************************************
 		 * Channel specific load flags:
 		 *
-		 * Bits 22-31 are reserved for future use by this interface or one of its
+		 * Bits 23-31 are reserved for future use by this interface or one of its
 		 * derivatives (e.g., see nsICachingChannel).
 		 */
 
@@ -65,6 +65,12 @@ namespace DotGecko.Gecko.Interop
 		 * should only do so with good reason.
 		 */
 		public const UInt32 LOAD_CALL_CONTENT_SNIFFERS = 1 << 21;
+
+		/**
+		 * This flag tells the channel to use URI classifier service to check
+		 * the URI when opening the channel.
+		 */
+		public const UInt32 LOAD_CLASSIFY_URI = 1 << 22;
 	}
 
 	/**
@@ -79,7 +85,7 @@ namespace DotGecko.Gecko.Interop
 	 * protocol-specific results.  For example, QI'ing to nsIHttpChannel allows
 	 * response headers to be retrieved for the corresponding http transaction. 
 	 *
-	 * @status FROZEN
+	 * This interface must be used only from the XPCOM main thread.
 	 */
 	[ComImport, Guid("c63a055a-a676-4e71-bf3c-6cfa11082018"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIChannel : nsIRequest
@@ -206,7 +212,9 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * NOTE: nsIChannel implementations are not required to implement this
 		 * method.  Moreover, since this method may block the calling thread, it
-		 * should not be called on a thread that processes UI events.
+		 * should not be called on a thread that processes UI events.  Like any
+		 * other nsIChannel method it must not be called on any thread other
+		 * than the XPCOM main thread.
 		 *
 		 * NOTE: Implementations should throw NS_ERROR_IN_PROGRESS if the channel
 		 * is reopened.

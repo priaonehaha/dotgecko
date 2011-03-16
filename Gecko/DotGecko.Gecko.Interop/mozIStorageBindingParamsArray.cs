@@ -1,15 +1,16 @@
+using System;
 using System.Runtime.InteropServices;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("e676e1a3-1dc6-4802-ac03-291fa9de7f93"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("67eea5c3-4881-41ff-b0fe-09f2356aeadb"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface mozIStorageBindingParamsArray //: nsISupports
 	{
 		/**
 		 * Creates a new mozIStorageBindingParams object that can be added to this
 		 * array.
 		 *
-		 * @returns a mozIStorageBindingParams object that can be used to specify
+		 * @return a mozIStorageBindingParams object that can be used to specify
 		 *          parameters that need to be bound.
 		 */
 		mozIStorageBindingParams NewBindingParams();
@@ -21,5 +22,10 @@ namespace DotGecko.Gecko.Interop
 		 *        The parameters to add to this array.
 		 */
 		void AddParams(mozIStorageBindingParams aParameters);
+
+		/**
+		 * The number of mozIStorageBindingParams this object contains.
+		 */
+		UInt32 Length { get; }
 	}
 }
