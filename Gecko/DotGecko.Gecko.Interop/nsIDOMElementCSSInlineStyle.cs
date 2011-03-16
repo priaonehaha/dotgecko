@@ -8,8 +8,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * For more information on this interface please see
 	 * http://www.w3.org/TR/DOM-Level-2-Style
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("99715845-95fc-4a56-aa53-214b65c26e22"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMElementCSSInlineStyle //: nsISupports

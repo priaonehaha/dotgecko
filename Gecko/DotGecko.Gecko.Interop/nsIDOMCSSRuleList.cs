@@ -9,8 +9,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * For more information on this interface please see
 	 * http://www.w3.org/TR/DOM-Level-2-Style
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("a6cf90c0-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMCSSRuleList //: nsISupports

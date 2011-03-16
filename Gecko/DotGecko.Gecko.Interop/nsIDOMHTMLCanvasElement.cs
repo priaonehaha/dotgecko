@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using jsval = System.IntPtr;
 using nsISupports = System.Object;
 using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
@@ -15,7 +16,7 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @status UNDER_DEVELOPMENT
 	 */
-	[ComImport, Guid("d87394af-d31a-484e-8b7c-75381045384d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("53ad994a-3cd0-48fa-8ffb-7f3d8cd19c50"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHTMLCanvasElement : nsIDOMHTMLElement
 	{
 		#region nsIDOMNode Members
@@ -91,22 +92,34 @@ namespace DotGecko.Gecko.Interop
 		Boolean MozOpaque { get; set; }
 
 		[return: MarshalAs(UnmanagedType.IUnknown)]
-		nsISupports GetContext([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contextId);
+		nsISupports GetContext([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contextId, [Optional] jsval contextOptions);
 
-		// This version will query the JS context for its arguments; C++
-		// callers should use toDataURLAs.
-		//
 		// Valid calls are:
 		//  toDataURL();              -- defaults to image/png
 		//  toDataURL(type);          -- uses given type
 		//  toDataURL(type, params);  -- only available to trusted callers
-		void ToDataURL([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		void ToDataURL([Optional, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String type,
+			[Optional, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String aParams,
+			[In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 
 		// This version lets you specify different image types and pass parameters
 		// to the encoder. For example toDataURLAs("image/png", "transparency=none")
 		// gives you a PNG with the alpha channel discarded. See the encoder for
 		// the options string that it supports. Separate multiple options with
 		// semicolons.
-		void ToDataURLAs([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String mimeType, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String encoderOptions, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		void ToDataURLAs([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String mimeType,
+			[MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String encoderOptions,
+			[In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+
+
+		// Valid calls are
+		// mozGetAsFile(name);              -- defaults to image/png
+		// mozGetAsFile(name, type);        -- uses given type
+		nsIDOMFile MozGetAsFile([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name,
+												[Optional] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String type);
+
+		// A Mozilla-only extension to get a canvas context backed by double-buffered
+		// shared memory. Only privileged callers can call this.
+		nsISupports MozGetIPCContext([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contextId);
 	}
 }

@@ -302,7 +302,6 @@
     <Compile Include="nsIDOMHTMLAppletElement.cs" />
     <Compile Include="nsIDOMHTMLAreaElement.cs" />
     <Compile Include="nsIDOMHTMLBaseElement.cs" />
-    <Compile Include="nsIDOMHTMLBaseFontElement.cs" />
     <Compile Include="nsIDOMHTMLBodyElement.cs" />
     <Compile Include="nsIDOMHTMLBRElement.cs" />
     <Compile Include="nsIDOMHTMLButtonElement.cs" />
@@ -486,6 +485,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="nsIXULTemplateQueryProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIDOMValidityState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

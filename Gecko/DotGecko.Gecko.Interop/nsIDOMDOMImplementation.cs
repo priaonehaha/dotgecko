@@ -11,10 +11,8 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * For more information on this interface please see 
 	 * http://www.w3.org/TR/DOM-Level-2-Core/
-	 *
-	 * @status FROZEN
 	 */
-	[ComImport, Guid("a6cf9074-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("03a6f574-99ec-42f8-9e6c-812a4a9bcbf7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMDOMImplementation //: nsISupports
 	{
 		Boolean HasFeature([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String feature, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String version);
@@ -25,5 +23,14 @@ namespace DotGecko.Gecko.Interop
 			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String systemId); // raises(DOMException);
 
 		nsIDOMDocument CreateDocument([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String namespaceURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String qualifiedName, nsIDOMDocumentType doctype); // raises(DOMException);
+
+		/**
+		 * Returns an HTML document with a basic DOM already constructed and with an
+		 * appropriate title element.
+		 *
+		 * @param title the title of the Document
+		 * @see <http://www.whatwg.org/html/#creating-documents>
+		 */
+		nsIDOMDocument SreateHTMLDocument([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String title);
 	}
 }

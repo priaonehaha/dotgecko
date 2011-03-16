@@ -42,7 +42,7 @@ namespace DotGecko.Gecko.Interop
 
 		private static void DrawWindow(nsIDOMHTMLCanvasElement canvasElement, nsIDOMWindow domWindow, Color bgColor, CaptureFlags captureFlags)
 		{
-			var context = (nsIDOMCanvasRenderingContext2D)canvasElement.GetContext("2d");
+			var context = (nsIDOMCanvasRenderingContext2D)canvasElement.GetContext("2d", IntPtr.Zero);
 			String cssBgColor = String.Format(CssColorFormatInfo.CurrentInfo, "{0:rgba}", bgColor);
 			context.DrawWindow(domWindow, 0, 0, canvasElement.Width, canvasElement.Height, cssBgColor, (UInt32)captureFlags);
 		}
