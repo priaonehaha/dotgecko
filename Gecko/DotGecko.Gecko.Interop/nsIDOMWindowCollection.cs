@@ -7,8 +7,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * The nsIDOMWindowCollection interface is an interface for a
 	 * collection of DOM window objects.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("a6cf906f-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMWindowCollection //: nsISupports

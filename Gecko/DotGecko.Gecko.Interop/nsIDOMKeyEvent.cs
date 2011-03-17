@@ -20,7 +20,17 @@ namespace DotGecko.Gecko.Interop
 		public const UInt32 DOM_VK_ALT = 0x12;
 		public const UInt32 DOM_VK_PAUSE = 0x13;
 		public const UInt32 DOM_VK_CAPS_LOCK = 0x14;
+		public const UInt32 DOM_VK_KANA = 0x15;
+		public const UInt32 DOM_VK_HANGUL = 0x15;
+		public const UInt32 DOM_VK_JUNJA = 0x17;
+		public const UInt32 DOM_VK_FINAL = 0x18;
+		public const UInt32 DOM_VK_HANJA = 0x19;
+		public const UInt32 DOM_VK_KANJI = 0x19;
 		public const UInt32 DOM_VK_ESCAPE = 0x1B;
+		public const UInt32 DOM_VK_CONVERT = 0x1C;
+		public const UInt32 DOM_VK_NONCONVERT = 0x1D;
+		public const UInt32 DOM_VK_ACCEPT = 0x1E;
+		public const UInt32 DOM_VK_MODECHANGE = 0x1F;
 		public const UInt32 DOM_VK_SPACE = 0x20;
 		public const UInt32 DOM_VK_PAGE_UP = 0x21;
 		public const UInt32 DOM_VK_PAGE_DOWN = 0x22;
@@ -30,6 +40,9 @@ namespace DotGecko.Gecko.Interop
 		public const UInt32 DOM_VK_UP = 0x26;
 		public const UInt32 DOM_VK_RIGHT = 0x27;
 		public const UInt32 DOM_VK_DOWN = 0x28;
+		public const UInt32 DOM_VK_SELECT = 0x29;
+		public const UInt32 DOM_VK_PRINT = 0x2A;
+		public const UInt32 DOM_VK_EXECUTE = 0x2B;
 		public const UInt32 DOM_VK_PRINTSCREEN = 0x2C;
 		public const UInt32 DOM_VK_INSERT = 0x2D;
 		public const UInt32 DOM_VK_DELETE = 0x2E;
@@ -78,6 +91,7 @@ namespace DotGecko.Gecko.Interop
 		public const UInt32 DOM_VK_Z = 0x5A;
 
 		public const UInt32 DOM_VK_CONTEXT_MENU = 0x5D;
+		public const UInt32 DOM_VK_SLEEP = 0x5F;
 
 		public const UInt32 DOM_VK_NUMPAD0 = 0x60;
 		public const UInt32 DOM_VK_NUMPAD1 = 0x61;

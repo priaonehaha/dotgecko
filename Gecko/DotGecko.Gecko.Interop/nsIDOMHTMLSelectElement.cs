@@ -9,12 +9,13 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIDOMHTMLSelectElement interface is the interface to a [X]HTML
 	 * select element.
 	 *
-	 * For more information on this interface please see
+	 * This interface is trying to follow the DOM Level 2 HTML specification:
 	 * http://www.w3.org/TR/DOM-Level-2-HTML/
 	 *
-	 * @status FROZEN
+	 * with changes from the work-in-progress WHATWG HTML specification:
+	 * http://www.whatwg.org/specs/web-apps/current-work/
 	 */
-	[ComImport, Guid("a6cf9090-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("e3c6d960-972c-4a5e-a8f4-6ca65d578abf"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHTMLSelectElement : nsIDOMHTMLElement
 	{
 		#region nsIDOMNode Members
@@ -83,24 +84,43 @@ namespace DotGecko.Gecko.Interop
 
 		#endregion
 
-		void GetType([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
-		Int32 SelectedIndex { get; set; }
-		void GetValue([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
-		void SetValue([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
-		// Modified in DOM Level 2:
-		UInt32 Length { get; set; } // raises(DOMException) on setting
-		nsIDOMHTMLFormElement Form { get; }
-		// Modified in DOM Level 2:
-		nsIDOMHTMLOptionsCollection Options { get; }
+		Boolean Autofocus { get; set; }
 		Boolean Disabled { get; set; }
+		nsIDOMHTMLFormElement Form { get; }
 		Boolean Multiple { get; set; }
 		void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 		Int32 Size { get; set; }
-		Int32 TabIndex { get; set; }
-		void Add(nsIDOMHTMLElement element, nsIDOMHTMLElement before); // raises(DOMException);
+
+		void GetType([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+
+		nsIDOMHTMLOptionsCollection Options { get; }
+		UInt32 Length { get; set; }
+		nsIDOMNode Item(UInt32 index);
+		nsIDOMNode NamedItem([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name);
+		void Add(nsIDOMHTMLElement element, nsIDOMHTMLElement before); //raises(DOMException);   
 		void Remove(Int32 index);
+
+		Int32 SelectedIndex { get; set; }
+		void GetValue([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void SetValue([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+
+		Int32 TabIndex { get; set; }
 		void Blur();
 		void Focus();
+
+		// The following lines are parte of the constraint validation API, see:
+		// http://www.whatwg.org/specs/web-apps/current-work/#the-constraint-validation-api
+		Boolean WillValidate { get; }
+		nsIDOMValidityState Validity { get; }
+		void GetValidationMessage([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		Boolean CheckValidity();
+		void SetCustomValidity([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String error);
 	}
+
+	//[ComImport, Guid("9b63d2d3-ccb0-4eed-a9e5-d1c142a805b7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	//public interface nsIDOMHTMLSelectElement_Mozilla_2_0_Branch : nsIDOMHTMLSelectElement
+	//{
+	//    Boolean Required { get; set; }
+	//}
 }

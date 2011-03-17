@@ -31,6 +31,6 @@ namespace DotGecko.Gecko.Interop
 		 * @param title the title of the Document
 		 * @see <http://www.whatwg.org/html/#creating-documents>
 		 */
-		nsIDOMDocument SreateHTMLDocument([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String title);
+		nsIDOMDocument SreateHTMLDocument([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String title);
 	}
 }

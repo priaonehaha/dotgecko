@@ -13,8 +13,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * This interface is not officially defined by any standard bodies, it
 	 * originates from the defacto DOM Level 0 standard.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("a6cf906b-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMWindow //: nsISupports

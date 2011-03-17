@@ -9,12 +9,13 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIDOMHTMLObjectElement interface is the interface to a [X]HTML
 	 * object element.
 	 *
-	 * For more information on this interface please see
+	 * This interface is trying to follow the DOM Level 2 HTML specification:
 	 * http://www.w3.org/TR/DOM-Level-2-HTML/
 	 *
-	 * @status FROZEN
+	 * with changes from the work-in-progress WHATWG HTML specification:
+	 * http://www.whatwg.org/specs/web-apps/current-work/
 	 */
-	[ComImport, Guid("a6cf90ac-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("9b93aab4-7fe8-4f79-9ad2-0623178a0c46"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHTMLObjectElement : nsIDOMHTMLElement
 	{
 		#region nsIDOMNode Members
@@ -116,5 +117,13 @@ namespace DotGecko.Gecko.Interop
 		void SetWidth([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 		// Introduced in DOM Level 2:
 		nsIDOMDocument ContentDocument { get; }
+
+		// The following lines are parte of the constraint validation API, see:
+		// http://www.whatwg.org/specs/web-apps/current-work/#the-constraint-validation-api
+		Boolean WillValidate { get; }
+		nsIDOMValidityState Validity { get; }
+		void GetValidationMessage([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		Boolean CheckValidity();
+		void SetCustomValidity([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String error);
 	}
 }

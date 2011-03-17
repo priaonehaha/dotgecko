@@ -207,11 +207,11 @@ namespace DotGecko.Gecko.Interop
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		[return: MarshalAs(UnmanagedType.U4)]
-		public static extern nsResult NS_NewLocalFile([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
+		public static extern nsResult NS_NewLocalFile([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
 
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		[return: MarshalAs(UnmanagedType.U4)]
-		public static extern nsResult NS_NewNativeLocalFile([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
+		public static extern nsResult NS_NewNativeLocalFile([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
 
 		/**
 		 * Allocates a block of memory of a particular size. If the memory cannot

@@ -8,10 +8,11 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIDOMHTMLOptionsCollection interface is the interface to a
 	 * collection of [X]HTML option elements.
 	 *
-	 * For more information on this interface please see
+	 * This interface is trying to follow the DOM Level 2 HTML specification:
 	 * http://www.w3.org/TR/DOM-Level-2-HTML/
 	 *
-	 * @status FROZEN
+	 * with changes from the work-in-progress WHATWG HTML specification:
+	 * http://www.whatwg.org/specs/web-apps/current-work/
 	 */
 	// Introduced in DOM Level 2:
 	[ComImport, Guid("bce0213c-f70f-488f-b93f-688acca55d63"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

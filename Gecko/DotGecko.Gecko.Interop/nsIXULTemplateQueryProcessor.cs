@@ -219,7 +219,7 @@ namespace DotGecko.Gecko.Interop
 		void AddBinding(nsIDOMNode aRuleNode,
 						nsIAtom aVar,
 						nsIAtom aRef,
-						[MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aExpr);
+						[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aExpr);
 
 		/**
 		 * Translate a ref attribute string into a result. This is used as the
@@ -239,7 +239,7 @@ namespace DotGecko.Gecko.Interop
 		 * @return the translated ref
 		 */
 		nsIXULTemplateResult TranslateRef([MarshalAs(UnmanagedType.IUnknown)] nsISupports aDatasource,
-										  [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aRefString);
+										  [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aRefString);
 
 		/**
 		 * Compare two results to determine their order, used when sorting results.

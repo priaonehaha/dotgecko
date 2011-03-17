@@ -11,8 +11,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * For more information on this interface please see
 	 * http://www.w3.org/TR/DOM-Level-2-Style
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("9b0c2ed7-111c-4824-adf9-ef0da6dad371"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMMediaList //: nsISupports

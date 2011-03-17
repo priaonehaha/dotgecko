@@ -92,7 +92,7 @@ namespace DotGecko.Gecko.Interop
 		Boolean MozOpaque { get; set; }
 
 		[return: MarshalAs(UnmanagedType.IUnknown)]
-		nsISupports GetContext([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contextId, [Optional] jsval contextOptions);
+		nsISupports GetContext([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contextId, [Optional] jsval contextOptions);
 
 		// Valid calls are:
 		//  toDataURL();              -- defaults to image/png
@@ -107,19 +107,19 @@ namespace DotGecko.Gecko.Interop
 		// gives you a PNG with the alpha channel discarded. See the encoder for
 		// the options string that it supports. Separate multiple options with
 		// semicolons.
-		void ToDataURLAs([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String mimeType,
-			[MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String encoderOptions,
+		void ToDataURLAs([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String mimeType,
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String encoderOptions,
 			[In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 
 
 		// Valid calls are
 		// mozGetAsFile(name);              -- defaults to image/png
 		// mozGetAsFile(name, type);        -- uses given type
-		nsIDOMFile MozGetAsFile([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name,
-												[Optional] [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String type);
+		nsIDOMFile MozGetAsFile([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String name,
+			[Optional, In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String type);
 
 		// A Mozilla-only extension to get a canvas context backed by double-buffered
 		// shared memory. Only privileged callers can call this.
-		nsISupports MozGetIPCContext([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contextId);
+		nsISupports MozGetIPCContext([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contextId);
 	}
 }

@@ -99,6 +99,6 @@ namespace DotGecko.Gecko.Interop
 		nsIDOMValidityState Validity { get; }
 		void GetValidationMessage([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		Boolean CheckValidity();
-		void SetCustomValidity([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String error);
+		void SetCustomValidity([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String error);
 	}
 }

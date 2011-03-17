@@ -238,7 +238,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @param aId the id to return the result for
 		 */
-		nsIXULTemplateResult GetResultForId([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aId);
+		nsIXULTemplateResult GetResultForId([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aId);
 
 		/**
 		 * Retrieve the result corresponding to a generated element, or null is
