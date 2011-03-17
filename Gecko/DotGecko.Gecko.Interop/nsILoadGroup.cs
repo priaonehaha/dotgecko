@@ -7,8 +7,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/**
 	 * A load group maintains a collection of nsIRequest objects. 
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("3de0a31c-feaf-400f-9f1e-4ef71f8b20cc"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsILoadGroup : nsIRequest

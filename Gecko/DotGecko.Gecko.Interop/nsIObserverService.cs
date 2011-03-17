@@ -11,8 +11,6 @@ namespace DotGecko.Gecko.Interop
 	 * notifications of specific string referenced topic. Service also provides a 
 	 * way to notify registered listeners and a way to enumerate registered client 
 	 * listeners.
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("D07F5192-E3D1-11d2-8ACD-00105A1B8860"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIObserverService //: nsISupports 

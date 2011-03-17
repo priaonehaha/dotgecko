@@ -21,7 +21,9 @@ namespace DotGecko.Gecko
 		Xml= nsIFilePickerConstants.filterXML,
 		Xul = nsIFilePickerConstants.filterXUL,
 		Apps = nsIFilePickerConstants.filterApps,
-		AllowURLs = nsIFilePickerConstants.filterAllowURLs
+		AllowURLs = nsIFilePickerConstants.filterAllowURLs,
+		Audio = nsIFilePickerConstants.filterAudio,
+		Video = nsIFilePickerConstants.filterVideo
 	}
 
 	public enum FilePickerResult : short

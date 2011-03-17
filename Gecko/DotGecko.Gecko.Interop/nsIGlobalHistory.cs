@@ -7,11 +7,11 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * The interface to global history.
 	 *
-	 * @status FROZEN & DEPRECATED. This interface is still accepted, but new
+	 * @status DEPRECATED. This interface is still accepted, but new
 	 *         implementations should use nsIGlobalHistory2.
 	 * @version 1.0
 	 */
-	[Obsolete("Use nsIGlobalHistory2", false)]
+	[Obsolete("Use nsIGlobalHistory2")]
 	[ComImport, Guid("9491C383-E3C4-11d2-BDBE-0050040A9B44"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIGlobalHistory //: nsISupports
 	{

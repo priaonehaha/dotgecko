@@ -12,8 +12,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @see nsIPrefBranch
 	 * @see nsISupportsString
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("ae419e24-1dd1-11b2-b39a-d3e5e7073802"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIPrefLocalizedString //: nsISupports
@@ -22,7 +20,7 @@ namespace DotGecko.Gecko.Interop
 		 * Provides access to string data stored in this property.
 		 *
 		 * @return NS_OK The operation succeeded.
-		 * @return Other An error occured.
+		 * @return Other An error occurred.
 		 */
 		String Data { [return: MarshalAs(UnmanagedType.LPWStr)]get; [param: MarshalAs(UnmanagedType.LPWStr)]set; }
 

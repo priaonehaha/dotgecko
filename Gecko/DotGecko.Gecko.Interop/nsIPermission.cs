@@ -9,7 +9,7 @@ namespace DotGecko.Gecko.Interop
 	 * used to specify allowed/blocked objects from
 	 * user-specified sites (cookies, images etc).
 	 */
-	[ComImport, Guid("28F16D80-157B-11d5-A542-0010A401EB10"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("5036f0f6-f77b-4168-9d57-a1c0dd66cf02"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIPermission //: nsISupports
 	{
 		/**
@@ -30,5 +30,18 @@ namespace DotGecko.Gecko.Interop
 		 * The permission (see nsIPermissionManager.idl for allowed values)
 		 */
 		UInt32 Capability { get; }
+
+		/**
+		 * The expiration type of the permission (session, time-based or none).
+		 * Constants are EXPIRE_*, defined in nsIPermissionManager.
+		 * @see nsIPermissionManager
+		 */
+		UInt32 ExpireType { get; }
+
+		/**
+		 * The expiration time of the permission (milliseconds since Jan 1 1970
+		 * 0:00:00).
+		 */
+		Int64 ExpireTime { get; }
 	}
 }

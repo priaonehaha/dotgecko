@@ -156,7 +156,6 @@
     <Compile Include="nsIMIMEInfo.cs" />
     <Compile Include="nsIModule.cs" />
     <Compile Include="nsIMutableArray.cs" />
-    <Compile Include="nsINonBlockingAlertService.cs" />
     <Compile Include="nsIntMargin.cs" />
     <Compile Include="nsIntRect.cs" />
     <Compile Include="nsIObjectInputStream.cs" />

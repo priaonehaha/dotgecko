@@ -7,8 +7,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * A class factory allows the creation of nsISupports derived
 	 * components without specifying a concrete base class.  
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("00000001-0000-0000-c000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIFactory //: nsISupports

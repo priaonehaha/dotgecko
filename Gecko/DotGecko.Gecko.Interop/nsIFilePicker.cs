@@ -15,14 +15,29 @@ namespace DotGecko.Gecko.Interop
 		public const Int16 returnCancel = 1;          // User hit cancel, ignore selection
 		public const Int16 returnReplace = 2;         // User acknowledged file already exists so ok to replace, process selection
 
-		public const Int32 filterAll = 0x01;          // *.*
-		public const Int32 filterHTML = 0x02;         // *.html; *.htm
-		public const Int32 filterText = 0x04;         // *.txt
-		public const Int32 filterImages = 0x08;       // *.png; *.gif; *.jpg; *.jpeg
-		public const Int32 filterXML = 0x10;          // *.xml
-		public const Int32 filterXUL = 0x20;          // *.xul
-		public const Int32 filterApps = 0x40;         // Applications (per-platform implementation)
-		public const Int32 filterAllowURLs = 0x80;    // Allow URLs
+		public const Int32 filterAll = 0x001;          // *.*
+		public const Int32 filterHTML = 0x002;          // *.html; *.htm
+		public const Int32 filterText = 0x004;          // *.txt
+		public const Int32 filterImages = 0x008;          // *.jpe; *.jpg; *.jpeg; *.gif;
+		// *.png; *.bmp; *.ico; *.svg;
+		// *.svgz; *.tif; *.tiff; *.ai;
+		// *.drw; *.pct; *.psp; *.xcf;
+		// *.psd; *.raw
+		public const Int32 filterXML = 0x010;          // *.xml
+		public const Int32 filterXUL = 0x020;          // *.xul
+		public const Int32 filterApps = 0x040;          // Applications (per-platform implementation)
+		public const Int32 filterAllowURLs = 0x080;          // Allow URLs
+		public const Int32 filterAudio = 0x100;          // *.aac; *.aif; *.flac; *.iff;
+		// *.m4a; *.m4b; *.mid; *.midi;
+		// *.mp3; *.mpa; *.mpc; *.oga;
+		// *.ogg; *.ra; *.ram; *.snd;
+		// *.wav; *.wma
+		public const Int32 filterVideo = 0x200;          // *.avi; *.divx; *.flv; *.m4v;
+		// *.mkv; *.mov; *.mp4; *.mpeg;
+		// *.mpg; *.ogm; *.ogv; *.ogx;
+		// *.rm; *.rmvb; *.smil; *.webm;
+		// *.wmv; *.xvid
+
 	}
 
 	[ComImport, Guid("d24ef0aa-d555-4117-84af-9cbbb7406909"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -58,7 +73,8 @@ namespace DotGecko.Gecko.Interop
 		void AppendFilter([In] AString title, [In] AString filter);
 
 		/**
-		 * The filename that should be suggested to the user as a default.
+		 * The filename that should be suggested to the user as a default. This should
+		 * include the extension.
 		 *
 		 * @throws NS_ERROR_FAILURE on attempts to get
 		 */

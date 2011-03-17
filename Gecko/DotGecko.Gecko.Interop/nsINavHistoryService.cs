@@ -18,12 +18,7 @@ namespace DotGecko.Gecko.Interop
 		public const UInt32 RESULT_TYPE_FOLDER_SHORTCUT = 9;   // nsINavHistoryQueryResultNode
 	}
 
-	/**
-	 * Using Places services on quit-application or later is not reliable, so make
-	 * sure to do shutdown work on quit-application-granted, or history
-	 * synchronization could fail, losing latest changes.
-	 */
-	[ComImport, Guid("464ae28f-3a9c-4483-afb2-bb0fb0ddb893"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("081452e5-be5c-4038-a5ea-f1f34cb6fd81"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsINavHistoryResultNode //: nsISupports
 	{
 		/**
@@ -70,7 +65,7 @@ namespace DotGecko.Gecko.Interop
 		 * If this is a visit, it is the exact time that the page visit occurred.
 		 *
 		 * If this is a URI, it is the most recent time that the URI was visited.
-		 * Even if you ask for all URIs for a given date range long ago, this might
+		 * Even if you ask for all URIs for a given date range Int32 ago, this might
 		 * contain today's date if the URI was visited today.
 		 *
 		 * For hosts, or other node types with children, this is the most recent
@@ -100,13 +95,6 @@ namespace DotGecko.Gecko.Interop
 		 * set to -1.
 		 */
 		Int32 IndentLevel { get; }
-
-		/**
-		 * You can use this to associate temporary information with the result node.
-		 * This property bag is associated with the result node and is not persisted
-		 * in any way.
-		 */
-		nsIWritablePropertyBag PropertyBag { get; }
 
 		/**
 		 * When this item is in a bookmark folder (parent is of type folder), this is
@@ -145,6 +133,7 @@ namespace DotGecko.Gecko.Interop
 		void GetTags([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
 	}
 
+
 	/**
 	 * When you request RESULT_TYPE_VISIT from query options, you will get this
 	 * interface for each item, which includes the session ID so that we can
@@ -164,7 +153,6 @@ namespace DotGecko.Gecko.Interop
 		new PRTime Time { get; }
 		new void GetIcon([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 		new Int32 IndentLevel { get; }
-		new nsIWritablePropertyBag PropertyBag { get; }
 		new Int32 BookmarkIndex { get; }
 		new Int64 ItemId { get; }
 		new PRTime DateAdded { get; }
@@ -179,6 +167,7 @@ namespace DotGecko.Gecko.Interop
 		 */
 		Int64 SessionId { get; }
 	}
+
 
 	/**
 	 * This structure will be returned when you request RESULT_TYPE_FULL_VISIT in
@@ -199,7 +188,6 @@ namespace DotGecko.Gecko.Interop
 		new PRTime Time { get; }
 		new void GetIcon([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 		new Int32 IndentLevel { get; }
-		new nsIWritablePropertyBag PropertyBag { get; }
 		new Int32 BookmarkIndex { get; }
 		new Int64 ItemId { get; }
 		new PRTime DateAdded { get; }
@@ -232,12 +220,20 @@ namespace DotGecko.Gecko.Interop
 		Int32 TransitionType { get; }
 	}
 
+
+	public static class nsINavHistoryContainerResultNodeConstants
+	{
+		public const UInt16 STATE_CLOSED = 0;
+		public const UInt16 STATE_LOADING = 1;
+		public const UInt16 STATE_OPENED = 2;
+	}
+
 	/**
 	 * Base class for container results. This includes all types of groupings.
 	 * Bookmark folders and places queries will be QueryResultNodes which extends
 	 * these items.
 	 */
-	[ComImport, Guid("f9c8e1c1-e701-44ad-893c-8504c3956929"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("55829318-0f6c-4503-8739-84231f3a6793"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsINavHistoryContainerResultNode : nsINavHistoryResultNode
 	{
 		#region nsINavHistoryResultNode Members
@@ -251,7 +247,6 @@ namespace DotGecko.Gecko.Interop
 		new PRTime Time { get; }
 		new void GetIcon([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 		new Int32 IndentLevel { get; }
-		new nsIWritablePropertyBag PropertyBag { get; }
 		new Int32 BookmarkIndex { get; }
 		new Int64 ItemId { get; }
 		new PRTime DateAdded { get; }
@@ -273,6 +268,13 @@ namespace DotGecko.Gecko.Interop
 		Boolean ContainerOpen { get; set; }
 
 		/**
+		 * Indicates whether the container is closed, loading, or opened.  Loading
+		 * implies that the container has been opened asynchronously and has not yet
+		 * fully opened.
+		 */
+		UInt16 State { get; }
+
+		/**
 		 * This indicates whether this node "may" have children, and can be used
 		 * when the container is open or closed. When the container is closed, it
 		 * will give you an exact answer if the node can easily be populated (for
@@ -292,6 +294,41 @@ namespace DotGecko.Gecko.Interop
 		 */
 		UInt32 ChildCount { get; }
 		nsINavHistoryResultNode GetChild(UInt32 aIndex);
+
+		/**
+		 * Get the index of a direct child in this container.
+		 *
+		 * @param aNode
+		 *        a result node.
+		 *
+		 * @return aNode's index in this container.
+		 * @throws NS_ERROR_NOT_AVAILABLE if containerOpen is false.
+		 * @throws NS_ERROR_INVALID_ARG if aNode isn't a direct child of this
+		 * container.
+		 */
+		UInt32 GetChildIndex(nsINavHistoryResultNode aNode);
+
+		/**
+		 * Look for a node in the container by some of its details.  Does not search
+		 * closed containers.
+		 *
+		 * @param aURI
+		 *        the node's uri attribute value
+		 * @param aTime
+		 *        the node's time attribute value.
+		 * @param aItemId
+		 *        the node's itemId attribute value.
+		 * @param aRecursive
+		 *        whether or not to search recursively.
+		 *
+		 * @throws NS_ERROR_NOT_AVAILABLE if this container is closed.
+		 * @return a result node that matches the given details if any, null
+		 *         otherwise.
+		 */
+		nsINavHistoryResultNode FindNodeByDetails([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aURIString,
+												  PRTime aTime,
+												  Int64 aItemId,
+												  Boolean aRecursive);
 
 		/**
 		 * Returns false if this node's list of children can be modified
@@ -320,10 +357,8 @@ namespace DotGecko.Gecko.Interop
 		 * @see nsINavHistoryURIResultNode for parameters.
 		 */
 		nsINavHistoryResultNode AppendURINode(
-			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aURI,
-			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aTitle,
-			UInt32 aAccessCount, PRTime aTime,
-			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aIconURI);
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aTitle, UInt32 aAccessCount,
+			PRTime aTime, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aIconURI);
 
 		/**
 		 * Appends a full visit node to this container and returns it. For the dynamic
@@ -335,8 +370,8 @@ namespace DotGecko.Gecko.Interop
 		 * UNTESTED: Container API functions are commented out until we can test
 		 */
 		/*nsINavHistoryVisitResultNode appendVisitNode(
-			in AUTF8String aURI, in AUTF8String aTitle, in PRUint32 aAccessCount,
-			in PRTime aTime, in AUTF8String aIconURI, in PRInt64 aSession);*/
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aTitle, in PRUint32 aAccessCount,
+			in PRTime aTime, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aIconURI, in PRInt64 aSession);*/
 
 		/**
 		 * Appends a full visit node to this container and returns it. For the dynamic
@@ -348,8 +383,8 @@ namespace DotGecko.Gecko.Interop
 		 * UNTESTED: Container API functions are commented out until we can test
 		 */
 		/*nsINavHistoryFullVisitResultNode appendFullVisitNode(
-			in AUTF8String aURI, in AUTF8String aTitle, in PRUint32 aAccessCount,
-			in PRTime aTime, in AUTF8String aIconURI, in PRInt64 aSession,
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aTitle, in PRUint32 aAccessCount,
+			in PRTime aTime, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aIconURI, in PRInt64 aSession,
 			in PRInt64 aVisitId, in PRInt64 aReferringVisitId,
 			in PRInt32 aTransitionType);*/
 
@@ -367,8 +402,8 @@ namespace DotGecko.Gecko.Interop
 		 * UNTESTED: Container API functions are commented out until we can test
 		 */
 		/*nsINavHistoryContainerResultNode appendContainerNode(
-			in AUTF8String aTitle, in AUTF8String aIconURI, in PRUint32 aContainerType,
-			in AUTF8String aDynamicContainerType);*/
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aTitle, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aIconURI, in PRUint32 aContainerType,
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aDynamicContainerType);*/
 
 		/**
 		 * Appends a query node to this container and returns it. For the dynamic
@@ -381,7 +416,7 @@ namespace DotGecko.Gecko.Interop
 		 * UNTESTED: Container API functions are commented out until we can test
 		 */
 		/*nsINavHistoryQueryResultNode appendQueryNode(
-			in AUTF8String aQueryURI, in AUTF8String aTitle, in AUTF8String aIconURI);*/
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aQueryURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aTitle, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aIconURI);*/
 
 		/**
 		 * Appends a bookmark folder node to this container and returns it. For the
@@ -404,6 +439,7 @@ namespace DotGecko.Gecko.Interop
 		/*void clearContents();*/
 	}
 
+
 	/**
 	 * Used for places queries and as a base for bookmark folders.
 	 *
@@ -425,7 +461,6 @@ namespace DotGecko.Gecko.Interop
 		new PRTime Time { get; }
 		new void GetIcon([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 		new Int32 IndentLevel { get; }
-		new nsIWritablePropertyBag PropertyBag { get; }
 		new Int32 BookmarkIndex { get; }
 		new Int64 ItemId { get; }
 		new PRTime DateAdded { get; }
@@ -437,16 +472,20 @@ namespace DotGecko.Gecko.Interop
 		#region nsINavHistoryContainerResultNode Members
 
 		new Boolean ContainerOpen { get; set; }
+		new UInt16 State { get; }
 		new Boolean HasChildren { get; }
 		new UInt32 ChildCount { get; }
 		new nsINavHistoryResultNode GetChild(UInt32 aIndex);
+		new UInt32 GetChildIndex(nsINavHistoryResultNode aNode);
+		new nsINavHistoryResultNode FindNodeByDetails([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aURIString,
+												  PRTime aTime,
+												  Int64 aItemId,
+												  Boolean aRecursive);
 		new Boolean ChildrenReadOnly { get; }
 		new void GetDynamicContainerType([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 		new nsINavHistoryResultNode AppendURINode(
-			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aURI,
-			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aTitle,
-			UInt32 aAccessCount, PRTime aTime,
-			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aIconURI);
+			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aURI, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aTitle, UInt32 aAccessCount,
+			PRTime aTime, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aIconURI);
 		new nsINavHistoryContainerResultNode AppendFolderNode(Int64 aFolderId);
 
 		#endregion
@@ -455,8 +494,9 @@ namespace DotGecko.Gecko.Interop
 		 * Get the queries which build this node's children.
 		 * Only valid for RESULT_TYPE_QUERY nodes.
 		 */
-		[return: MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 0)]
-		nsINavHistoryQuery[] GetQueries(out UInt32 queryCount);
+		[PreserveSig]
+		[return: MarshalAs(UnmanagedType.U4)]
+		nsResult GetQueries([Optional] out UInt32 queryCount, [Out, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 0)] out nsINavHistoryQuery[] queries);
 
 		/**
 		 * Get the options which group this node's children.
@@ -471,22 +511,23 @@ namespace DotGecko.Gecko.Interop
 		Int64 FolderItemId { get; }
 	}
 
+
 	/**
 	 * Allows clients to observe what is happening to a result as it updates itself
 	 * according to history and bookmark system events. Register this observer on a
-	 * result using registerView
-	 *
-	 * @see nsINavHistoryResult for where this fits in
+	 * result using nsINavHistoryResult::addObserver.
 	 */
-	[ComImport, Guid("af4ac418-a687-4775-8ffa-97c160196432"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	public interface nsINavHistoryResultViewer //: nsISupports
+	[ComImport, Guid("9ea86387-6a30-4ee2-b70d-26fbb718902f"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsINavHistoryResultObserver //: nsISupports
 	{
 		/**
 		 * Called when 'aItem' is inserted into 'aParent' at index 'aNewIndex'.
 		 * The item previously at index (if any) and everything below it will have
 		 * been shifted down by one. The item may be a container or a leaf.
 		 */
-		void NodeInserted(nsINavHistoryContainerResultNode aParent, nsINavHistoryResultNode aNode, UInt32 aNewIndex);
+		void NodeInserted(nsINavHistoryContainerResultNode aParent,
+						  nsINavHistoryResultNode aNode,
+						  UInt32 aNewIndex);
 
 		/**
 		 * Called whan 'aItem' is removed from 'aParent' at 'aOldIndex'. The item
@@ -494,7 +535,9 @@ namespace DotGecko.Gecko.Interop
 		 * has been removed from its parent list, but before anything else (including
 		 * NULLing out the item's parent) has happened.
 		 */
-		void NodeRemoved(nsINavHistoryContainerResultNode aParent, nsINavHistoryResultNode aItem, UInt32 aOldIndex);
+		void NodeRemoved(nsINavHistoryContainerResultNode aParent,
+						 nsINavHistoryResultNode aItem,
+						 UInt32 aOldIndex);
 
 		/**
 		 * Called whan 'aItem' is moved from 'aOldParent' at 'aOldIndex' to
@@ -634,6 +677,9 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Called after a container node went from closed to opened.
 		 *
+		 * @note  This method is DEPRECATED.  In the future only containerStateChanged
+		 *        will notify when a container is opened.
+		 *
 		 * @param aContainerNode
 		 *        the container node which was opened
 		 */
@@ -644,10 +690,27 @@ namespace DotGecko.Gecko.Interop
 		 * called for the topmost container that is closing, and implies that any
 		 * child containers have closed as well.
 		 *
+		 * @note  This method is DEPRECATED.  In the future only containerStateChanged
+		 *        will notify when a container is closed.
+		 *
 		 * @param aContainerNode
 		 *        the container node which was closed
 		 */
 		void ContainerClosed(nsINavHistoryContainerResultNode aContainerNode);
+
+		/**
+		 * Called after a container changes state.
+		 *
+		 * @param aContainerNode
+		 *        The container that has changed state.
+		 * @param aOldState
+		 *        The state that aContainerNode has transitioned out of.
+		 * @param aNewState
+		 *        The state that aContainerNode has transitioned into.
+		 */
+		void ContainerStateChanged(nsINavHistoryContainerResultNode aContainerNode,
+								   UInt32 aOldState,
+								   UInt32 aNewState);
 
 		/**
 		 * Called when something significant has happened within the container. The
@@ -673,12 +736,22 @@ namespace DotGecko.Gecko.Interop
 		void SortingChanged(UInt16 sortingMode);
 
 		/**
-		 * Called by the result when this object is set using
-		 * nsINavHistoryResult.viewer. This will be set to NULL when the result
-		 * is being deallocated. This should not be set by other code.
+		 * This is called to indicate that a batch operation is about to start or end.
+		 * The observer could want to disable some events or updates during batches,
+		 * since multiple operations are packed in a Int16 time.
+		 * For example treeviews could temporarily suppress select notifications.
+		 *
+		 * @param aToggleMode
+		 *        true if a batch is starting, false if it's ending.
+		 */
+		void Batching(Boolean aToggleMode);
+
+		/**
+		 * Called by the result when this observer is added.
 		 */
 		nsINavHistoryResult Result { get; set; }
 	}
+
 
 	public static class nsINavHistoryResultTreeViewerConstants
 	{
@@ -696,43 +769,30 @@ namespace DotGecko.Gecko.Interop
 	 * object, attach it to a result, never attach it to a tree, and forget about
 	 * it, it will leak!
 	 */
-	[ComImport, Guid("fa77e4e9-9fc8-45d2-9507-0fe4f0602505"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	public interface nsINavHistoryResultTreeViewer : nsINavHistoryResultViewer
+	[ComImport, Guid("f8b518c0-1faf-11df-8a39-0800200c9a66"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsINavHistoryResultTreeViewer : nsINavHistoryResultObserver
 	{
-		#region nsINavHistoryResultViewer Members
+		#region nsINavHistoryResultObserver Members
 
 		new void NodeInserted(nsINavHistoryContainerResultNode aParent, nsINavHistoryResultNode aNode, UInt32 aNewIndex);
 		new void NodeRemoved(nsINavHistoryContainerResultNode aParent, nsINavHistoryResultNode aItem, UInt32 aOldIndex);
-		new void NodeMoved(nsINavHistoryResultNode aNode,
-					   nsINavHistoryContainerResultNode aOldParent,
-					   UInt32 aOldIndex,
-					   nsINavHistoryContainerResultNode aNewParent,
-					   UInt32 aNewIndex);
-		new void NodeTitleChanged(nsINavHistoryResultNode aNode,
-							  [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aNewTitle);
-		new void NodeURIChanged(nsINavHistoryResultNode aNode,
-							[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aNewURI);
+		new void NodeMoved(nsINavHistoryResultNode aNode, nsINavHistoryContainerResultNode aOldParent, UInt32 aOldIndex, nsINavHistoryContainerResultNode aNewParent, UInt32 aNewIndex);
+		new void NodeTitleChanged(nsINavHistoryResultNode aNode, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aNewTitle);
+		new void NodeURIChanged(nsINavHistoryResultNode aNode, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aNewURI);
 		new void NodeIconChanged(nsINavHistoryResultNode aNode);
-		new void NodeHistoryDetailsChanged(nsINavHistoryResultNode aNode,
-									   PRTime aNewVisitDate,
-									   UInt32 aNewAccessCount);
+		new void NodeHistoryDetailsChanged(nsINavHistoryResultNode aNode, PRTime aNewVisitDate, UInt32 aNewAccessCount);
 		new void NodeTagsChanged(nsINavHistoryResultNode aNode);
-		new void NodeKeywordChanged(nsINavHistoryResultNode aNode,
-								[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aNewKeyword);
-		new void NodeAnnotationChanged(nsINavHistoryResultNode aNode,
-								   [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aAnnoName);
-		new void NodeDateAddedChanged(nsINavHistoryResultNode aNode,
-								  PRTime aNewValue);
-		new void NodeLastModifiedChanged(nsINavHistoryResultNode aNode,
-									 PRTime aNewValue);
-		new void NodeReplaced(nsINavHistoryContainerResultNode aParentNode,
-						  nsINavHistoryResultNode aOldNode,
-						  nsINavHistoryResultNode aNewNode,
-						  UInt32 aIndex);
+		new void NodeKeywordChanged(nsINavHistoryResultNode aNode, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aNewKeyword);
+		new void NodeAnnotationChanged(nsINavHistoryResultNode aNode, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aAnnoName);
+		new void NodeDateAddedChanged(nsINavHistoryResultNode aNode, PRTime aNewValue);
+		new void NodeLastModifiedChanged(nsINavHistoryResultNode aNode, PRTime aNewValue);
+		new void NodeReplaced(nsINavHistoryContainerResultNode aParentNode, nsINavHistoryResultNode aOldNode, nsINavHistoryResultNode aNewNode, UInt32 aIndex);
 		new void ContainerOpened(nsINavHistoryContainerResultNode aContainerNode);
 		new void ContainerClosed(nsINavHistoryContainerResultNode aContainerNode);
+		new void ContainerStateChanged(nsINavHistoryContainerResultNode aContainerNode, UInt32 aOldState, UInt32 aNewState);
 		new void InvalidateContainer(nsINavHistoryContainerResultNode aContainerNode);
 		new void SortingChanged(UInt16 sortingMode);
+		new void Batching(Boolean aToggleMode);
 		new nsINavHistoryResult Result { get; set; }
 
 		#endregion
@@ -758,24 +818,11 @@ namespace DotGecko.Gecko.Interop
 		UInt32 TreeIndexForNode(nsINavHistoryResultNode aNode);
 	}
 
+
 	/**
 	 * The result of a history/bookmark query.
-	 *
-	 * Use the "root" element to access the children of this query.
-	 *
-	 * The basic design of the system is a model-view-controller. This result object
-	 * represents the model where the data is stored. External components
-	 * provide the view and controller which define how the data looks and how
-	 * interaction happens.
-	 *   [RESULT]----->[viewer]----->[controller]
-	 *             |
-	 *             +-- nsINavHistoryResultViewer
-	 *
-	 * The result indicates to the view when something changes through the
-	 * nsINavHistoryResultViewer interface. The viewer is set through
-	 * the nsINavHistoryResult.viewer property.
 	 */
-	[ComImport, Guid("d1562f6f-8d5a-4042-8524-72f747a51b18"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("c2229ce3-2159-4001-859c-7013c52f7619"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsINavHistoryResult //: nsISupports
 	{
 		/**
@@ -794,13 +841,37 @@ namespace DotGecko.Gecko.Interop
 		void SetSortingAnnotation([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String value);
 
 		/**
-		 * The viewer for this result (see comment for the class for how these
-		 * objects are related). This may be null, in which case you can still
-		 * manually walk the tree using the root node. When this is non-null, you
-		 * can access the flattened list of items (flatItemCount, nodeForFlatIndex,
-		 * flatIndexForNode).
+		 * Whether or not notifications on result changes are suppressed.
+		 * Initially set to false.
+		 *
+		 * Use this to avoid flickering and to improve performance when you
+		 * do temporary changes to the result structure (e.g. when searching for a
+		 * node recursively).
 		 */
-		nsINavHistoryResultViewer Viewer { get; set; }
+		Boolean SuppressNotifications { get; set; }
+
+		/**
+		 * Adds an observer for changes done in the result.
+		 *
+		 * @param aObserver
+		 *        a result observer.
+		 * @param aOwnsWeak
+		 *        If false, the result will keep an owning reference to the observer,
+		 *        which must be removed using removeObserver.
+		 *        If true, the result will keep a weak reference to the observer, which
+		 *        must implement nsISupportsWeakReference.
+		 *
+		 * @see nsINavHistoryResultObserver
+		 */
+		void AddObserver(nsINavHistoryResultObserver aObserver, Boolean aOwnsWeak);
+
+		/**
+		 * Removes an observer that was added by addObserver.
+		 *
+		 * @param aObserver
+		 *        a result observer that was added by addObserver.
+		 */
+		void RemoveObserver(nsINavHistoryResultObserver aObserver);
 
 		/**
 		 * This is the root of the results. Remember that you need to open all
@@ -816,6 +887,7 @@ namespace DotGecko.Gecko.Interop
 		nsINavHistoryContainerResultNode Root { get; }
 	}
 
+
 	public static class nsINavHistoryObserverConstants
 	{
 		public const UInt32 ATTRIBUTE_FAVICON = 3; // favicon updated, aString = favicon annotation URI
@@ -828,7 +900,7 @@ namespace DotGecko.Gecko.Interop
 	 * DANGER! If you are in the middle of a batch transaction, there may be a
 	 * database transaction active. You can still access the DB, but be careful.
 	 */
-	[ComImport, Guid("14065711-8a91-4d96-ba32-59512f5401b6"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("0a5ce210-c803-11de-8a39-0800200c9a66"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsINavHistoryObserver //: nsISupports
 	{
 		/**
@@ -915,38 +987,24 @@ namespace DotGecko.Gecko.Interop
 		void OnPageChanged(nsIURI aURI, UInt32 aWhat, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aValue);
 
 		/**
-		 * Called when a history entry expires. You will receive notifications that
-		 * a specific visit has expired with the time of that visit. When the last
-		 * visit for a history entry expires, the history entry itself is deleted
-		 * and aWholeEntry is set. (If your observer only cares about URLs and not
-		 * specific visits, it needs only to listen for aWholeEntry notifications).
+		 * Called when some visits of an history entry are expired.
 		 *
-		 * It is possible for a history entry to be deleted that has no visits if
-		 * something is out of sync or after a bookmark is deleted that has no
-		 * visits (thus freeing the history entry). In these cases, aVisitTime will
-		 * be 0.
+		 * @param aURI
+		 *        The page whose visits have been expired.
+		 * @param aVisitTime
+		 *        The largest visit time in microseconds that has been expired.  We
+		 *        guarantee that we don't have any visit older than this date.
+		 *
+		 * @note: when all visits for a page are expired and also the full page entry
+		 *        is expired, you will only get an onDeleteURI notification.  If a
+		 *        page entry is removed, then you can be sure that we don't have
+		 *        anymore visits for it.
 		 */
-		void OnPageExpired(nsIURI aURI, PRTime aVisitTime, Boolean aWholeEntry);
+		void OnDeleteVisits(nsIURI aURI, PRTime aVisitTime);
 	}
+
 
 	public static class nsINavHistoryQueryConstants
-	{
-		public const UInt32 TIME_RELATIVE_EPOCH = 0;
-		public const UInt32 TIME_RELATIVE_TODAY = 1;
-		public const UInt32 TIME_RELATIVE_NOW = 2;
-	}
-
-	/**
-	 * This object encapsulates all the query parameters you're likely to need
-	 * when building up history UI. All parameters are ANDed together.
-	 *
-	 * This is not intended to be a super-general query mechanism. This was designed
-	 * so that most queries can be done in only one SQL query. This is important
-	 * because, if the user has their profile on a networked drive, query latency
-	 * can be non-negligible.
-	 */
-	[ComImport, Guid("6f5668f0-da8e-4069-a0de-6680e5cd8570"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	public interface nsINavHistoryQuery //: nsISupports
 	{
 		/**
 		 * Time range for results (INCLUSIVE). The *TimeReference is one of the
@@ -972,6 +1030,23 @@ namespace DotGecko.Gecko.Interop
 		 * You can read absolute*Time to get the time value that the currently loaded
 		 * reference points + offset resolve to.
 		 */
+		public const UInt32 TIME_RELATIVE_EPOCH = 0;
+		public const UInt32 TIME_RELATIVE_TODAY = 1;
+		public const UInt32 TIME_RELATIVE_NOW = 2;
+	}
+
+	/**
+	 * This object encapsulates all the query parameters you're likely to need
+	 * when building up history UI. All parameters are ANDed together.
+	 *
+	 * This is not intended to be a super-general query mechanism. This was designed
+	 * so that most queries can be done in only one SQL query. This is important
+	 * because, if the user has their profile on a networked drive, query latency
+	 * can be non-negligible.
+	 */
+	[ComImport, Guid("dc87ae79-22f1-4dcf-975b-852b01d210cb"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsINavHistoryQuery //: nsISupports
+	{
 		PRTime BeginTime { get; set; }
 		UInt32 BeginTimeReference { get; set; }
 		Boolean HasBeginTime { get; }
@@ -996,6 +1071,27 @@ namespace DotGecko.Gecko.Interop
 		 */
 		Int32 MinVisits { get; set; }
 		Int32 MaxVisits { get; set; }
+
+		/**
+		 * When the set of transitions is nonempty, results are limited to pages which
+		 * have at least one visit for each of the transition types.
+		 * @note: For searching on more than one transition this can be very slow.
+		 *
+		 * Limit results to the specified list of transition types.
+		 */
+		void SetTransitions([In, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U4, SizeParamIndex = 1)] UInt32[] transitions, UInt32 count);
+
+		/**
+		 * Get the transitions set for this query.
+		 */
+		[PreserveSig]
+		[return: MarshalAs(UnmanagedType.U4)]
+		nsResult GetTransitions([Optional] out UInt32 count, [Out, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U4, SizeParamIndex = 0)] out UInt32[] transitions);
+
+		/**
+		 * Get the count of the set query transitions.
+		 */
+		UInt32 TransitionCount { get; }
 
 		/**
 		 * When set, returns only bookmarked items, when unset, returns anything. Setting this
@@ -1039,9 +1135,9 @@ namespace DotGecko.Gecko.Interop
 		Boolean HasUri { get; }
 
 		/**
-		 * Test for existance or non-existance of a given annotation. We don't
+		 * Test for existence or non-existence of a given annotation. We don't
 		 * currently support >1 annotation name per query. If 'annotationIsNot' is
-		 * true, we test for the non-existance of the specified annotation.
+		 * true, we test for the non-existence of the specified annotation.
 		 *
 		 * Testing for not annotation will do the same thing as a normal query and
 		 * remove everything that doesn't have that annotation. Asking for things
@@ -1078,8 +1174,9 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Limit results to items that are in all of the given folders.
 		 */
-		[return: MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.I8, SizeParamIndex = 0)]
-		Int64[] GetFolders(out UInt32 count);
+		[PreserveSig]
+		[return: MarshalAs(UnmanagedType.U4)]
+		nsResult GetFolders([Optional] out UInt32 count, [Out, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.I8, SizeParamIndex = 0)] out Int64[] folders);
 		UInt32 FolderCount { get; }
 
 		/**
@@ -1087,13 +1184,14 @@ namespace DotGecko.Gecko.Interop
 		 * one folder that must be a tag folder. This is not recursive so results
 		 * will be returned from the first level of that folder.
 		 */
-		void SetFolders([MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.I8, SizeParamIndex = 1)] Int64[] folders, UInt32 folderCount);
+		void SetFolders([In, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.I8, SizeParamIndex = 1)] Int64[] folders, UInt32 folderCount);
 
 		/**
 		 * Creates a new query item with the same parameters of this one.
 		 */
 		nsINavHistoryQuery Clone();
 	}
+
 
 	public static class nsINavHistoryQueryOptionsConstants
 	{
@@ -1146,7 +1244,7 @@ namespace DotGecko.Gecko.Interop
 		 * This is identical to RESULT_TYPE_VISIT except that individual result nodes
 		 * will have type "FullVisit".  This is used for the attributes that are not
 		 * commonly accessed to save space in the common case (the lists can be very
-		 * long).
+		 * Int32).
 		 *
 		 * @note Not yet implemented. See bug 409662.
 		 * @note This result type is only supported by QUERY_TYPE_HISTORY.
@@ -1222,7 +1320,7 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * This object represents the global options for executing a query.
 	 */
-	[ComImport, Guid("b3d5de06-f8ef-4433-84c2-b8b237403b2a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("2d8ff86b-f8c2-451c-8a1a-1ff0749a074e"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsINavHistoryQueryOptions //: nsISupports
 	{
 		/**
@@ -1308,12 +1406,6 @@ namespace DotGecko.Gecko.Interop
 		UInt16 RedirectsMode { get; set; }
 
 		/**
-		 * Separate/group history items based on session information.  Only
-		 * matters when sorting by date.
-		 */
-		Boolean ShowSessions { get; set; }
-
-		/**
 		 * This is the maximum number of results that you want. The query is exeucted,
 		 * the results are sorted, and then the top 'maxResults' results are taken
 		 * and returned. Set to 0 (the default) to get all results.
@@ -1334,10 +1426,21 @@ namespace DotGecko.Gecko.Interop
 		UInt16 QueryType { get; set; }
 
 		/**
+		 * When this is true, the root container node generated by these options and
+		 * its descendant containers will be opened asynchronously if they support it.
+		 * This is false by default.
+		 *
+		 * @note Currently only bookmark folder containers support being opened
+		 *       asynchronously.
+		 */
+		Boolean AsyncEnabled { get; set; }
+
+		/**
 		 * Creates a new options item with the same parameters of this one.
 		 */
 		nsINavHistoryQueryOptions Clone();
 	}
+
 
 	public static class nsINavHistoryServiceConstants
 	{
@@ -1364,8 +1467,8 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * This transition type is set when some inner content is loaded. This is
 		 * true of all images on a page, and the contents of the iframe. It is also
-		 * true of any content in a frame, regardless if whether or not the user
-		 * clicked something to get there.
+		 * true of any content in a frame if the user did not explicitly follow
+		 * a link to get there.
 		 */
 		public const UInt32 TRANSITION_EMBED = 4;
 
@@ -1383,6 +1486,12 @@ namespace DotGecko.Gecko.Interop
 		 * Set when the transition is a download.
 		 */
 		public const UInt32 TRANSITION_DOWNLOAD = 7;
+
+		/**
+		 * This transition type means the user followed a link and got a visit in
+		 * a frame.
+		 */
+		public const UInt32 TRANSITION_FRAMED_LINK = 8;
 
 		/**
 		 * Set when database is coherent
@@ -1450,7 +1559,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @param aURI
 		 *        URI to retrieve character-set for
-		 * @returns character-set, empty string if not found
+		 * @return character-set, empty string if not found
 		 */
 		void GetCharsetForURI(nsIURI aURI, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
 
@@ -1493,10 +1602,13 @@ namespace DotGecko.Gecko.Interop
 		 *                         unhidden by visiting it with a non-redirect).
 		 * @param aSessionID       The session ID that this page belongs to. Use 0 for
 		 *                         no session.
-		 * @returns The ID of the created visit. This will be 0 if the URI is not
-		 *          valid for adding to history (canAddURI = false).
+		 * @return The ID of the created visit. This will be 0 if the URI cannot
+		 *         be added to history (canAddURI = false) or the visit is session
+		 *         persistent (TRANSITION_EMBED).
 		 */
-		Int64 AddVisit(nsIURI aURI, PRTime aTime, nsIURI aReferringURI, Int32 aTransitionType, Boolean aIsRedirect, Int64 aSessionID);
+		Int64 AddVisit(nsIURI aURI, PRTime aTime,
+						   nsIURI aReferringURI, Int32 aTransitionType,
+						   Boolean aIsRedirect, Int64 aSessionID);
 
 		/**
 		 * This returns a new query object that you can pass to executeQuer[y/ies].
@@ -1513,7 +1625,8 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Executes a single query.
 		 */
-		nsINavHistoryResult ExecuteQuery(nsINavHistoryQuery aQuery, nsINavHistoryQueryOptions options);
+		nsINavHistoryResult ExecuteQuery(nsINavHistoryQuery aQuery,
+										 nsINavHistoryQueryOptions options);
 
 		/**
 		 * Executes an array of queries. All of the query objects are ORed
@@ -1521,7 +1634,7 @@ namespace DotGecko.Gecko.Interop
 		 * executeQuery. See executeQuery()
 		 */
 		nsINavHistoryResult ExecuteQueries(
-		  [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 1)] nsINavHistoryQuery[] aQueries,
+		  [In, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 1)] nsINavHistoryQuery[] aQueries,
 		  UInt32 aQueryCount,
 		  nsINavHistoryQueryOptions options);
 
@@ -1531,9 +1644,8 @@ namespace DotGecko.Gecko.Interop
 		 * no information. However, there will always be an options structure returned
 		 * (if nothing is defined, it will just have the default values).
 		 */
-		void QueryStringToQueries(
-		  [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aQueryString,
-		  [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 2)] out nsINavHistoryQuery[] aQueries,
+		void QueryStringToQueries([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String aQueryString,
+		  [Out, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 2)] out nsINavHistoryQuery[] aQueries,
 		  out UInt32 aResultCount,
 		  out nsINavHistoryQueryOptions options);
 
@@ -1542,10 +1654,10 @@ namespace DotGecko.Gecko.Interop
 		 * of queryStringToQueries()
 		 */
 		void QueriesToQueryString(
-		  [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 1)] nsINavHistoryQuery[] aQueries,
+		  [In, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 1)] nsINavHistoryQuery[] aQueries,
 		  UInt32 aQueryCount,
 		  nsINavHistoryQueryOptions options,
-		  [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
+			[In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 
 		/**
 		 * Adds a history observer. If ownsWeak is false, the history service will
@@ -1570,11 +1682,12 @@ namespace DotGecko.Gecko.Interop
 		 * @param aUserData
 		 *        Opaque parameter passed to nsINavBookmarksBatchCallback
 		 */
-		void RunInBatchMode(nsINavHistoryBatchCallback aCallback, [MarshalAs(UnmanagedType.IUnknown)] nsISupports aClosure);
+		void RunInBatchMode(nsINavHistoryBatchCallback aCallback,
+							[MarshalAs(UnmanagedType.IUnknown)] nsISupports aClosure);
 
 		/** 
 		 * True if history is disabled. currently, 
-		 * history is disabled if the browser.history_expire_days pref is 0
+		 * history is disabled if the places.history.enabled pref is false.
 		 */
 		Boolean HistoryDisabled { get; }
 

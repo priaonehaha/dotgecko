@@ -7,7 +7,6 @@ namespace DotGecko.Gecko.Interop
 	 * Provides information about global history to gecko. 
 	 *
 	 * @note  This interface replaces and deprecates nsIGlobalHistory.
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("cf777d42-1270-4b34-be7b-2931c93feda5"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIGlobalHistory2 //: nsISupports

@@ -43,8 +43,6 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIEmbeddingSiteWindow is implemented by the embedder to provide
 	 * Gecko with the means to call up to the host to resize the window,
 	 * hide or show it and set/get its title.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("3E5432CD-9568-4bd1-8CBE-D50ABA110743"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIEmbeddingSiteWindow //: nsISupports

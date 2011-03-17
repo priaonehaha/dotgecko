@@ -5,8 +5,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/**
 	 * Represents an object that can be stored in a hashtable.
-	 *
-	 * @status FROZEN - This interface will not change in the Mozilla 1.x lifetime
 	 */
 	[ComImport, Guid("17e595fa-b57a-4933-bd0f-b1812e8ab188"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIHashable //: nsISupports

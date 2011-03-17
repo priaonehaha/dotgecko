@@ -34,6 +34,8 @@ namespace DotGecko.Gecko.Interop
 
 		new nsIDOMEventTarget WindowRoot { get; }
 		new nsIDOMOfflineResourceList ApplicationCache { get; }
+		new void CreateBlobURL(nsIDOMBlob blob, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		new void RevokeBlobURL([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String URL);
 
 		#endregion
 

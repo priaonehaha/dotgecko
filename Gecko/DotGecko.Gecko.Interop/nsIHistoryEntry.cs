@@ -9,8 +9,6 @@ namespace DotGecko.Gecko.Interop
 	 * it. nsIHistoryEntry provides access to information like URI, 
 	 * title and frame traversal status for that document.
 	 * This interface is accessible from javascript.
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("A41661D4-1417-11D5-9882-00C04FA02F40"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIHistoryEntry //: nsISupports 

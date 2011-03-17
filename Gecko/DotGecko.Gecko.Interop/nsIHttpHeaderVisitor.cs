@@ -5,8 +5,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/**
 	 * Implement this interface to visit http headers.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("0cf40717-d7c1-4a94-8c1e-d6c9734101bb"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIHttpHeaderVisitor //: nsISupports

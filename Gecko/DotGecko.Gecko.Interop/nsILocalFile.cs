@@ -22,8 +22,6 @@ namespace DotGecko.Gecko.Interop
 	 * that is accessible via the local file system.
 	 *
 	 * It follows the same string conventions as nsIFile.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("aa610f20-a889-11d3-8c81-000064657374"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsILocalFile : nsIFile

@@ -11,8 +11,6 @@ namespace DotGecko.Gecko.Interop
 	 * This interface allows for the modification of HTTP request parameters and
 	 * the inspection of the resulting HTTP response status and headers when they
 	 * become available.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("9277fe09-f0cc-4cd9-bbce-581dd94b0260"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIHttpChannel : nsIChannel

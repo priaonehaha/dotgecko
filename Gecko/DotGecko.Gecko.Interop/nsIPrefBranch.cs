@@ -32,8 +32,6 @@ namespace DotGecko.Gecko.Interop
 	 * "page", "homepage", or "homepage_override" to the various Get/Set methods.
 	 *
 	 * @see nsIPrefService
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("56c35506-f14b-11d3-99d3-ddbfac2ccf65"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIPrefBranch //: nsISupports
@@ -138,7 +136,6 @@ namespace DotGecko.Gecko.Interop
 		 *                    - nsILocalFile
 		 *                    - nsISupportsString (UniChar)
 		 *                    - nsIPrefLocalizedString (Localized UniChar)
-		 *                    - nsIFileSpec (deprecated - to be removed eventually)
 		 * @param aValue    The XPCOM object into which to the complex preference 
 		 *                  value should be retrieved.
 		 *
@@ -161,7 +158,6 @@ namespace DotGecko.Gecko.Interop
 		 *                    - nsILocalFile
 		 *                    - nsISupportsString (UniChar)
 		 *                    - nsIPrefLocalizedString (Localized UniChar)
-		 *                    - nsIFileSpec (deprecated - to be removed eventually)
 		 * @param aValue    The XPCOM object from which to set the complex preference 
 		 *                  value.
 		 *
@@ -296,7 +292,7 @@ namespace DotGecko.Gecko.Interop
 		 * @return NS_OK The preference list was successfully retrieved.
 		 * @return Other The preference(s) do not exist or an error occurred.
 		 */
-		IntPtr GetChildList([MarshalAs(UnmanagedType.LPStr)] String aStartingAt, out UInt32 aCount);
+		IntPtr GetChildList([MarshalAs(UnmanagedType.LPStr)] String aStartingAt, [Optional] out UInt32 aCount);
 
 		/**
 		 * Called to reset all of the preferences referenced by this branch to their

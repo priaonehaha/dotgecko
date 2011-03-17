@@ -17,6 +17,10 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * The amount of time in milliseconds that has passed
 		 * since the last user activity.
+		 *
+		 * If we do not have a valid idle time to report, 0 is returned
+		 * (this can happen if the user never interacted with the browser
+		 * at all, and if we are also unable to poll for idle time manually).
 		 */
 		UInt32 IdleTime { get; }
 

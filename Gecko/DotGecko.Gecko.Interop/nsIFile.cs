@@ -29,8 +29,6 @@ namespace DotGecko.Gecko.Interop
 	 * A string containing characters encoded in the native charset cannot
 	 * be safely passed to javascript via xpconnect.  Therefore, the "native
 	 * methods" are not scriptable. 
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("c8c0a080-0868-11d3-915f-d9d889d48e3c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIFile //: nsISupports

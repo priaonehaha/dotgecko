@@ -8,8 +8,6 @@ namespace DotGecko.Gecko.Interop
 	 * nsIFileURL provides access to the underlying nsIFile object corresponding to
 	 * an URL.  The URL scheme need not be file:, since other local protocols may
 	 * map URLs to files (e.g., resource:).
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("d26b2e2e-1dd1-11b2-88f3-8545a7ba7949"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIFileURL : nsIURL
