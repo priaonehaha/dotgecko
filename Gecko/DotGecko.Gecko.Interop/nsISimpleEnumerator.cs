@@ -10,7 +10,6 @@ namespace DotGecko.Gecko.Interop
 	 * getNext() must be pre-ceeded by a call to hasMoreElements(). There is
 	 * no way to "reset" an enumerator, once you obtain one.
 	 *
-	 * @status FROZEN
 	 * @version 1.0
 	 */
 	[ComImport, Guid("D1899240-F9D2-11D2-BDD6-000064657374"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

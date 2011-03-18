@@ -4,7 +4,7 @@ using PRTime = System.UInt64;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("23c51569-e9a1-4a92-adeb-3723db82ef7c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("3a982955-dc44-422e-8734-8462bf8d2121"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsITransfer : nsIWebProgressListener2
 	{
 		#region nsIWebProgressListener Members

@@ -10,8 +10,6 @@ namespace DotGecko.Gecko.Interop
 	 * the embedding application's top level window is disabled, deactivate() must
 	 * be called, and activate() called again when the top level window is
 	 * reactivated for the browser's focus memory to work correctly.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("9c5d3c58-1dd1-11b2-a1c9-f3699284657a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebBrowserFocus //: nsISupports

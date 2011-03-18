@@ -32,8 +32,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * These first three are pointer types and do data copying
 	 * using the nsIMemory. Be careful!
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("d0d4b136-1dd1-11b2-9371-f0727ef827c0"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPrimitive //: nsISupports
@@ -43,8 +41,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for nsID structures
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("d18290a0-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsID : nsISupportsPrimitive
@@ -62,8 +58,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for ASCII strings
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("d65ff270-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsCString : nsISupportsPrimitive
@@ -82,8 +76,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for Unicode strings
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("d79dc970-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsString : nsISupportsPrimitive
@@ -106,8 +98,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for booleans
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("ddc3b490-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPRBool : nsISupportsPrimitive
@@ -125,8 +115,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for 8-bit integers
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("dec2e4e0-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPRUint8 : nsISupportsPrimitive
@@ -144,8 +132,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for unsigned 16-bit integers
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("dfacb090-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPRUint16 : nsISupportsPrimitive
@@ -163,8 +149,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for unsigned 32-bit integers
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("e01dc470-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPRUint32 : nsISupportsPrimitive
@@ -182,8 +166,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for 64-bit integers
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("e13567c0-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPRUint64 : nsISupportsPrimitive
@@ -201,8 +183,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for NSPR date/time values
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("e2563630-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPRTime : nsISupportsPrimitive
@@ -221,8 +201,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * Scriptable storage for single character values
 	 * (often used to store an ASCII character)
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("e2b05e40-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsChar : nsISupportsPrimitive
@@ -240,8 +218,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for 16-bit integers
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("e30d94b0-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPRInt16 : nsISupportsPrimitive
@@ -259,8 +235,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for 32-bit integers
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("e36c5250-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPRInt32 : nsISupportsPrimitive
@@ -278,8 +252,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for 64-bit integers
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("e3cb0ff0-4a1c-11d3-9890-006008962422"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsPRInt64 : nsISupportsPrimitive
@@ -297,8 +269,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for floating point numbers
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("abeaa390-4ac0-11d3-baea-00805f8a5dd7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsFloat : nsISupportsPrimitive
@@ -316,8 +286,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for doubles
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("b32523a0-4ac0-11d3-baea-00805f8a5dd7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsDouble : nsISupportsPrimitive
@@ -335,8 +303,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for generic pointers
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("464484f0-568d-11d3-baf8-00805f8a5dd7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsVoid : nsISupportsPrimitive
@@ -354,8 +320,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Scriptable storage for other XPCOM objects
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("995ea724-1dd1-11b2-9211-c21bdd3e7ed0"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISupportsInterfacePointer : nsISupportsPrimitive

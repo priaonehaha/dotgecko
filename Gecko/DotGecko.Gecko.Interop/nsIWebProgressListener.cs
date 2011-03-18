@@ -196,8 +196,6 @@ namespace DotGecko.Gecko.Interop
 	 * requests in the context of a nsIWebProgress instance as well as any child
 	 * nsIWebProgress instances.  nsIWebProgress.idl describes the parent-child
 	 * relationship of nsIWebProgress instances.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("570F39D1-EFD0-11d3-B093-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebProgressListener //: nsISupports

@@ -17,8 +17,6 @@ namespace DotGecko.Gecko.Interop
 	 * does not by default search subframes or iframes. To change this
 	 * behaviour, and to explicitly set the frame to search, 
 	 * QueryInterface to nsIWebBrowserFindInFrames.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("2f977d44-5485-11d4-87e2-0010a4e75ef2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebBrowserFind //: nsISupports
@@ -92,8 +90,6 @@ namespace DotGecko.Gecko.Interop
 	 * Controls how find behaves when multiple frames or iframes are present.
 	 *
 	 * Get by doing a QueryInterface from nsIWebBrowserFind.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("e0f5d182-34bc-11d5-be5b-b760676c6ebc"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebBrowserFindInFrames //: nsISupports

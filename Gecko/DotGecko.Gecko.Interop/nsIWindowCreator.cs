@@ -9,8 +9,6 @@ namespace DotGecko.Gecko.Interop
 	 * must provide an implementation of the Window Watcher component and
 	 * notify the WindowWatcher during application initialization.
 	 * @see nsIWindowWatcher
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("30465632-A777-44cc-90F9-8145475EF999"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWindowCreator //: nsISupports

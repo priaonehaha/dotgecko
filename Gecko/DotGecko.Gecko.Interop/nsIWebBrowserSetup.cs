@@ -92,8 +92,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @note Unless stated otherwise, settings are presumed to be enabled by
 	 *       default.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("F15398A0-8018-11d3-AF70-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebBrowserSetup //: nsISupports

@@ -18,7 +18,7 @@ namespace DotGecko.Gecko.Interop
 	 * When the window is destroyed, it will fire a "xul-window-destroyed"
 	 * notification through the global observer service.
 	 */
-	[ComImport, Guid("c175a596-ee13-420a-aa74-13ad3a14deb1"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("5869c5e5-743d-473c-bb71-41752146d373"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIXULWindow //: nsISupports
 	{
 		/**
@@ -65,12 +65,15 @@ namespace DotGecko.Gecko.Interop
 
 		/**
 		 * Move the window to a centered position.
-		 * @param aRelative the window relative to which the window is moved.
-		 *                  See screen parameter for details. if null, the
-		 *                  window is centered relative to the main screen.
+		 * @param aRelative If not null, the window relative to which the window is
+		 *                  moved. See aScreen parameter for details.
 		 * @param aScreen   PR_TRUE to center the window relative to the screen
-		 *                  containing aRelative. PR_FALSE to center it relative
-		 *                  to aRelative itself.
+		 *                  containing aRelative if aRelative is not null. If
+		 *                  aRelative is null then relative to the screen of the
+		 *                  opener window if it was initialized by passing it to
+		 *                  nsWebShellWindow::Initialize. Failing that relative to
+		 *                  the main screen.
+		 *                  PR_FALSE to center it relative to aRelative itself.
 		 * @param aAlert    PR_TRUE to move the window to an alert position,
 		 *                  generally centered horizontally and 1/3 down from the top.
 		 */
@@ -90,6 +93,12 @@ namespace DotGecko.Gecko.Interop
 		UInt32 ContextFlags { get; set; }
 
 		UInt32 ChromeFlags { get; set; }
+
+		/**
+		 * Begin assuming |chromeFlags| don't change hereafter, and assert
+		 * if they do change.  The state change is one-way and idempotent.
+		 */
+		void AssumeChromeFlagsAreFrozen();
 
 		/**
 		 * Create a new window.

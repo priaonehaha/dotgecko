@@ -50,8 +50,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * The correct way to create an nsIURI from a string is via
 	 * nsIIOService.newURI.
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("07a22cc0-0ce5-11d3-9331-00104ba0fd40"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIURI //: nsISupports

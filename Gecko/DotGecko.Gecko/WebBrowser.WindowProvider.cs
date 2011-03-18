@@ -14,11 +14,11 @@ namespace DotGecko.Gecko
 			remove { Events.Remove(EventKey.ProvideWindow, value); }
 		}
 
-		nsIDOMWindow nsIWindowProvider.ProvideWindow(nsIDOMWindow aParent, UInt32 aChromeFlags, Boolean aPositionSpecified, Boolean aSizeSpecified, nsIURI aURI, AString aName, AUTF8String aFeatures, out Boolean aWindowIsNew)
+		nsIDOMWindow nsIWindowProvider.ProvideWindow(nsIDOMWindow aParent, UInt32 aChromeFlags, Boolean aCalledFromJS, Boolean aPositionSpecified, Boolean aSizeSpecified, nsIURI aURI, AString aName, AUTF8String aFeatures, out Boolean aWindowIsNew)
 		{
 			Trace.TraceInformation("nsIWindowProvider.ProvideWindow");
 
-			var e = new ProvideWindowEventArgs((ChromeFlags)aChromeFlags, aPositionSpecified, aSizeSpecified, aURI.ToUri(), aName.GetString(), aFeatures.GetUTF8String());
+			var e = new ProvideWindowEventArgs((ChromeFlags)aChromeFlags, aCalledFromJS, aPositionSpecified, aSizeSpecified, aURI.ToUri(), aName.GetString(), aFeatures.GetUTF8String());
 			Events.Raise(EventKey.ProvideWindow, e);
 			aWindowIsNew = e.WindowIsNew;
 			return e.Window != null ? e.Window.m_WebBrowser.ContentDOMWindow : null;

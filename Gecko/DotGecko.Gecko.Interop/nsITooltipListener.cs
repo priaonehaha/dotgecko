@@ -11,8 +11,6 @@ namespace DotGecko.Gecko.Interop
 	 * for.
 	 *
 	 * @see nsITooltipTextProvider
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("44b78386-1dd2-11b2-9ad2-e4eee2ca1916"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsITooltipListener //: nsISupports

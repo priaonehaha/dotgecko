@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using nsISupports = System.Object;
+using jsval = System.IntPtr;
 using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
@@ -54,7 +55,7 @@ namespace DotGecko.Gecko.Interop
 	 * [noscript] since any nsIVariant object will be automatically converted to a
 	 * JS type anyway.
 	 */
-	[ComImport, Guid("6c9eb060-8c6a-11d5-90f3-0010a4e73d9a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("81e4c2de-acac-4ad6-901a-b5fb1b851a0d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIVariant //: nsISupports
 	{
 		UInt16 DataType { get; }
@@ -87,6 +88,8 @@ namespace DotGecko.Gecko.Interop
 
 		[return: MarshalAs(UnmanagedType.IUnknown)]
 		nsISupports GetAsISupports();
+
+		jsval GetAsJSVal();
 
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 0)]
 		Object GetAsInterface(out Guid iid);
@@ -144,6 +147,7 @@ namespace DotGecko.Gecko.Interop
 		new String GetAsWString();
 		[return: MarshalAs(UnmanagedType.IUnknown)]
 		new nsISupports GetAsISupports();
+		new jsval GetAsJSVal();
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 0)]
 		new Object GetAsInterface(out Guid iid);
 		[PreserveSig]

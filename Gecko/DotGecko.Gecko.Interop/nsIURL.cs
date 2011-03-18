@@ -18,8 +18,6 @@ namespace DotGecko.Gecko.Interop
 	 *                ----------------------------
 	 *                            |
 	 *                        filePath
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("d6116970-8034-11d3-9399-00104ba0fd40"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIURL : nsIURI
@@ -174,10 +172,18 @@ namespace DotGecko.Gecko.Interop
 		void GetCommonBaseSpec(nsIURI aURIToCompare, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 
 		/**
-		 * This method takes a uri and returns a substring of this if it can be
-		 * made relative to the uri passed in.  If no commonality is found, the
-		 * entire uri spec is returned.  If they are identical, "" is returned.
-		 * Filename, query, etc are always returned except when uris are identical.
+		 * This method tries to create a string which specifies the location of the
+		 * argument relative to |this|.  If the argument and |this| are equal, the
+		 * method returns "".  If any of the URIs' scheme, host, userpass, or port
+		 * don't match, the method returns the full spec of the argument.
+		 *
+		 * Examples:
+		 *    this.spec               aURIToCompare.spec        result
+		 * 1) http://mozilla.org/     http://www.mozilla.org/   http://www.mozilla.org/
+		 * 2) http://mozilla.org/     http://www.mozilla.org    http://www.mozilla.org/
+		 * 3) http://foo.com/bar/     http://foo.com:80/bar/    ""
+		 * 4) http://foo.com/         http://foo.com/a.htm#b    a.html#b
+		 * 5) http://foo.com/a/b/     http://foo.com/c          ../../c
 		 */
 		void GetRelativeSpec(nsIURI aURIToCompare, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 	}

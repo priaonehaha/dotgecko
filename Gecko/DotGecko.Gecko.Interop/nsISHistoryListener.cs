@@ -15,8 +15,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * A session history listener can be registered on a particular nsISHistory
 	 * instance via the nsISHistory::addSHistoryListener() method.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("3b07f591-e8e1-11d4-9882-00c04fa02f40"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISHistoryListener //: nsISupports 

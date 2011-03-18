@@ -11,8 +11,6 @@ namespace DotGecko.Gecko.Interop
 	 * wish to provide a custom "new window" of their own (for example by returning
 	 * a new tab, an existing window, etc) instead of just having a real new
 	 * toplevel window open.
-	 *
-	 * @status UNDER_REVIEW
 	 */
 
 	/**
@@ -23,7 +21,7 @@ namespace DotGecko.Gecko.Interop
 	 * or the provider does not provide a window, the window watcher will proceed
 	 * to actually open a new window.
 	 */
-	[ComImport, Guid("5119ac7f-81dd-4061-96a7-71f2cf5efee4"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("f607bd66-08e5-4d2e-ad83-9f9f3ca17658"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWindowProvider //: nsISupports
 	{
 		/**
@@ -81,6 +79,7 @@ namespace DotGecko.Gecko.Interop
 		 */
 		nsIDOMWindow ProvideWindow(nsIDOMWindow aParent,
 								   UInt32 aChromeFlags,
+								   Boolean aCalledFromJS,
 								   Boolean aPositionSpecified,
 								   Boolean aSizeSpecified,
 								   nsIURI aURI,

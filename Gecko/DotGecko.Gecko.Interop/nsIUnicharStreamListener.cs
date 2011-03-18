@@ -11,8 +11,6 @@ namespace DotGecko.Gecko.Interop
 	 * UTF-16.
 	 *
 	 * nsIUnicharStreamListener
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("4a7e9b62-fef8-400d-9865-d6820f630b4c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIUnicharStreamListener : nsIRequestObserver

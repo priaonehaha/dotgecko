@@ -4,9 +4,10 @@ namespace DotGecko.Gecko
 {
 	public sealed class ProvideWindowEventArgs : EventArgs
 	{
-		internal ProvideWindowEventArgs(ChromeFlags chromeFlags, Boolean positionSpecified, Boolean sizeSpecified, Uri uri, String name, String features)
+		internal ProvideWindowEventArgs(ChromeFlags chromeFlags, Boolean calledFromJS, Boolean positionSpecified, Boolean sizeSpecified, Uri uri, String name, String features)
 		{
 			m_ChromeFlags = chromeFlags;
+			m_CalledFromJS = calledFromJS;
 			m_PositionSpecified = positionSpecified;
 			m_SizeSpecified = sizeSpecified;
 			m_Uri = uri;
@@ -16,6 +17,8 @@ namespace DotGecko.Gecko
 		}
 
 		public ChromeFlags ChromeFlags { get { return m_ChromeFlags; } }
+
+		public Boolean CalledFromJS { get { return m_CalledFromJS; } }
 
 		public Boolean PositionSpecified { get { return m_PositionSpecified; } }
 
@@ -32,6 +35,7 @@ namespace DotGecko.Gecko
 		public Boolean WindowIsNew { get; set; }
 
 		private readonly ChromeFlags m_ChromeFlags;
+		private readonly Boolean m_CalledFromJS;
 		private readonly Boolean m_PositionSpecified;
 		private readonly Boolean m_SizeSpecified;
 		private readonly Uri m_Uri;

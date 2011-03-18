@@ -88,8 +88,6 @@ namespace DotGecko.Gecko.Interop
 	 * nsIWebProgress instance to which it added itself, and it may also receive
 	 * notifications from any nsIWebProgress instances that are children of that
 	 * nsIWebProgress instance.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("570F39D0-EFD0-11d3-B093-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebProgress //: nsISupports

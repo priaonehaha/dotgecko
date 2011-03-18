@@ -55,8 +55,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * nsIWebBrowserChrome corresponds to the top-level, outermost window
 	 * containing an embedded Gecko web browser.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("BA434C60-9D52-11d3-AFB0-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebBrowserChrome //: nsISupports

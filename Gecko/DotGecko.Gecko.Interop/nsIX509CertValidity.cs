@@ -6,8 +6,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/**
 	 * Information on the validity period of a X.509 certificate.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("e701dfd8-1dd1-11b2-a172-ffa6cc6156ad"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIX509CertValidity //: nsISupports

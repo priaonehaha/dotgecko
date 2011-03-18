@@ -149,8 +149,6 @@ namespace DotGecko.Gecko.Interop
 	 * It provides methods and attributes to direct an object to navigate to a new
 	 * location, stop or restart an in process load, or determine where the object
 	 * has previously gone.
-	 *
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("F5D9E7B0-D930-11d3-B057-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebNavigation //: nsISupports

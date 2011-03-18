@@ -12,7 +12,6 @@ namespace DotGecko.Gecko.Interop
 	 * (hopefully short-lived) owning reference on demand, through which clients
 	 * can get useful access to the referent, while it still exists.
 	 *
-	 * @status FROZEN
 	 * @version 1.0
 	 * @see nsISupportsWeakReference
 	 * @see nsWeakReference
@@ -36,7 +35,6 @@ namespace DotGecko.Gecko.Interop
 	 * instances of |nsIWeakReference|.  Weak references in this scheme can only be
 	 * produced for objects that implement this interface.
 	 *
-	 * @status FROZEN
 	 * @version 1.0
 	 * @see nsIWeakReference
 	 * @see nsSupportsWeakReference
