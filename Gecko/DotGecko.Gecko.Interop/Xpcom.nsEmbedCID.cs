@@ -23,7 +23,7 @@ namespace DotGecko.Gecko.Interop
 		 * interfaces and does not guarantee ability to get any particular
 		 * interfaces via the nsIInterfaceRequestor implementation.
 		 */
-		public const String NS_WEBBROWSER_CONTRACTID = @"@mozilla.org/embedding/browser/nsWebBrowser;1";
+		public const String NS_WEBBROWSER_CONTRACTID = "@mozilla.org/embedding/browser/nsWebBrowser;1";
 
 		/**
 		 * Prompt Service ContractID
@@ -39,18 +39,7 @@ namespace DotGecko.Gecko.Interop
 		 * want more control over the way prompts, alerts, and confirmation dialogs are
 		 * presented to the user.
 		 */
-		public const String NS_PROMPTSERVICE_CONTRACTID = @"@mozilla.org/embedcomp/prompt-service;1";
-
-		/**
-		 * Non Blocking Alert Service ContractID
-		 *   This service is for posing non blocking alerts to the user.
-		 *
-		 * This contract implements the following interfaces:
-		 * nsINonBlockingAlertService
-		 *
-		 * Embedders may override this ContractID with their own implementation.
-		 */
-		public const String NS_NONBLOCKINGALERTSERVICE_CONTRACTID = @"@mozilla.org/embedcomp/nbalert-service;1";
+		public const String NS_PROMPTSERVICE_CONTRACTID = "@mozilla.org/embedcomp/prompt-service;1";
 
 		/**
 		 * This contract ID should be implemented by password managers to be able to
@@ -60,6 +49,6 @@ namespace DotGecko.Gecko.Interop
 		 * This contract implements the following interfaces:
 		 * nsIPromptFactory
 		 */
-		public const String NS_PWMGR_AUTHPROMPTFACTORY = @"@mozilla.org/passwordmanager/authpromptfactory;1";
+		public const String NS_PWMGR_AUTHPROMPTFACTORY = "@mozilla.org/passwordmanager/authpromptfactory;1";
 	}
 }

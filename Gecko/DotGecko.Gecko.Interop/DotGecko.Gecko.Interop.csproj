@@ -224,12 +224,24 @@
     <Compile Include="nsStringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xpcom.cs" />
-    <Compile Include="Xpcom.IDs.cs" />
-    <Compile Include="Xpcom.nsAppDirectoryServiceDefs.cs" />
-    <Compile Include="Xpcom.nsEmbedCID.cs" />
-    <Compile Include="Xpcom.nsNetCID.cs" />
-    <Compile Include="Xpcom.nsToolkitCompsCID.cs" />
-    <Compile Include="Xpcom.nsXPCOMCID.cs" />
+    <Compile Include="Xpcom.IDs.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsAppDirectoryServiceDefs.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsEmbedCID.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsNetCID.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsToolkitCompsCID.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsXPCOMCID.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
     <Compile Include="Xpcom.Strings.cs">
       <DependentUpon>Xpcom.cs</DependentUpon>
     </Compile>
