@@ -46,6 +46,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JavaScript\MozJS.cs" />
     <Compile Include="nsIAppShell.cs" />
     <Compile Include="nsIArray.cs" />
     <Compile Include="nsIAtom.cs" />
@@ -508,6 +509,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="nsIContentSecurityPolicy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIJSContextStack.cs" />
+    <Compile Include="nsIJSON.cs" />
+    <Compile Include="nsIJSRuntimeService.cs" />
+    <Compile Include="nsIScriptSecurityManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXPCSecurityManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXPCScriptable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXPConnect.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIInterfaceInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
