@@ -19,8 +19,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * Any of these methods may throw NS_ERROR_OUT_OF_MEMORY when the
 	 * array must grow to complete the call, but the allocation fails.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("af059da0-c85b-40ec-af07-ae4bfdc192cc"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIMutableArray : nsIArray

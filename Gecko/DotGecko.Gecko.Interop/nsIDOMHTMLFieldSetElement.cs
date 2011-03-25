@@ -9,12 +9,13 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIDOMHTMLFieldSetElement interface is the interface to a
 	 * [X]HTML fieldset element.
 	 *
-	 * For more information on this interface please see
+	 * This interface is trying to follow the DOM Level 2 HTML specification:
 	 * http://www.w3.org/TR/DOM-Level-2-HTML/
 	 *
-	 * @status FROZEN
+	 * with changes from the work-in-progress WHATWG HTML specification:
+	 * http://www.whatwg.org/specs/web-apps/current-work/
 	 */
-	[ComImport, Guid("a6cf9097-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("58db2166-36fc-482c-a9f8-84ad262537b2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHTMLFieldSetElement : nsIDOMHTMLElement
 	{
 		#region nsIDOMNode Members
@@ -83,6 +84,21 @@ namespace DotGecko.Gecko.Interop
 
 		#endregion
 
+		Boolean Disabled { get; set; }
 		nsIDOMHTMLFormElement Form { get; }
+		void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+
+		void GetType([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+
+		nsIDOMHTMLCollection Elements { get; }
+
+		// The following lines are parte of the constraint validation API, see:
+		// http://www.whatwg.org/specs/web-apps/current-work/#the-constraint-validation-api
+		Boolean WillValidate { get; }
+		nsIDOMValidityState Validity { get; }
+		void GetValidationMessage([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		Boolean CheckValidity();
+		void SetCustomValidity([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String error);
 	}
 }

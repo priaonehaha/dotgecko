@@ -4,11 +4,12 @@ using System.Text;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("13a1b39e-72e5-442d-aa73-5905ffaf837b"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("88e03453-a773-47ba-9d84-14f672ac99e2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIPluginTag //: nsISupports
 	{
 		void GetDescription([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 		void GetFilename([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
+		void GetFullpath([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 		void GetVersion([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 		void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] StringBuilder retval);
 		Boolean Disabled { get; set; }

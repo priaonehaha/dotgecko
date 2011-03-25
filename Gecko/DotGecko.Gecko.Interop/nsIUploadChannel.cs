@@ -9,8 +9,6 @@ namespace DotGecko.Gecko.Interop
 	 * A channel may optionally implement this interface if it supports the
 	 * notion of uploading a data stream.  The upload stream may only be set
 	 * prior to the invocation of asyncOpen on the channel.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("ddf633d8-e9a4-439d-ad88-de636fd9bb75"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIUploadChannel //: nsISupports

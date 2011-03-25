@@ -21,7 +21,7 @@ namespace DotGecko.Gecko.Interop
 	}
 
 	/* Defines the abstract interface for a principal. */
-	[ComImport, Guid("b8268b9a-2403-44ed-81e3-614075c92034"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("799ab95c-0038-4e0f-b705-74c21f185bb5"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIPrincipal : nsISerializable
 	{
 		#region nsISerializable Members
@@ -205,5 +205,10 @@ namespace DotGecko.Gecko.Interop
 		 * one, this will return null.  Getting this attribute never throws.
 		 */
 		nsISupports Certificate { [return: MarshalAs(UnmanagedType.IUnknown)] get; }
+
+		/**
+		 * A Content Security Policy associated with this principal.
+		 */
+		nsIContentSecurityPolicy CSP { get; set; }
 	}
 }

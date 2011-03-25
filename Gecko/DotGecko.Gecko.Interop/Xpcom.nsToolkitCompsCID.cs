@@ -22,8 +22,6 @@ namespace DotGecko.Gecko.Interop
 
 		public const String NS_FORMHISTORY_CONTRACTID = "@mozilla.org/satchel/form-history;1";
 
-		public const String NS_FORMHISTORYIMPORTER_CONTRACTID = "@mozilla.org/satchel/form-history-importer;1";
-
 		public const String NS_FORMFILLCONTROLLER_CONTRACTID = "@mozilla.org/satchel/form-fill-controller;1";
 
 		public const String NS_FORMHISTORYAUTOCOMPLETE_CONTRACTID = "@mozilla.org/autocomplete/search;1?name=form-history";
@@ -58,6 +56,12 @@ namespace DotGecko.Gecko.Interop
 
 		public const String NS_FAVICONSERVICE_CONTRACTID = "@mozilla.org/browser/favicon-service;1";
 
+		public const String NS_PLACESIMPORTEXPORTSERVICE_CONTRACTID = "@mozilla.org/browser/places/import-export-service;1";
+
+		public const String NS_APPSTARTUP_CONTRACTID = "@mozilla.org/toolkit/app-startup;1";
+
+		public const String NS_WEBAPPSSUPPORT_CONTRACTID = "@mozilla.org/webapps/installer;1";
+
 		/////////////////////////////////////////////////////////////////////////////
 
 		// {A0CCAAF8-09DA-44D8-B250-9AC3E93C8117}
@@ -73,18 +77,12 @@ namespace DotGecko.Gecko.Interop
 		public static readonly Guid NS_AUTOCOMPLETESIMPLERESULT_CID = new Guid(0x2ee3039b, 0x2de4, 0x43d9, 0x93, 0xb0, 0x64, 0x9b, 0xea, 0xcf, 0xf3, 0x9a);
 
 		// {7A6F70B6-2BBD-44b5-9304-501352D44AB5}
-		public static readonly Guid NS_AUTOCOMPLETEMDBRESULT_CID = new Guid(0x7a6f70b6, 0x2bbd, 0x44b5, 0x93, 0x4, 0x50, 0x13, 0x52, 0xd4, 0x4a, 0xb5);
+		public static readonly Guid NS_AUTOCOMPLETEMDBRESULT_CID = new Guid(0x7a6f70b6, 0x2bbd, 0x44b5, 0x93, 0x04, 0x50, 0x13, 0x52, 0xd4, 0x4a, 0xb5);
 
 		public static readonly Guid NS_DOWNLOADMANAGER_CID = new Guid(0xedb0490e, 0x1dd1, 0x11b2, 0x83, 0xb8, 0xdb, 0xf8, 0xd8, 0x59, 0x06, 0xa6);
 
 		// {895DB6C7-DBDF-40ea-9F64-B175033243DC}
-		public static readonly Guid NS_FORMFILLCONTROLLER_CID = new Guid(0x895db6c7, 0xdbdf, 0x40ea, 0x9f, 0x64, 0xb1, 0x75, 0x3, 0x32, 0x43, 0xdc);
-
-		// {A2059C0E-5A58-4c55-AB7C-26F0557546EF}
-		public static readonly Guid NS_FORMHISTORY_CID = new Guid(0xa2059c0e, 0x5a58, 0x4c55, 0xab, 0x7c, 0x26, 0xf0, 0x55, 0x75, 0x46, 0xef);
-
-		// {db340cc2-7f50-4ea3-8427-f529daf6dc87}
-		public static readonly Guid NS_FORMHISTORYIMPORTER_CID = new Guid(0xdb340cc2, 0x7f50, 0x4ea3, 0x84, 0x27, 0xf5, 0x29, 0xda, 0xf6, 0xdc, 0x87);
+		public static readonly Guid NS_FORMFILLCONTROLLER_CID = new Guid(0x895db6c7, 0xdbdf, 0x40ea, 0x9f, 0x64, 0xb1, 0x75, 0x03, 0x32, 0x43, 0xdc);
 
 		// {59648a91-5a60-4122-8ff2-54b839c84aed}
 		public static readonly Guid NS_GLOBALHISTORY_CID = new Guid(0x59648a91, 0x5a60, 0x4122, 0x8f, 0xf2, 0x54, 0xb8, 0x39, 0xc8, 0x4a, 0xed);
@@ -121,5 +119,10 @@ namespace DotGecko.Gecko.Interop
 		public static readonly Guid NS_MORKHISTORYIMPORTER_CID = new Guid(0x428e6d12, 0x9c6d, 0x436f, 0xb7, 0xa3, 0x6c, 0xa5, 0xf4, 0x80, 0x92, 0x12);
 
 		public static readonly Guid NS_FAVICONSERVICE_CID = new Guid(0x984e3259, 0x9266, 0x49cf, 0xb6, 0x05, 0x60, 0xb0, 0x22, 0xa0, 0x07, 0x56);
+
+		// {6fb0c970-e1b1-11db-8314-0800200c9a66}
+		public static readonly Guid NS_PLACESIMPORTEXPORTSERVICE_CID = new Guid(0x6fb0c970, 0xe1b1, 0x11db, 0x83, 0x14, 0x08, 0x00, 0x20, 0x0c, 0x9a, 0x66);
+
+		public static readonly Guid NS_WEBAPPSSUPPORT_CID = new Guid(0xd0b62752, 0x88be, 0x4c88, 0x94, 0xe5, 0xc6, 0x9e, 0x15, 0xa1, 0x0c, 0x4e);
 	}
 }

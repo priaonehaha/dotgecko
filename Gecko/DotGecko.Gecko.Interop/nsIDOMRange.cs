@@ -20,8 +20,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * For more information on this interface please see
 	 * http://www.w3.org/TR/DOM-Level-2-Traversal-Range/
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("a6cf90ce-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMRange //: nsISupports
@@ -72,6 +70,6 @@ namespace DotGecko.Gecko.Interop
 
 		void ToString([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result); // raises(DOMException);
 
-		void Detach(); // raises(DOMException);
+		void Detach();
 	}
 }

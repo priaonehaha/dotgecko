@@ -38,8 +38,6 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * This function may allocate additional memory for aContainer.  When
 		 * aContainer is no longer needed, NS_StringContainerFinish should be called.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -63,8 +61,6 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * NOTE: NS_StringContainerInit2(container, nsnull, 0, 0) is equivalent to
 		 * NS_StringContainerInit(container).
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
 		public static extern UInt32 NS_StringContainerInit2(AStringContainer aContainer, String aData, UInt32 aDataLength, UInt32 aFlags);
@@ -75,8 +71,6 @@ namespace DotGecko.Gecko.Interop
 		 * @param aContainer    string container reference
 		 *
 		 * This function frees any memory owned by aContainer.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
 		public static extern void NS_StringContainerFinish(AStringContainer aContainer);
@@ -95,8 +89,6 @@ namespace DotGecko.Gecko.Interop
 		 *                      whether or not aStr's internal buffer is null-
 		 *                      terminated
 		 * @return              length of aStr's internal buffer
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
 		public static extern UInt32 NS_StringGetData(AString aStr, out IntPtr aData, IntPtr aTerminated);
@@ -127,8 +119,6 @@ namespace DotGecko.Gecko.Interop
 		 * internal buffer.  The behavior depends on the implementation of the abstract
 		 * string, aStr.  If aStr is a reference to a nsStringContainer, then its data
 		 * will be null-terminated by this function.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
 		public static extern UInt32 NS_StringGetMutableData(AString aStr, UInt32 aDataLength, out IntPtr aData);
@@ -142,8 +132,6 @@ namespace DotGecko.Gecko.Interop
 		 * @param aStr          abstract string reference
 		 * @return              null-terminated copy of the string's internal buffer
 		 *                      (it must be free'd using using nsMemory::Free)
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
 		public static extern String NS_StringCloneData(AString aStr);
@@ -164,8 +152,6 @@ namespace DotGecko.Gecko.Interop
 		 * from aData.  The behavior depends on the implementation of the abstract
 		 * string, aStr.  If aStr is a reference to a nsStringContainer, then its data
 		 * will be null-terminated by this function.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -196,8 +182,6 @@ namespace DotGecko.Gecko.Interop
 		 * from aData.  The behavior depends on the implementation of the abstract
 		 * string, aStr.  If aStr is a reference to a nsStringContainer, then its data
 		 * will be null-terminated by this function.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -217,8 +201,6 @@ namespace DotGecko.Gecko.Interop
 		 * data from aSrcStr.  The behavior depends on the implementation of the
 		 * abstract string, aDestStr.  If aDestStr is a reference to a
 		 * nsStringContainer, then its data will be null-terminated by this function.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Unicode)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -270,8 +252,6 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * This function may allocate additional memory for aContainer.  When
 		 * aContainer is no longer needed, NS_CStringContainerFinish should be called.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -295,8 +275,6 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * NOTE: NS_CStringContainerInit2(container, nsnull, 0, 0) is equivalent to
 		 * NS_CStringContainerInit(container).
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -312,8 +290,6 @@ namespace DotGecko.Gecko.Interop
 		 * @param aContainer    string container reference
 		 *
 		 * This function frees any memory owned by aContainer.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		public static extern void NS_CStringContainerFinish(ACStringContainer aContainer);
@@ -332,8 +308,6 @@ namespace DotGecko.Gecko.Interop
 		 *                      whether or not aStr's internal buffer is null-
 		 *                      terminated
 		 * @return              length of aStr's internal buffer
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		public static extern UInt32 NS_CStringGetData(ACString aStr, out IntPtr aData, IntPtr aTerminated);
@@ -364,8 +338,6 @@ namespace DotGecko.Gecko.Interop
 		 * internal buffer.  The behavior depends on the implementation of the abstract
 		 * string, aStr.  If aStr is a reference to a nsStringContainer, then its data
 		 * will be null-terminated by this function.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		public static extern UInt32 NS_CStringGetMutableData(ACString aStr, UInt32 aDataLength, out IntPtr aData);
@@ -379,8 +351,6 @@ namespace DotGecko.Gecko.Interop
 		 * @param aStr          abstract string reference
 		 * @return              null-terminated copy of the string's internal buffer
 		 *                      (it must be free'd using using nsMemory::Free)
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		public static extern String NS_CStringCloneData(ACString aStr);
@@ -401,8 +371,6 @@ namespace DotGecko.Gecko.Interop
 		 * from aData.  The behavior depends on the implementation of the abstract
 		 * string, aStr.  If aStr is a reference to a nsStringContainer, then its data
 		 * will be null-terminated by this function.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -437,8 +405,6 @@ namespace DotGecko.Gecko.Interop
 		 * from aData.  The behavior depends on the implementation of the abstract
 		 * string, aStr.  If aStr is a reference to a nsStringContainer, then its data
 		 * will be null-terminated by this function.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -458,8 +424,6 @@ namespace DotGecko.Gecko.Interop
 		 * data from aSrcStr.  The behavior depends on the implementation of the
 		 * abstract string, aDestStr.  If aDestStr is a reference to a
 		 * nsStringContainer, then its data will be null-terminated by this function.
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true, CharSet = CharSet.Ansi)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -515,8 +479,6 @@ namespace DotGecko.Gecko.Interop
 		 * @param aSource       abstract string reference containing source string
 		 * @param aSrcEncoding  character encoding of the source string
 		 * @param aDest         abstract string reference to hold the result
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		[return: MarshalAs(UnmanagedType.U4)]
@@ -534,8 +496,6 @@ namespace DotGecko.Gecko.Interop
 		 * @param aSource       abstract string reference containing source string
 		 * @param aDestEncoding character encoding of the resulting string
 		 * @param aDest         abstract string reference to hold the result
-		 *
-		 * @status FROZEN
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		[return: MarshalAs(UnmanagedType.U4)]

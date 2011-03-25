@@ -5,7 +5,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/*
 	 * nsICategoryManager
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("3275b2cd-af6d-429a-80d7-f0c5120342ac"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsICategoryManager //: nsISupports

@@ -8,8 +8,6 @@ namespace DotGecko.Gecko.Interop
 	 * the system-wide OS clipboard. Mozilla does not use a private
 	 * clipboard, instead it places its data directly onto the system 
 	 * clipboard. The webshell implements this interface.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("b8100c90-73be-11d2-92a5-00105a1b0d64"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIClipboardCommands //: nsISupports

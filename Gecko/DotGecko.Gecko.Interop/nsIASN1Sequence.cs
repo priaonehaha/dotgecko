@@ -26,8 +26,6 @@ namespace DotGecko.Gecko.Interop
 	 * when working with visual reprenstation of ASN.1 objects
 	 * in a human user interface, like in a tree widget
 	 * where open/close state of nodes must be remembered.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("b6b957e6-1dd1-11b2-89d7-e30624f50b00"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIASN1Sequence : nsIASN1Object

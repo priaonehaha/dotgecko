@@ -9,8 +9,6 @@ namespace DotGecko.Gecko.Interop
 	 * Typical usage scenarios will include running applications which register
 	 * a nsIURIContentListener for each of its content windows with the uri
 	 * dispatcher service. 
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("94928AB3-8B63-11d3-989D-001083010E9B"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIURIContentListener //: nsISupports

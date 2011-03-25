@@ -9,10 +9,11 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIDOMHTMLDocument interface is the interface to a [X]HTML
 	 * document object.
 	 *
-	 * For more information on this interface please see
+	 * This interface is trying to follow the DOM Level 2 HTML specification:
 	 * http://www.w3.org/TR/DOM-Level-2-HTML/
 	 *
-	 * @status FROZEN
+	 * with changes from the work-in-progress WHATWG HTML specification:
+	 * http://www.whatwg.org/specs/web-apps/current-work/
 	 */
 	[ComImport, Guid("a6cf9084-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHTMLDocument : nsIDOMDocument
@@ -92,12 +93,8 @@ namespace DotGecko.Gecko.Interop
 		void Open();
 		void Close();
 
-		// The methods write() and writeln() must be callable from JS with
-		// no arguments for backwards compatibility, thus they are marked
-		// [noscript] here. The JS versions of these methods are defined in
-		// nsIDOMNSHTMLDocument.
-		void Write([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String text);
-		void Writeln([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String text);
+		void Write([Optional, In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String text);
+		void Writeln([Optional, In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String text);
 
 		nsIDOMNodeList GetElementsByName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String elementName);
 	}

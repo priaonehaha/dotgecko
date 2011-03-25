@@ -109,8 +109,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Simplified graphics interface for JS rendering.
-	 *
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("343700dd-078b-42b6-a809-b9c1d7e951d0"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIPrintSettings //: nsISupports

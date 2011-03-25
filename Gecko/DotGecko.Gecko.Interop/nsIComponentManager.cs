@@ -6,7 +6,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/**
 	 * The nsIComponentManager interface.
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("a88e5a60-205a-4bb1-94e1-2628daf51eae"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIComponentManager //: nsISupports

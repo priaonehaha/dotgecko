@@ -58,7 +58,7 @@ namespace DotGecko.Gecko.Interop
 		 *                         was blocked.
 		 * @param aSource          The URI source of the subject content.
 		 * @param aTarget          The location the content was saved to if
-		 *                         no blocking occured.
+		 *                         no blocking occurred.
 		 */
 		void Log(Int16 aEntryType, Boolean aFlag, nsIURI aSource, [Optional] nsIFile aTarget);
 	}

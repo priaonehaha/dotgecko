@@ -18,8 +18,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * nsIWebBrowserPrint corresponds to the main interface
 	 * for printing an embedded Gecko web browser window/document
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("9A7CA4B0-FBBA-11d4-A869-00105A183419"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebBrowserPrint //: nsISupports
@@ -105,7 +103,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @param aThePrintSettings - Printer Settings for the print preview, if aThePrintSettings is null
 		 *                            then the global PS will be used.
-		 * @param aChildDOMWin - DOM Window of the child document to be PP (FrameSet frames)
+		 * @param aChildDOMWin - DOM Window to be print previewed.
 		 * @param aWPListener - is updated during the printpreview
 		 * @return void
 		 */

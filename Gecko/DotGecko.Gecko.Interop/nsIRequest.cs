@@ -95,8 +95,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * nsIRequest
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("ef6bfbd2-fd46-48d8-96b7-9f8f0fd387fe"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIRequest //: nsISupports

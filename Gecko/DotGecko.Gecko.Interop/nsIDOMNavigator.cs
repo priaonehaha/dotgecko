@@ -31,19 +31,5 @@ namespace DotGecko.Gecko.Interop
 
 		Boolean JavaEnabled();
 		Boolean TaintEnabled();
-
-		// XXX This one's tough, would nsISupports preference(in DOMString
-		// pref /*, ... */); work?
-
-		// jsval      preference(/* ... */);
-	}
-
-	[ComImport, Guid("4b4f8316-1dd2-11b2-b265-9a857376d159"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	public interface nsIDOMJSNavigator //: nsISupports
-	{
-		// Nothing about this method (except its name :-) is describeable
-		// in XPIDL, argument handling and the return value needs to be
-		// dealt with in the implementation of this method.
-		void Preference();
 	}
 }

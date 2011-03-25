@@ -15,6 +15,15 @@ namespace DotGecko.Gecko.Interop
 		public const UInt32 UNKNOWN_ACTION = 0;
 		public const UInt32 ALLOW_ACTION = 1;
 		public const UInt32 DENY_ACTION = 2;
+
+		/**
+		 * Predefined expiration types for permissions.  Permissions can be permanent
+		 * (never expire), expire at the end of the session, or expire at a specified
+		 * time.
+		 */
+		public const UInt32 EXPIRE_NEVER = 0;
+		public const UInt32 EXPIRE_SESSION = 1;
+		public const UInt32 EXPIRE_TIME = 2;
 	}
 
 	/**
@@ -41,7 +50,7 @@ namespace DotGecko.Gecko.Interop
 	 *          "cleared"
 	 *          the entire permission list was cleared. the subject is null.
 	 */
-	[ComImport, Guid("00708302-684c-42d6-a5a3-995d51b1d17c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("0b83f9d5-3f96-41b6-91aa-ff3a7e4880d7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIPermissionManager //: nsISupports
 	{
 		/**
@@ -62,8 +71,14 @@ namespace DotGecko.Gecko.Interop
 		 *                    NOTE: UNKNOWN_ACTION (0) is reserved to represent the
 		 *                    default permission when no entry is found for a host, and
 		 *                    should not be used by consumers to indicate otherwise.
+		 * @param expiretype  a constant defining whether this permission should
+		 *                    never expire (EXPIRE_NEVER), expire at the end of the
+		 *                    session (EXPIRE_SESSION), or expire at a specified time
+		 *                    (EXPIRE_TIME).
+		 * @param expiretime  an integer representation of when this permission
+		 *                    should be forgotten (milliseconds since Jan 1 1970 0:00:00). 
 		 */
-		void Add(nsIURI uri, [MarshalAs(UnmanagedType.LPStr)] String type, UInt32 permission);
+		void Add(nsIURI uri, [MarshalAs(UnmanagedType.LPStr)] String type, UInt32 permission, [Optional] UInt32 expireType, [Optional] Int64 expireTime);
 
 		/**
 		 * Remove permission information for a given host string and permission type.

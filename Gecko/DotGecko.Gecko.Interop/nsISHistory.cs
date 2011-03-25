@@ -12,8 +12,6 @@ namespace DotGecko.Gecko.Interop
 	 * session history component must create a instance of it and set
 	 * it in the nsIWebNavigation object.
 	 * This interface is accessible from javascript. 
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("9883609F-CDD8-4d83-9B55-868FF08AD433"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISHistory //: nsISupports
@@ -132,5 +130,26 @@ namespace DotGecko.Gecko.Interop
 		 * @see do_QueryInterface()
 		 */
 		nsISimpleEnumerator GetSHistoryEnumerator();
+	}
+
+	[ComImport, Guid("ac8b3eb3-2051-4cce-8303-d6e7938501dd"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsISHistory_2_0_BRANCH : nsISHistory
+	{
+		#region Members
+
+		new Int32 GetCount();
+		new Int32 GetIndex();
+		new Int32 GetRequestedIndex();
+		new Int32 GetMaxLength();
+		new void SetMaxLength(Int32 value);
+		new nsIHistoryEntry GetEntryAtIndex(Int32 index, Boolean modifyIndex);
+		new void PurgeHistory(Int32 numEntries);
+		new void AddSHistoryListener(nsISHistoryListener aListener);
+		new void RemoveSHistoryListener(nsISHistoryListener aListener);
+		new nsISimpleEnumerator GetSHistoryEnumerator();
+
+		# endregion
+
+		void ReloadCurrentEntry();
 	}
 }

@@ -46,6 +46,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JavaScript\MozJS.cs" />
     <Compile Include="nsIAppShell.cs" />
     <Compile Include="nsIArray.cs" />
     <Compile Include="nsIAtom.cs" />
@@ -156,7 +157,6 @@
     <Compile Include="nsIMIMEInfo.cs" />
     <Compile Include="nsIModule.cs" />
     <Compile Include="nsIMutableArray.cs" />
-    <Compile Include="nsINonBlockingAlertService.cs" />
     <Compile Include="nsIntMargin.cs" />
     <Compile Include="nsIntRect.cs" />
     <Compile Include="nsIObjectInputStream.cs" />
@@ -225,12 +225,24 @@
     <Compile Include="nsStringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xpcom.cs" />
-    <Compile Include="Xpcom.IDs.cs" />
-    <Compile Include="Xpcom.nsAppDirectoryServiceDefs.cs" />
-    <Compile Include="Xpcom.nsEmbedCID.cs" />
-    <Compile Include="Xpcom.nsNetCID.cs" />
-    <Compile Include="Xpcom.nsToolkitCompsCID.cs" />
-    <Compile Include="Xpcom.nsXPCOMCID.cs" />
+    <Compile Include="Xpcom.IDs.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsAppDirectoryServiceDefs.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsEmbedCID.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsNetCID.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsToolkitCompsCID.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xpcom.nsXPCOMCID.cs">
+      <DependentUpon>Xpcom.cs</DependentUpon>
+    </Compile>
     <Compile Include="Xpcom.Strings.cs">
       <DependentUpon>Xpcom.cs</DependentUpon>
     </Compile>
@@ -302,7 +314,6 @@
     <Compile Include="nsIDOMHTMLAppletElement.cs" />
     <Compile Include="nsIDOMHTMLAreaElement.cs" />
     <Compile Include="nsIDOMHTMLBaseElement.cs" />
-    <Compile Include="nsIDOMHTMLBaseFontElement.cs" />
     <Compile Include="nsIDOMHTMLBodyElement.cs" />
     <Compile Include="nsIDOMHTMLBRElement.cs" />
     <Compile Include="nsIDOMHTMLButtonElement.cs" />
@@ -445,6 +456,80 @@
     <Compile Include="nsITextServicesFilter.cs" />
     <Compile Include="nsITransferable.cs" />
     <Compile Include="nsIXULSortService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="mozIStorageBaseStatement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="mozIStorageCompletionCallback.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="mozIStorageAsyncStatement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIDOMXULElement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIRDFCompositeDataSource.cs" />
+    <Compile Include="nsIRDFDataSource.cs" />
+    <Compile Include="nsIRDFNode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIRDFResource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIRDFObserver.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULTemplateBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIBoxObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULTemplateResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULTemplateRuleFilter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULBuilderListener.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXULTemplateQueryProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIDOMValidityState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIAnimationFrameListener.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsICycleCollectorListener.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIContentSecurityPolicy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIJSContextStack.cs" />
+    <Compile Include="nsIJSON.cs" />
+    <Compile Include="nsIJSRuntimeService.cs" />
+    <Compile Include="nsIScriptSecurityManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXPCSecurityManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXPCScriptable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIXPConnect.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIInterfaceInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

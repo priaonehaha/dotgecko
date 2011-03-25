@@ -3,6 +3,12 @@ using System.Runtime.InteropServices;
 
 namespace DotGecko.Gecko.Interop
 {
+	public static class nsIXULSortServiceConstants
+	{
+		public const UInt32 SORT_COMPARECASE = 0x0001;
+		public const UInt32 SORT_INTEGER = 0x0100;
+	}
+
 	/**
 	 * A service used to sort the contents of a XUL widget.
 	 */
@@ -16,13 +22,16 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @param aNode A node in the XUL widget whose children are to be sorted.
 		 * @param aSortKey The value to be used as the comparison key.
-		 * @param aSortDirection May be either <b>natural</b> to return
-		 * the contents to their natural (unsorted) order,
-		 * <b>ascending</b> to sort the contents in ascending order, or
-		 * <b>descending</b> to sort the contents in descending order.
+		 * @param aSortHints One or more hints as to how to sort:
+		 *
+		 *   ascending: to sort the contents in ascending order
+		 *   descending: to sort the contents in descending order
+		 *   comparecase: perform case sensitive comparisons
+		 *   integer: treat values as integers, non-integers are compared as strings
+		 *   twostate: don't allow the natural (unordered state)
 		 */
 		void Sort(nsIDOMNode aNode,
 				  [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aSortKey,
-				  [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aSortDirection);
+				  [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aSortHints);
 	}
 }

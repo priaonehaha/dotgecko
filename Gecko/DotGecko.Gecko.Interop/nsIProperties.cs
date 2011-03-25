@@ -7,7 +7,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/*
 	 * Simple mapping service interface.
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("78650582-4e93-4b60-8e85-26ebd3eb14ca"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIProperties //: nsISupports

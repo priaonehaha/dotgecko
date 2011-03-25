@@ -9,10 +9,8 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIDOMHTMLEmbedElement interface is the interface to a [X]HTML
 	 * embed element.
 	 *
-	 * Note that this is not a W3C standard interface, it is Mozilla
-	 * proprietary.
-	 *
-	 * @status FROZEN
+	 * For more information on this interface, please see
+	 * http://www.whatwg.org/specs/web-apps/current-work/#the-embed-element
 	 */
 	[ComImport, Guid("123f90ab-15b3-11d2-456e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHTMLEmbedElement : nsIDOMHTMLElement

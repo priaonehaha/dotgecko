@@ -1,5 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
+using nsPreferencesArrayPtr = System.IntPtr;
+using nsPreferencePtr = System.IntPtr;
+using nsPreferencePtrConst = System.IntPtr;
+
 
 namespace DotGecko.Gecko.Interop
 {
@@ -11,8 +15,6 @@ namespace DotGecko.Gecko.Interop
 	 * of the preferences themselves.
 	 *
 	 * @see nsIPrefBranch
-	 * 
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("decb9cc7-c08f-4ea5-be91-a8fc637ce2d2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIPrefService //: nsISupports
@@ -111,5 +113,28 @@ namespace DotGecko.Gecko.Interop
 		 * @see getBranch
 		 */
 		nsIPrefBranch GetDefaultBranch([MarshalAs(UnmanagedType.LPStr)] String aPrefRoot);
+	}
+
+	[ComImport, Guid("08c8cd2f-8345-45ee-938d-37ee6d3661b2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsIPrefServiceInternal //: nsISupports
+	{
+		/**
+		 * Called to read the preferences in the defaults/preferences/
+		 * directory of a zip file
+		 *
+		 * @param aFile The zip file to be read.
+		 *
+		 * @return NS_OK The file was read and processed.
+		 * @return Other The file failed to read or contained invalid data.
+		 *
+		 * @see readUserPrefs
+		 */
+		void ReadExtensionPrefs(nsILocalFile aFile);
+
+		void MirrorPreferences(nsPreferencesArrayPtr aArray);
+		void MirrorPreference([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String aPrefName, nsPreferencePtr aPref);
+		Boolean PrefHasUserValue([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String aPrefName);
+		void SetPreference(nsPreferencePtrConst aPref);
+		void ClearContentPref([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String aPrefName);
 	}
 }

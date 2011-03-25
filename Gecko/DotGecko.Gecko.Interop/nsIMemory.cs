@@ -33,8 +33,6 @@ namespace DotGecko.Gecko.Interop
 	 * This will be passed as the extra data when the pressure 
 	 * observer has been asked to flush because a malloc() or 
 	 * realloc() has failed.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("59e7e77a-38e4-11d4-8cf5-0060b0fc14a3"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIMemory //: nsISupports
@@ -88,7 +86,10 @@ namespace DotGecko.Gecko.Interop
 		 * This predicate can be used to determine if we're in a low-memory
 		 * situation (what constitutes low-memory is platform dependent). This
 		 * can be used to trigger the memory pressure observers.
+		 *
+		 * DEPRECATED - Always returns false.  See bug 592308.
 		 */
+		[Obsolete]
 		Boolean IsLowMemory();
 	}
 }

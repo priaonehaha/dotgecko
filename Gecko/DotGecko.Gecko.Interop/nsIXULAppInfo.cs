@@ -6,9 +6,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * A scriptable interface to the nsXULAppAPI structure. See nsXULAppAPI.h for
 	 * a detailed description of each attribute.
-	 *
-	 * @status FROZEN - This interface is frozen for use by embedders and will
-	 *                  not change in the future.
 	 */
 	[ComImport, Guid("a61ede2a-ef09-11d9-a5ce-001124787b2e"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIXULAppInfo //: nsISupports

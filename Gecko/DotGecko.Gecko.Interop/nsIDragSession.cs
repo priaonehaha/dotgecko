@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("15860D52-FE2C-4DDD-AC50-9C23E24916C4"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("fde41f6a-c710-46f8-a0a8-1ff76ca4ff57"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDragSession //: nsISupports
 	{
 		/**
@@ -11,6 +11,11 @@ namespace DotGecko.Gecko.Interop
 		  * usually the target "frame" sets this so the native system can render the correct feedback
 		  */
 		Boolean CanDrop { get; set; }
+
+		  /**
+		   * Indicates if the drop event should be dispatched only to chrome.
+		   */
+		Boolean OnlyChromeDrop { get; set; }
 
 		/**
 		  * Sets the action (copy, move, link, et.c) for the current drag 
@@ -59,14 +64,5 @@ namespace DotGecko.Gecko.Interop
 		 * Check to set if any of the native data on the clipboard matches this data flavor
 		 */
 		Boolean IsDataFlavorSupported([MarshalAs(UnmanagedType.LPStr)] String aDataFlavor);
-	}
-
-	[ComImport, Guid("fde41f6a-c710-46f8-a0a8-1ff76ca4ff57"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	public interface nsIDragSession_1_9_2 //: nsISupports
-	{
-		/**
-		 * Indicates if the drop event should be dispatched only to chrome.
-		 */
-		Boolean OnlyChromeDrop { get; set; }
 	}
 }

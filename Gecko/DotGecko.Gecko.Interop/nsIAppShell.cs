@@ -7,7 +7,7 @@ namespace DotGecko.Gecko.Interop
 	 * Interface for the native event system layer.  This interface is designed
 	 * to be used on the main application thread only.
 	 */
-	[ComImport, Guid("501403e9-a091-4780-ba55-cfd1e21287a1"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("40bc6280-ad83-471e-b197-80ab90e2065e"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIAppShell //: nsISupports
 	{
 		/**
@@ -64,5 +64,16 @@ namespace DotGecko.Gecko.Interop
 		 * The current event loop nesting level.
 		 */
 		UInt32 EventloopNestingLevel { get; }
+
+		/**
+		 * Allows running of a "synchronous section", in the form of an nsIRunnable
+		 * once the event loop has reached a "stable state". We've reached a stable
+		 * state when the currently executing task/event has finished, see:
+		 * http://www.whatwg.org/specs/web-apps/current-work/multipage/webappapis.html#synchronous-section
+		 * In practice this runs aRunnable once the currently executing event
+		 * finishes. If called multiple times per task/event, all the runnables will
+		 * be executed, in the order in which runInStableState() was called.
+		 */
+		void RunInStableState(nsIRunnable aRunnable);
 	}
 }

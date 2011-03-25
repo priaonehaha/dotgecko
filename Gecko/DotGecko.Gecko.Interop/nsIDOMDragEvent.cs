@@ -6,7 +6,7 @@ using DOMTimeStamp = System.UInt64;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("D52CF140-FB90-44DF-8D69-4B2BAB4D461F"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("98351627-62d7-4b07-bbf3-78009b20764b"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMDragEvent : nsIDOMMouseEvent
 	{
 		#region nsIDOMEvent Members
@@ -80,23 +80,5 @@ namespace DotGecko.Gecko.Interop
 						   UInt16 aButton,
 						   nsIDOMEventTarget aRelatedTarget,
 						   nsIDOMDataTransfer aDataTransfer);
-
-		void InitDragEventNS([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String namespaceURIArg,
-							 [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String typeArg,
-							 Boolean canBubbleArg,
-							 Boolean cancelableArg,
-							 nsIDOMAbstractView aView,
-							 Int32 aDetail,
-							 Int32 aScreenX,
-							 Int32 aScreenY,
-							 Int32 aClientX,
-							 Int32 aClientY,
-							 Boolean aCtrlKey,
-							 Boolean aAltKey,
-							 Boolean aShiftKey,
-							 Boolean aMetaKey,
-							 UInt16 aButton,
-							 nsIDOMEventTarget aRelatedTarget,
-							 nsIDOMDataTransfer aDataTransfer);
 	}
 }

@@ -8,8 +8,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * For more information on this interface please see
 	 * http://www.w3.org/TR/DOM-Level-2-Views
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("F51EBADE-8B1A-11D3-AAE7-0010830123B4"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMAbstractView //: nsISupports

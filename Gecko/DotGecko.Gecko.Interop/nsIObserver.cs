@@ -7,8 +7,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * This interface is implemented by an object that wants
 	 * to observe an event corresponding to a topic.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("DB242E01-E4D9-11d2-9DDE-000064657374"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIObserver //: nsISupports

@@ -21,8 +21,6 @@ namespace DotGecko.Gecko.Interop
 	 * @return <any-error> if not interested in providing any data
 	 *
 	 * Errors are never passed to the caller of WriteSegments.
-	 *
-	 * @status FROZEN
 	 */
 	[return: MarshalAs(UnmanagedType.U4)]
 	public delegate nsResult nsReadSegmentFun(nsIOutputStream aOutStream, IntPtr aClosure, IntPtr aToSegment, UInt32 aFromOffset, UInt32 aCount, ref UInt32 aReadCount);
@@ -40,8 +38,6 @@ namespace DotGecko.Gecko.Interop
 	 * avoid locking up the main application thread.  For this reason, it is
 	 * generally the case that a blocking output stream should be implemented using
 	 * thread- safe AddRef and Release.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("0d0acd2a-61b4-11d4-9877-00c04fa0cf4a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIOutputStream //: nsISupports

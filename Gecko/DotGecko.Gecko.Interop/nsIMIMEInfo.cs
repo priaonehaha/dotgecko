@@ -221,7 +221,7 @@ namespace DotGecko.Gecko.Interop
 	 * we should also try to make nsIWebContentHandlerInfo inherit from or possibly
 	 * be replaced by nsIWebHandlerApp (bug 394710).
 	 */
-	[ComImport, Guid("8d298761-0963-4c90-99e2-6ea498825e82"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("8BDF20A4-9170-4548-AF52-78311A44F920"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIHandlerApp //: nsISupports
 	{
 		/**
@@ -231,11 +231,19 @@ namespace DotGecko.Gecko.Interop
 		void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
 
 		/**
+		 * Detailed description for this handler. Suitable for
+		 * a tooltip or short informative sentence.
+		 */
+		void GetDetailedDescription([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
+		void SetDetailedDescription([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
+
+		/**
 		 * Whether or not the given handler app is logically equivalent to the
 		 * invokant (i.e. they represent the same app).
 		 * 
 		 * Two apps are the same if they are both either local or web handlers
-		 * and their executables/URI templates are the same in a string comparison.
+		 * and their executables/URI templates and command line parameters are
+		 * the same.
 		 *
 		 * @param aHandlerApp the handler app to compare to the invokant
 		 *
@@ -267,13 +275,15 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * nsILocalHandlerApp is a local OS-level executable
 	 */
-	[ComImport, Guid("9812be73-273c-478c-8170-c3e0db08ae7c"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("D36B6329-52AE-4f45-80F4-B2536AE5F8B2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsILocalHandlerApp : nsIHandlerApp
 	{
 		#region nsIHandlerApp Members
 
 		new void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder result);
 		new void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
+		new void GetDetailedDescription([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
+		new void SetDetailedDescription([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
 		new Boolean Equals(nsIHandlerApp aHandlerApp);
 		new void LaunchWithURI(nsIURI aURI, [Optional] nsIInterfaceRequestor aWindowContext);
 
@@ -283,6 +293,45 @@ namespace DotGecko.Gecko.Interop
 		 * Pointer to the executable file used to handle content
 		 */
 		nsIFile Executable { get; set; }
+
+		/**
+		 * Returns the current number of command line parameters.
+		 */
+		UInt32 ParameterCount { get; }
+
+		/**
+		 * Clears the current list of command line parameters.
+		 */
+		void ClearParameters();
+
+		/**
+		 * Appends a command line parameter to the command line
+		 * parameter list.
+		 *
+		 * @param param the parameter to add.
+		 */
+		void AppendParameter([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String param);
+
+		/**
+		 * Retrieves a specific command line parameter.
+		 *
+		 * @param param the index of the parameter to return.
+		 *
+		 * @return the parameter string.
+		 *
+		 * @throw NS_ERROR_INVALID_ARG if the index is out of range.
+		 */
+		void GetParameter(UInt32 parameterIndex, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
+
+		/**
+		 * Checks to see if a parameter exists in the command line
+		 * parameter list.
+		 *
+		 * @param param the parameter to search for.
+		 *
+		 * @return TRUE if the parameter exists in the current list. 
+		 */
+		Boolean ParameterExists([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String param);
 	}
 
 	/**
@@ -298,6 +347,8 @@ namespace DotGecko.Gecko.Interop
 
 		new void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder result);
 		new void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
+		new void GetDetailedDescription([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
+		new void SetDetailedDescription([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
 		new Boolean Equals(nsIHandlerApp aHandlerApp);
 		new void LaunchWithURI(nsIURI aURI, [Optional] nsIInterfaceRequestor aWindowContext);
 
@@ -323,6 +374,8 @@ namespace DotGecko.Gecko.Interop
 
 		new void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder result);
 		new void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
+		new void GetDetailedDescription([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
+		new void SetDetailedDescription([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
 		new Boolean Equals(nsIHandlerApp aHandlerApp);
 		new void LaunchWithURI(nsIURI aURI, [Optional] nsIInterfaceRequestor aWindowContext);
 

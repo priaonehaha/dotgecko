@@ -74,12 +74,9 @@ namespace DotGecko.Gecko.Interop
 		 * Each connection uses its own sqlite cache, which is inefficient, so you
 		 * should use openDatabase instead of this method unless you need a feature
 		 * of SQLite that is incompatible with a shared cache, like virtual table
-		 * and full text indexing support.
-		 *
-		 * Consumers should check mozIStorageConnection::connectionReady to ensure
-		 * that they can use the database.  If this value is false, it is strongly
-		 * recommended that the database be backed up with
-		 * mozIStorageConnection::backupDB so user data is not lost.
+		 * and full text indexing support. If cache contention is expected, for
+		 * instance when operating on a database from multiple threads, using
+		 * unshared connections may be a performance win.
 		 *
 		 * ==========
 		 *   DANGER

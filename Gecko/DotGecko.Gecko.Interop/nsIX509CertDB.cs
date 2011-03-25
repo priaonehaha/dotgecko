@@ -19,8 +19,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * This represents a service to access and manipulate 
 	 * X.509 certificates stored in a database.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("da48b3c0-1284-11d5-ac67-000064657374"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIX509CertDB //: nsISupports
@@ -73,7 +71,7 @@ namespace DotGecko.Gecko.Interop
 							   [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPWStr, SizeParamIndex = 2)] out String certNameList);
 
 		/**
-		 *  Find the email encryption certificate by nickname.
+		 *  Find user's own email encryption certificate by nickname.
 		 *
 		 *  @param aNickname The nickname to be used as the key
 		 *                   to find the certificate.
@@ -83,7 +81,7 @@ namespace DotGecko.Gecko.Interop
 		nsIX509Cert FindEmailEncryptionCert([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String aNickname);
 
 		/**
-		 *  Find the email signing certificate by nickname.
+		 *  Find user's own email encryption certificate by nickname.
 		 *
 		 *  @param aNickname The nickname to be used as the key
 		 *                   to find the certificate.

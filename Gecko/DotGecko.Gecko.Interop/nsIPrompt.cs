@@ -32,10 +32,6 @@ namespace DotGecko.Gecko.Interop
 	}
 
 	/**
-	 * @status UNDER_REVIEW
-	 */
-
-	/**
 	 * This is the prompt interface which can be used without knowlege of a
 	 * parent window. The parentage is hidden by the GetInterface though
 	 * which it is gotten. This interface is identical to nsIPromptService

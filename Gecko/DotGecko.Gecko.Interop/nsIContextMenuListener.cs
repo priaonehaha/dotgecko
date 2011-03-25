@@ -29,8 +29,6 @@ namespace DotGecko.Gecko.Interop
 	 * 
 	 * @see nsIDOMNode
 	 * @see nsIDOMEvent
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("3478b6b0-3875-11d4-94ef-0020183bf181"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIContextMenuListener //: nsISupports

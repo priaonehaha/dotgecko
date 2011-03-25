@@ -6,7 +6,7 @@ using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("c2f4433a-8b4c-4676-ab30-3bffd26fb29e"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("9d6a1157-0719-46a7-b49f-7ffeaa0b5c86"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMWindowInternal : nsIDOMWindow2
 	{
 		#region nsIDOMWindow Members
@@ -34,6 +34,8 @@ namespace DotGecko.Gecko.Interop
 
 		new nsIDOMEventTarget WindowRoot { get; }
 		new nsIDOMOfflineResourceList ApplicationCache { get; }
+		new void CreateBlobURL(nsIDOMBlob blob, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		new void RevokeBlobURL([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String URL);
 
 		#endregion
 
@@ -67,8 +69,6 @@ namespace DotGecko.Gecko.Interop
 		/* [replaceable] statusbar */
 		nsIDOMBarProp Statusbar { get; }
 
-		/* [replaceable] directories */
-		nsIDOMBarProp Directories { get; }
 		Boolean Closed { get; }
 		nsIDOMCrypto Crypto { get; }
 		nsIDOMPkcs11 Pkcs11 { get; }
@@ -121,8 +121,6 @@ namespace DotGecko.Gecko.Interop
 		void Prompt(
 			[In, Optional, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String aMessage,
 			[In, Optional, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String aInitial,
-			[In, Optional, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String aTitle,
-			[Optional] UInt32 aSavePassword,
 			[In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 
 		void Focus();
@@ -221,5 +219,34 @@ namespace DotGecko.Gecko.Interop
 		 * See the WHATWG HTML5 specification, section 6.4, for more details.
 		 */
 		void PostMessage([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String message, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String targetOrigin);
+
+		/**
+		 * Returns the number of times this document for this window has
+		 * been painted to the screen.
+		 */
+		UInt64 MozPaintCount { get; }
+
+		/**
+		 * Request a refresh of this browser window.
+		 */
+		void MozRequestAnimationFrame([Optional] nsIAnimationFrameListener aListener);
+
+		/**
+		 * The current animation start time in milliseconds since the epoch.
+		 */
+		Int64 MozAnimationStartTime { get; }
+	}
+
+	[ComImport, Guid("8fc58f56-f769-4368-a098-edd08550cf1a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsIDOMMozURLProperty //: nsISupports
+	{
+		void CreateObjectURL(nsIDOMBlob blob, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void RevokeObjectURL([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String URL);
+	}
+
+	[ComImport, Guid("05563c0c-b74c-41ad-91d1-bc22d580a581"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsIDOMWindow_2_0_BRANCH //: nsISupports
+	{
+		nsIDOMMozURLProperty URL { get; }
 	}
 }

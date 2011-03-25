@@ -26,8 +26,6 @@ namespace DotGecko.Gecko.Interop
 	 * Errors are never passed to the caller of ReadSegments.
 	 *
 	 * NOTE: returning NS_OK and (*aWriteCount = 0) has undefined behavior.
-	 *
-	 * @status FROZEN
 	 */
 	[UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = false)]
 	[return: MarshalAs(UnmanagedType.U4)]
@@ -46,8 +44,6 @@ namespace DotGecko.Gecko.Interop
 	 * locking up the main application thread.  For this reason, it is generally
 	 * the case that a blocking input stream should be implemented using thread-
 	 * safe AddRef and Release.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("fa9c7f6c-61b3-11d4-9877-00c04fa0cf4a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIInputStream //: nsISupports
@@ -70,13 +66,13 @@ namespace DotGecko.Gecko.Interop
 		 * that is closed will throw an exception when this method is called.  That
 		 * enables the caller to know the condition of the stream before attempting
 		 * to read from it.  If a stream is at end-of-file, but not closed, then
-		 * this method should return 0 bytes available.
+		 * this method returns 0 bytes available.  (Note: some nsIInputStream
+		 * implementations automatically close when eof is reached; some do not).
 		 *
 		 * @return number of bytes currently available in the stream, or
 		 *   PR_UINT32_MAX if the size of the stream exceeds PR_UINT32_MAX.
 		 *
-		 * @throws NS_BASE_STREAM_CLOSED if the stream is closed normally or at
-		 *   end-of-file
+		 * @throws NS_BASE_STREAM_CLOSED if the stream is closed normally.
 		 * @throws <other-error> if the stream is closed due to some error
 		 *   condition
 		 */

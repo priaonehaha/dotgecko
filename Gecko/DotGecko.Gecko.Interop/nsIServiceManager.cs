@@ -15,8 +15,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * A user of a service may keep references to particular services indefinitely
 	 * and only must call Release when it shuts down.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("8bb35ed9-e332-462d-9155-4a002ab5c958"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIServiceManager //: nsISupports

@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using nsISupports = System.Object;
 using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
@@ -24,6 +25,10 @@ namespace DotGecko.Gecko.Interop
 
 	public static class nsIDOMCanvasRenderingContext2DConstants
 	{
+		public const Int32 CMG_STYLE_STRING = 0;
+		public const Int32 CMG_STYLE_PATTERN = 1;
+		public const Int32 CMG_STYLE_GRADIENT = 2;
+
 		// Show the caret if appropriate when drawing
 		public const UInt32 DRAWWINDOW_DRAW_CARET = 0x01;
 
@@ -33,9 +38,18 @@ namespace DotGecko.Gecko.Interop
 
 		// Draw scrollbars and scroll the viewport if they are present
 		public const UInt32 DRAWWINDOW_DRAW_VIEW = 0x04;
+
+		// Use the widget layer manager if available. This means hardware
+		// acceleration may be used, but it might actually be slower or
+		// lower quality than normal. It will however more accurately reflect
+		// the pixels rendered to the screen.
+		public const UInt32 DRAWWINDOW_USE_WIDGET_LAYERS = 0x08;
+
+		// Don't synchronously decode images - draw what we have
+		public const UInt32 DRAWWINDOW_ASYNC_DECODE_IMAGES = 0x10;
 	}
 
-	[ComImport, Guid("3e7d5d06-8846-4cff-8739-44756cbf494f"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("408be1b9-4d75-4873-b50b-9b651626e41d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMCanvasRenderingContext2D //: nsISupports
 	{
 		// back-reference to the canvas element for which
@@ -60,14 +74,24 @@ namespace DotGecko.Gecko.Interop
 		void SetGlobalCompositeOperation([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 
 		// colors and styles
+
+		// These attributes work, but are quickstubbed for JS code.  Native
+		// code should use the _multi variants below.
 		nsIVariant StrokeStyle { get; set; }
 		nsIVariant GetFillStyle { get; set; }
+
+		// These do the actual work.  Use these from c++ -- only one of str or iface
+		// should be specified; the one that's not null/void is used.  For the getter,
+		// ifaceType is 0 if it's a string, 1 if it's a pattern, or 2 if it's a gradient
+		void SetStrokeStyle_multi([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String str, [MarshalAs(UnmanagedType.IUnknown)] nsISupports iface);
+		void GetStrokeStyle_multi([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder str, [MarshalAs(UnmanagedType.IUnknown)] out nsISupports iface, out Int32 type);
+		void SetFillStyle_multi([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String str, [MarshalAs(UnmanagedType.IUnknown)] nsISupports iface);
+		void GetFillStyle_multi([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder str, [MarshalAs(UnmanagedType.IUnknown)] out nsISupports iface, out Int32 type);
 
 		nsIDOMCanvasGradient CreateLinearGradient(Single x0, Single y0, Single x1, Single y1);
 
 		nsIDOMCanvasGradient CreateRadialGradient(Single x0, Single y0, Single r0, Single x1, Single y1, Single r1);
 
-		//nsIDOMCanvasPattern createPattern(in nsIDOMHTMLImageElement image, in DOMString repetition);
 		nsIDOMCanvasPattern CreatePattern(nsIDOMHTMLElement image, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String repetition);
 
 		Single LineWidth { get; set; } /* default 1 */
@@ -102,7 +126,7 @@ namespace DotGecko.Gecko.Interop
 		void QuadraticCurveTo(Single cpx, Single cpy, Single x, Single y);
 		void BezierCurveTo(Single cp1x, Single cp1y, Single cp2x, Single cp2y, Single x, Single y);
 		void ArcTo(Single x1, Single y1, Single x2, Single y2, Single radius);
-		void Arc(Single x, Single y, Single r, Single startAngle, Single endAngle, Boolean clockwise);
+		void Arc(Single x, Single y, Single r, Single startAngle, Single endAngle, [Optional] Boolean anticlockwise);
 		void Rect(Single x, Single y, Single w, Single h);
 
 		void Fill();
@@ -132,7 +156,15 @@ namespace DotGecko.Gecko.Interop
 		void MozTextAlongPath([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String textToDraw, Boolean stroke);
 
 		// image api
-		void DrawImage();
+		void DrawImage(nsIDOMElement image,
+			Single a1, Single a2,
+			[Optional] Single a3,
+			[Optional] Single a4,
+			[Optional] Single a5,
+			[Optional] Single a6,
+			[Optional] Single a7,
+			[Optional] Single a8);
+
 		/*
 		  void drawImage(in HTMLImageElement image, Single dx, Single dy);
 		  void drawImage(in HTMLImageElement image, Single dx, Single dy, Single sw, Single sh);
@@ -147,10 +179,23 @@ namespace DotGecko.Gecko.Interop
 		// void putImageData (in ImageData d, Single x, Single y);
 		// ImageData = { width: #, height: #, data: [r, g, b, a, ...] }
 
+		// These are just dummy functions; for JS, they are implemented as quickstubs
+		// that call the _explicit methods below.  Native callers should use the _explit
+		// methods directly.
 		void GetImageData();
 		void PutImageData();
 
+		// dataLen must be == width*height*4 in both of these calls
+		void GetImageData_explicit(Int32 x, Int32 y, UInt32 width, UInt32 height,
+			[MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 5)] Byte[] dataPtr, UInt32 dataLen);
+		void PutImageData_explicit(Int32 x, Int32 y, UInt32 width, UInt32 height,
+			[MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeParamIndex = 5)] Byte[] dataPtr, UInt32 dataLen,
+			Boolean hasDirtyRect, Int32 dirtyX, Int32 dirtyY, Int32 dirtyWidth, Int32 dirtyHeight);
+
 		// ImageData createImageData(Single w, Single h);
+		// Note: this is basically script-only (and really, quickstub-only).  Native callers
+		// should just use the noscript 'explicit' get/put methods above, instead of using
+		// a separate ImageData object.
 		void CreateImageData();
 
 		// image smoothing mode -- if disabled, images won't be smoothed
@@ -193,5 +238,7 @@ namespace DotGecko.Gecko.Interop
 		 * only.
 		 */
 		void DrawWindow(nsIDOMWindow window, Single x, Single y, Single w, Single h, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String bgColor, [Optional] UInt32 flags);
+
+		void AsyncDrawXULElement(nsIDOMXULElement elem, Single x, Single y, Single w, Single h, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String bgColor, [Optional] UInt32 flags);
 	}
 }

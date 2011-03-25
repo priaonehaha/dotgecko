@@ -12,7 +12,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * nsIProfile
 	 * 
-	 * @status FROZEN
 	 * @version 1.0
 	 */
 	[ComImport, Guid("02b0625a-e7f3-11d2-9f5a-006008a6efe9"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

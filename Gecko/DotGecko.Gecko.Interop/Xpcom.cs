@@ -1,26 +1,17 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using nsISupports = System.Object;
+using nsPurpleBufferEntry = System.IntPtr;
 
 namespace DotGecko.Gecko.Interop
 {
 	public static partial class Xpcom
 	{
 		/**
-		 * Every XPCOM component implements this function signature, which is the
-		 * only entrypoint XPCOM uses to the function.
-		 *
-		 * @status FROZEN
-		 */
-		[return: MarshalAs(UnmanagedType.U4)]
-		public delegate nsResult nsGetModuleProc(nsIComponentManager aCompMgr, nsIFile location, out nsIModule return_cobj); 
-
-		/**
 		 * Initialises XPCOM. You must call one of the NS_InitXPCOM methods
 		 * before proceeding to use xpcom. The one exception is that you may
 		 * call NS_NewLocalFile to create a nsIFile.
 		 * 
-		 * @status FROZEN
-		 *
 		 * @note Use <CODE>NS_NewLocalFile</CODE> or <CODE>NS_NewNativeLocalFile</CODE> 
 		 *       to create the file object you supply as the bin directory path in this
 		 *       call. The function may be safely called before the rest of XPCOM or 
@@ -53,68 +44,8 @@ namespace DotGecko.Gecko.Interop
 		public static extern nsResult NS_InitXPCOM2(out nsIServiceManager result, nsIFile binDirectory, nsIDirectoryServiceProvider appFileLocationProvider);
 
 		/**
-		 * Some clients of XPCOM have statically linked components (not dynamically
-		 * loaded component DLLs), which can be passed to NS_InitXPCOM3 using this
-		 * structure.
-		 *
-		 * @status FROZEN
-		 */
-		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-		public struct nsStaticModuleInfo
-		{
-			public String name;
-			public nsGetModuleProc getModule;
-		}
-
-		/**
-		 * Initialises XPCOM with static components. You must call one of the
-		 * NS_InitXPCOM methods before proceeding to use xpcom. The one
-		 * exception is that you may call NS_NewLocalFile to create a nsIFile.
-		 * 
-		 * @status FROZEN
-		 *
-		 * @note Use <CODE>NS_NewLocalFile</CODE> or <CODE>NS_NewNativeLocalFile</CODE> 
-		 *       to create the file object you supply as the bin directory path in this
-		 *       call. The function may be safely called before the rest of XPCOM or 
-		 *       embedding has been initialised.
-		 *
-		 * @param result           The service manager.  You may pass null.
-		 *
-		 * @param binDirectory     The directory containing the component
-		 *                         registry and runtime libraries;
-		 *                         or use <CODE>nsnull</CODE> to use the working
-		 *                         directory.
-		 *
-		 * @param appFileLocationProvider The object to be used by Gecko that specifies
-		 *                         to Gecko where to find profiles, the component
-		 *                         registry preferences and so on; or use
-		 *                         <CODE>nsnull</CODE> for the default behaviour.
-		 *
-		 * @param staticComponents An array of static components. Passing null causes
-		 *                         default (builtin) components to be registered, if
-		 *                         present.
-		 * @param componentCount   Number of elements in staticComponents
-		 *
-		 * @see NS_NewLocalFile
-		 * @see nsILocalFile
-		 * @see nsIDirectoryServiceProvider
-		 * @see XRE_GetStaticComponents
-		 *
-		 * @return NS_OK for success;
-		 *         NS_ERROR_NOT_INITIALIZED if static globals were not initialized,
-		 *         which can happen if XPCOM is reloaded, but did not completly
-		 *         shutdown. Other error codes indicate a failure during
-		 *         initialisation.
-		 */
-		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
-		[return: MarshalAs(UnmanagedType.U4)]
-		public static extern nsResult NS_InitXPCOM3(out nsIServiceManager result, nsIFile binDirectory, nsIDirectoryServiceProvider appFileLocationProvider, ref nsStaticModuleInfo staticComponents, UInt32 componentCount);
-
-		/**
 		 * Shutdown XPCOM. You must call this method after you are finished
 		 * using xpcom. 
-		 *
-		 * @status FROZEN
 		 *
 		 * @param servMgr           The service manager which was returned by NS_InitXPCOM.
 		 *                          This will release servMgr.  You may pass null.
@@ -130,7 +61,6 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Public Method to access to the service manager.
 		 * 
-		 * @status FROZEN
 		 * @param result Interface pointer to the service manager 
 		 *
 		 * @return NS_OK for success;
@@ -144,7 +74,6 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Public Method to access to the component manager.
 		 * 
-		 * @status FROZEN
 		 * @param result Interface pointer to the service 
 		 *
 		 * @return NS_OK for success;
@@ -157,9 +86,8 @@ namespace DotGecko.Gecko.Interop
 
 		/**
 		 * Public Method to access to the component registration manager.
-		 * 
-		 * @status FROZEN
-		 * @param result Interface pointer to the service 
+		 *
+		 * @param result Interface pointer to the service
 		 *
 		 * @return NS_OK for success;
 		 *         other error codes indicate a failure during initialisation.
@@ -172,7 +100,6 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Public Method to access to the memory manager.  See nsIMemory
 		 * 
-		 * @status FROZEN
 		 * @param result Interface pointer to the memory manager 
 		 *
 		 * @return NS_OK for success;
@@ -186,8 +113,6 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Public Method to create an instance of a nsILocalFile.  This function
 		 * may be called prior to NS_InitXPCOM.
-		 * 
-		 * @status FROZEN
 		 * 
 		 *   @param path       
 		 *       A string which specifies a full file path to a 
@@ -207,17 +132,15 @@ namespace DotGecko.Gecko.Interop
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		[return: MarshalAs(UnmanagedType.U4)]
-		public static extern nsResult NS_NewLocalFile([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
+		public static extern nsResult NS_NewLocalFile([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
 
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		[return: MarshalAs(UnmanagedType.U4)]
-		public static extern nsResult NS_NewNativeLocalFile([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
+		public static extern nsResult NS_NewNativeLocalFile([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String path, Boolean followLinks, out nsILocalFile result);
 
 		/**
 		 * Allocates a block of memory of a particular size. If the memory cannot
 		 * be allocated (because of an out-of-memory condition), null is returned.
-		 *
-		 * @status FROZEN
 		 *
 		 * @param size   The size of the block to allocate
 		 * @result       The block of memory
@@ -228,8 +151,6 @@ namespace DotGecko.Gecko.Interop
 
 		/**
 		 * Reallocates a block of memory to a new size.
-		 *
-		 * @status FROZEN
 		 *
 		 * @param ptr     The block of memory to reallocate. This block must originally
 						  have been allocated by NS_Alloc or NS_Realloc
@@ -250,8 +171,6 @@ namespace DotGecko.Gecko.Interop
 		/**
 		 * Frees a block of memory. Null is a permissible value, in which case no
 		 * action is taken.
-		 *
-		 * @status FROZEN
 		 *
 		 * @param ptr   The block of memory to free. This block must originally have
 		 *              been allocated by NS_Alloc or NS_Realloc
@@ -349,27 +268,109 @@ namespace DotGecko.Gecko.Interop
 		 * @param aObject the object being referenced by the COMPtr
 		 */
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
-		public static extern void NS_LogCOMPtrAddRef(IntPtr aCOMPtr, [MarshalAs(UnmanagedType.IUnknown)] Object aObject);
+		public static extern void NS_LogCOMPtrAddRef(IntPtr aCOMPtr, [MarshalAs(UnmanagedType.IUnknown)] nsISupports aObject);
 
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
-		public static extern void NS_LogCOMPtrRelease(IntPtr aCOMPtr, [MarshalAs(UnmanagedType.IUnknown)] Object aObject);
+		public static extern void NS_LogCOMPtrRelease(IntPtr aCOMPtr, [MarshalAs(UnmanagedType.IUnknown)] nsISupports aObject);
 
-		//[DllImport(xpcom, ExactSpelling = true)]
-		//internal static extern X NS_CycleCollectorSuspect();
+		/**
+		 * The XPCOM cycle collector analyzes and breaks reference cycles between
+		 * participating XPCOM objects. All objects in the cycle must implement
+		 * nsCycleCollectionParticipant to break cycles correctly.
+		 *
+		 * The first two functions below exist only to support binary components
+		 * that were compiled for older XPCOM versions.
+		 */
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		public static extern Boolean NS_CycleCollectorSuspect([MarshalAs(UnmanagedType.IUnknown)] nsISupports n);
 
-		//[DllImport(xpcom, ExactSpelling = true)]
-		//internal static extern X NS_CycleCollectorForget();
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		public static extern Boolean NS_CycleCollectorForget([MarshalAs(UnmanagedType.IUnknown)] nsISupports n);
 
-		//[DllImport(xpcom, ExactSpelling = true)]
-		//internal static extern X NS_CycleCollectorSuspect2();
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		public static extern nsPurpleBufferEntry NS_CycleCollectorSuspect2([MarshalAs(UnmanagedType.IUnknown)] nsISupports n);
 
-		//[DllImport(xpcom, ExactSpelling = true)]
-		//internal static extern X NS_CycleCollectorForget2();
+		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
+		public static extern Boolean NS_CycleCollectorForget2(nsPurpleBufferEntry e);
+
+		/**
+		 * Categories (in the category manager service) used by XPCOM:
+		 */
+
+		/**
+		 * A category which is read after component registration but before
+		 * the "xpcom-startup" notifications. Each category entry is treated
+		 * as the contract ID of a service which implements
+		 * nsIDirectoryServiceProvider. Each directory service provider is
+		 * installed in the global directory service.
+		 */
+		public const String XPCOM_DIRECTORY_PROVIDER_CATEGORY = "xpcom-directory-providers";
+
+		/**
+		 * A category which is read after component registration but before
+		 * NS_InitXPCOM returns. Each category entry is treated as the contractID of
+		 * a service: each service is instantiated, and if it implements nsIObserver
+		 * the nsIObserver.observe method is called with the "xpcom-startup" topic.
+		 */
+		public const String NS_XPCOM_STARTUP_CATEGORY = "xpcom-startup";
+
+
+		/**
+		 * Observer topics (in the observer service) used by XPCOM:
+		 */
+
+		/**
+		 * At XPCOM startup after component registration is complete, the
+		 * following topic is notified. In order to receive this notification,
+		 * component must register their contract ID in the category manager,
+		 *
+		 * @see NS_XPCOM_STARTUP_CATEGORY
+		 */
+		public const String NS_XPCOM_STARTUP_OBSERVER_ID = "xpcom-startup";
+
+		/**
+		 * At XPCOM shutdown, this topic is notified just before "xpcom-shutdown".
+		 * Components should only use this to mark themselves as 'being destroyed'.
+		 * Nothing should be dispatched to any event loop.
+		 */
+		public const String NS_XPCOM_WILL_SHUTDOWN_OBSERVER_ID = "xpcom-will-shutdown";
+
+		/**
+		 * At XPCOM shutdown, this topic is notified. All components must
+		 * release any interface references to objects in other modules when
+		 * this topic is notified.
+		 */
+		public const String NS_XPCOM_SHUTDOWN_OBSERVER_ID = "xpcom-shutdown";
+
+		/**
+		 * This topic is notified when an entry was added to a category in the
+		 * category manager. The subject of the notification will be the name of
+		 * the added entry as an nsISupportsCString, and the data will be the
+		 * name of the category. The notification will occur on the main thread.
+		 */
+		public const String NS_XPCOM_CATEGORY_ENTRY_ADDED_OBSERVER_ID = "xpcom-category-entry-added";
+
+		/**
+		 * This topic is notified when an entry was removed from a category in the
+		 * category manager. The subject of the notification will be the name of
+		 * the removed entry as an nsISupportsCString, and the data will be the
+		 * name of the category. The notification will occur on the main thread.
+		 */
+		public const String NS_XPCOM_CATEGORY_ENTRY_REMOVED_OBSERVER_ID = "xpcom-category-entry-removed";
+
+		/**
+		 * This topic is notified when an a category was cleared in the category
+		 * manager. The subject of the notification will be the category manager,
+		 * and the data will be the name of the cleared category.
+		 * The notification will occur on the main thread.
+		 */
+		public const String NS_XPCOM_CATEGORY_CLEARED_OBSERVER_ID = "xpcom-category-cleared";
 
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		[return: MarshalAs(UnmanagedType.U4)]
 		public static extern nsResult NS_GetDebug(out nsIDebug result);
 
+		[Obsolete("Use NS_Log* functions")]
 		[DllImport(xpcom, CallingConvention = CallingConvention.Cdecl, ExactSpelling = true, PreserveSig = true)]
 		[return: MarshalAs(UnmanagedType.U4)]
 		public static extern nsResult NS_GetTraceRefcnt(out nsITraceRefcnt result);

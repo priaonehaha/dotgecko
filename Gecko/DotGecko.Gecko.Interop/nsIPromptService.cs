@@ -89,8 +89,6 @@ namespace DotGecko.Gecko.Interop
 	 * not refer to the button types by name.  For example, it is inadvisable to
 	 * tell the user to "Press OK to proceed."  Instead, such a prompt might be
 	 * rewritten to ask the user: "Would you like to proceed?"
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("1630C61A-325E-49ca-8759-A31B16C47AA5"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIPromptService //: nsISupports

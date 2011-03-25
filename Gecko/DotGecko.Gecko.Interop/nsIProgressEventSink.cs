@@ -22,8 +22,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * NOTE: This interface is actually not specific to channels and may be used
 	 * with other implementations of nsIRequest.
-	 *
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("D974C99E-4148-4df9-8D98-DE834A2F6462"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIProgressEventSink //: nsISupports

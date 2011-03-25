@@ -9,12 +9,13 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIDOMHTMLFormElement interface is the interface to a [X]HTML
 	 * form element.
 	 *
-	 * For more information on this interface please see
+	 * This interface is trying to follow the DOM Level 2 HTML specification:
 	 * http://www.w3.org/TR/DOM-Level-2-HTML/
 	 *
-	 * @status FROZEN
+	 * with changes from the work-in-progress WHATWG HTML specification:
+	 * http://www.whatwg.org/specs/web-apps/current-work/
 	 */
-	[ComImport, Guid("a6cf908f-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("0884ce23-e069-499e-a13c-a91c8ae0fc98"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHTMLFormElement : nsIDOMHTMLElement
 	{
 		#region nsIDOMNode Members
@@ -83,20 +84,26 @@ namespace DotGecko.Gecko.Interop
 
 		#endregion
 
-		nsIDOMHTMLCollection Elements { get; }
-		Int32 Length { get; }
 		void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+
 		void GetAcceptCharset([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetAcceptCharset([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 		void GetAction([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetAction([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		void GetAutocomplete([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void SetAutocomplete([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 		void GetEnctype([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetEnctype([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 		void GetMethod([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetMethod([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		Boolean NoValidate { get; set; }
 		void GetTarget([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetTarget([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+
+		nsIDOMHTMLCollection Element { get; }
+		Int32 Length { get; }
+
 		void Submit();
 		void Reset();
 	}

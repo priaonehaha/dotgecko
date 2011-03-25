@@ -13,8 +13,6 @@ namespace DotGecko.Gecko.Interop
 	 * you QI() on to get to interface B, you must be able to QI on B to get back 
 	 * to A.  This interface however allows you to obtain an interface C from A 
 	 * that may or most likely will not have the ability to get back to A. 
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("033A1470-8B2A-11d3-AF88-00A024FFC08C"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIInterfaceRequestor //: nsISupports

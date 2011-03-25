@@ -7,8 +7,6 @@ namespace DotGecko.Gecko.Interop
 	 * This interface provides a way to stream data to the web browser. This allows
 	 * loading of data from sources which can not be accessed using URIs and
 	 * nsIWebNavigation.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("86d02f0e-219b-4cfc-9c88-bd98d2cce0b8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebBrowserStream //: nsISupports

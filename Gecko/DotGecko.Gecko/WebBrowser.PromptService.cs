@@ -56,14 +56,8 @@ namespace DotGecko.Gecko
 			remove { Events.Remove(EventKey.AsyncPromptAuth, value); }
 		}
 
-		public event EventHandler<DialogEventArgs> NonBlockingAlert
-		{
-			add { Events.Add(EventKey.NonBlockingAlert, value); }
-			remove { Events.Remove(EventKey.NonBlockingAlert, value); }
-		}
-
 		[Guid("79E7A6D0-A2FA-4A6E-A486-C5BB5A411DDC")]
-		private sealed class PromptService : nsIPromptService, nsIPromptService2, nsINonBlockingAlertService
+		private sealed class PromptService : nsIPromptService, nsIPromptService2
 		{
 			//TODO: Raise static events if aParent parameter is null.
 
@@ -276,21 +270,6 @@ namespace DotGecko.Gecko
 				browser.Events.Raise(EventKey.AsyncPromptAuth, e);
 				checkValue = e.CheckState;
 				return e;
-			}
-
-			void nsINonBlockingAlertService.ShowNonBlockingAlert(nsIDOMWindow aParent, String aDialogTitle, String aText)
-			{
-				Trace.TraceInformation("nsINonBlockingAlertService.ShowNonBlockingAlert");
-
-				WebBrowser browser = GetBrowserFromDomWindow(aParent);
-				if (browser == null)
-				{
-					Trace.TraceWarning("Can't get Browser object from DomWindow");
-					return;
-				}
-
-				var e = new DialogEventArgs(aDialogTitle, aText);
-				browser.Events.Raise(EventKey.NonBlockingAlert, e);
 			}
 		}
 

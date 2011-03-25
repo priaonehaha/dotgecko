@@ -9,7 +9,6 @@ namespace DotGecko.Gecko.Interop
 	 * Interface for manipulating and querying the current selected range
 	 * of nodes within the document.
 	 *
-	 * @status FROZEN
 	 * @version 1.0
 	 */
 	[ComImport, Guid("B2C7ED59-8634-4352-9E37-5484C8B6E4E1"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

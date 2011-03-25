@@ -35,8 +35,6 @@ namespace DotGecko.Gecko.Interop
 	 * file path format common to protocols like http, ftp, and file.
 	 * It supports initialization from a relative path and provides
 	 * some customization on how URLs are normalized.
-	 *
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("babd6cca-ebe7-4329-967c-d6b9e33caa81"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIStandardURL : nsIMutable

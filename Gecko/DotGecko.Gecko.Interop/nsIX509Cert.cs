@@ -47,8 +47,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * This represents a X.509 certificate.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("f0980f60-ee3d-11d4-998b-00b0d02354a0"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIX509Cert //: nsISupports

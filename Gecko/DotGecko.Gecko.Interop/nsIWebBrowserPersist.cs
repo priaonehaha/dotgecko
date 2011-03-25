@@ -139,8 +139,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Interface for persisting DOM documents and URIs to local or remote storage.
-	 *
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("dd4e0a6a-210f-419a-ad85-40e8543b9465"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWebBrowserPersist : nsICancelable

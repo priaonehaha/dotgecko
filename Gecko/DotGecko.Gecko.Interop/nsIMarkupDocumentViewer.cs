@@ -13,7 +13,7 @@ namespace DotGecko.Gecko.Interop
 	 * This interface describes the properties of a content viewer 
 	 * for a markup document - HTML or XML
 	 */
-	[ComImport, Guid("40b2282a-a882-4483-a634-dec468d88377"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("19187542-1f4d-46e1-9b2d-d5de02dace85"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIMarkupDocumentViewer //: nsISupports
 	{
 		/*
@@ -88,14 +88,6 @@ namespace DotGecko.Gecko.Interop
 		 *               3 - visual order
 		 */
 		Byte BidiTextType { get; set; }
-
-		/**
-		 * bidiControlsTextMode: the order of bidirectional text in form controls.
-		 *                       1 - logical
-		 *                       2 - visual
-		 *                       3 - like the containing document
-		 */
-		Byte BidiControlsTextMode { get; set; }
 
 		/**
 		 * bidiNumeral: the type of numerals to display. 

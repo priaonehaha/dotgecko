@@ -5,8 +5,6 @@ namespace DotGecko.Gecko.Interop
 {
 	/**
 	 * nsIStreamListener
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("1a637020-1482-11d3-9333-00104ba0fd40"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIStreamListener : nsIRequestObserver

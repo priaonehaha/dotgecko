@@ -459,7 +459,6 @@ namespace DotGecko.Gecko
 			Select,
 			PromptAuth,
 			AsyncPromptAuth,
-			NonBlockingAlert,
 
 			ShowFilePicker,
 			PromptAppLaunch,

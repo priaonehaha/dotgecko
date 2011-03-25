@@ -9,12 +9,13 @@ namespace DotGecko.Gecko.Interop
 	 * The nsIDOMHTMLImageElement interface is the interface to a [X]HTML
 	 * img element.
 	 *
-	 * For more information on this interface please see
+	 * This interface is trying to follow the DOM Level 2 HTML specification:
 	 * http://www.w3.org/TR/DOM-Level-2-HTML/
 	 *
-	 * @status FROZEN
+	 * with changes from the work-in-progress WHATWG HTML specification:
+	 * http://www.whatwg.org/specs/web-apps/current-work/
 	 */
-	[ComImport, Guid("a6cf90ab-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("3fc9c313-49b9-4315-b39f-7166cf362e10"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHTMLImageElement : nsIDOMHTMLElement
 	{
 		#region nsIDOMNode Members
@@ -83,28 +84,35 @@ namespace DotGecko.Gecko.Interop
 
 		#endregion
 
-		void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
-		void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
-		void GetAlign([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
-		void SetAlign([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 		void GetAlt([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetAlt([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
-		void GetBorder([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
-		void SetBorder([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
-		// Modified in DOM Level 2:
-		Int32 Height { get; set; }
-		// Modified in DOM Level 2:
-		Int32 HSpace { get; set; }
-		Boolean IsMap { get; set; }
-		void GetLongDesc([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
-		void SetLongDesc([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 		void GetSrc([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetSrc([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 		void GetUseMap([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
 		void SetUseMap([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
-		// Modified in DOM Level 2:
-		Int32 VSpace { get; set; }
-		// Modified in DOM Level 2:
+		Boolean IsMap { get; set; }
 		Int32 Width { get; set; }
+		Int32 Height { get; set; }
+		Int32 NaturalWidth { get; }
+		Int32 NaturalHeight { get; }
+		Boolean Complete { get; }
+
+		void GetName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void SetName([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		void GetAlign([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void SetAlign([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		void GetBorder([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void SetBorder([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		Int32 HSpace { get; set; }
+		void GetLongDesc([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void SetLongDesc([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		Int32 VSpace { get; set; }
+		void GetLowSrc([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void SetLowSrc([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+
+		// These attributes are offsets from the closest view (to mimic
+		// NS4's "offset-from-layer" behavior).
+		Int32 X { get; }
+		Int32 Y { get; }
 	}
 }

@@ -25,7 +25,6 @@ namespace DotGecko.Gecko.Interop
 
 	/**
 	 * Enumeration of Programming Languages
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("ea604e90-40ba-11d5-90bb-0010a4e73d9a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIProgrammingLanguage //: nsISupports

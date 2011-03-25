@@ -23,8 +23,6 @@ namespace DotGecko.Gecko.Interop
 	 * about that requirement.
 	 *   This component must be initialized at application startup by calling
 	 * setWindowCreator.
-	 *
-	 * @status FROZEN
 	 */
 	[ComImport, Guid("002286a8-494b-43b3-8ddd-49e3fc50622b"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIWindowWatcher //: nsISupports

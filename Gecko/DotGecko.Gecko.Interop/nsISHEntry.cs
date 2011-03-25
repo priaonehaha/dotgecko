@@ -14,7 +14,7 @@ namespace DotGecko.Gecko.Interop
 	 * hold all information required to recreate the document from history
 	 * 
 	 */
-	[ComImport, Guid("09fecea6-5453-43ba-bf91-3ff32618f037"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("39b73c3a-48eb-4189-8069-247279c3c42d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsISHEntry : nsIHistoryEntry
 	{
 		#region nsIHistoryEntry Members
@@ -113,6 +113,21 @@ namespace DotGecko.Gecko.Interop
 		 */
 		UInt32 PageIdentifier { get; set; }
 
+		/**
+		 * docIdentifier is an integer that should be the same for two entries
+		 * attached to the same docshell if and only if the two entries are entries
+		 * for the same document.  In practice, two entries A and B will have the
+		 * same docIdentifier if they have the same pageIdentifier or if B was
+		 * created by A calling history.pushState().
+		 */
+		UInt64 DocIdentifier { get; set; }
+
+		/**
+		 * Changes this entry's doc identifier to a new value which is unique
+		 * among those of all other entries.
+		 */
+		void SetUniqueDocIdentifier();
+
 		/** attribute to set and get the cache key for the entry */
 		nsISupports CacheKey { [return: MarshalAs(UnmanagedType.IUnknown)] get; [param: MarshalAs(UnmanagedType.IUnknown)] set; }
 
@@ -141,7 +156,9 @@ namespace DotGecko.Gecko.Interop
 			nsILayoutHistoryState layoutHistoryState,
 			nsISupports cacheKey,
 			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ACStringMarshaler))] String contentType,
-			nsISupports owner);
+			nsISupports owner,
+			UInt64 docshellID,
+			Boolean dynamicCreation);
 
 		nsISHEntry Clone();
 
@@ -161,6 +178,13 @@ namespace DotGecko.Gecko.Interop
 		nsISupports Owner { [return: MarshalAs(UnmanagedType.IUnknown)] get; [param: MarshalAs(UnmanagedType.IUnknown)] set; }
 
 		/**
+		 * Get/set data associated with this history state via a pushState() call,
+		 * encoded as JSON.
+		 **/
+		void GetStateData([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
+		void SetStateData([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value);
+
+		/**
 		 * Gets the owning pointer to the editor data assosicated with
 		 * this shistory entry. This forgets its pointer, so free it when
 		 * you're done.
@@ -176,5 +200,34 @@ namespace DotGecko.Gecko.Interop
 
 		/** Returns true if this shistory entry is storing a detached editor. */
 		Boolean HasDetachedEditor();
+
+		/**
+		 * Returns true if the related docshell was added because of
+		 * dynamic addition of an iframe/frame.
+		 */
+		Boolean IsDynamicallyAdded();
+
+		/**
+		 * Returns true if any of the child entries returns true
+		 * when isDynamicallyAdded is called on it.
+		 */
+		Boolean HasDynamicallyAddedChild();
+
+		/**
+		 * The history ID of the docshell.
+		 */
+		UInt64 DocshellID { get; set; }
+	}
+
+	[ComImport, Guid("bb66ac35-253b-471f-a317-3ece940f04c5"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsISHEntryInternal //: nsISupports
+	{
+		void RemoveFromBFCacheAsync();
+		void RemoveFromBFCacheSync();
+
+		/**
+		 * A number that is assigned by the sHistory when the entry is activated
+		 */
+		UInt32 LastTouched { get; set; }
 	}
 }

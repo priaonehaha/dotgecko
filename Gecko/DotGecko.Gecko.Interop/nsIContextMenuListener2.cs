@@ -34,8 +34,6 @@ namespace DotGecko.Gecko.Interop
 	 *
 	 * @see nsIContextMenuListener
 	 * @see nsIContextMenuInfo
-	 *
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("7fb719b3-d804-4964-9596-77cf924ee314"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIContextMenuListener2 //: nsISupports
@@ -71,8 +69,6 @@ namespace DotGecko.Gecko.Interop
 	 * nsIContextMenuInfo
 	 *
 	 * A helper object for implementors of nsIContextMenuListener2.
-	 *
-	 * @status UNDER_REVIEW
 	 */
 	[ComImport, Guid("2f977d56-5485-11d4-87e2-0010a4e75ef2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIContextMenuInfo //: nsISupports

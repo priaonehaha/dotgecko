@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -26,5 +27,14 @@ namespace DotGecko.Gecko.Interop
 		 * over.
 		 */
 		void SetOverLink([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String link, nsIDOMElement element);
+
+		/**
+		 * Determines the appropriate target for a link.
+		 */
+		void OnBeforeLinkTraversal([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String originalTarget,
+									nsIURI linkURI,
+									nsIDOMNode linkNode,
+									Boolean isAppTab,
+									[In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
 	}
 }

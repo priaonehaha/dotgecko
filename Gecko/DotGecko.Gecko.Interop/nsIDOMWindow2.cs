@@ -5,7 +5,7 @@ using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("73c5fa35-3add-4c87-a303-a850ccf4d65a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("efff0d88-3b94-4375-bdeb-676a847ecd7d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMWindow2 : nsIDOMWindow
 	{
 		#region nsIDOMWindow Members
@@ -40,5 +40,11 @@ namespace DotGecko.Gecko.Interop
 		 * Get the application cache object for this window.
 		 */
 		nsIDOMOfflineResourceList ApplicationCache { get; }
+
+		/**
+		 * Deprecated, but can't remove yet since we don't want to change interfaces.
+		 */
+		void CreateBlobURL(nsIDOMBlob blob, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+		void RevokeBlobURL([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String URL);
 	}
 }

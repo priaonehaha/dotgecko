@@ -8,7 +8,6 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * nsIPrefBranch2 allows clients to observe changes to pref values.
 	 *
-	 * @status FROZEN
 	 * @see nsIPrefBranch
 	 */
 	[ComImport, Guid("74567534-eb94-4b1c-8f45-389643bfc555"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
