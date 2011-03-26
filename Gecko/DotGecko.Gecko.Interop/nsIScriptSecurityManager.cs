@@ -1,11 +1,11 @@
 using System;
 using System.Runtime.InteropServices;
+using DotGecko.Gecko.Interop.JavaScript;
 using nsISupports = System.Object;
 using JSContextPtr = System.IntPtr;
 using JSObjectPtr = System.IntPtr;
 using JSStackFramePtr = System.IntPtr;
 using nsAXPCNativeCallContextPtr = System.IntPtr;
-using jsid = System.IntPtr;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -58,7 +58,7 @@ namespace DotGecko.Gecko.Interop
 		new void CanCreateInstance(JSContextPtr aJSContext, [In] ref Guid aCID);
 		new void CanGetService(JSContextPtr aJSContext, [In] ref Guid aCID);
 		new void CanAccess(UInt32 aAction, nsAXPCNativeCallContextPtr aCallContext, JSContextPtr aJSContext, JSObjectPtr aJSObject,
-			[MarshalAs(UnmanagedType.IUnknown)] nsISupports aObj, nsIClassInfo aClassInfo, jsid aName, ref IntPtr aPolicy);
+			[MarshalAs(UnmanagedType.IUnknown)] nsISupports aObj, nsIClassInfo aClassInfo, JsId aName, ref IntPtr aPolicy);
 
 		#endregion
 
@@ -69,7 +69,7 @@ namespace DotGecko.Gecko.Interop
 		void CheckPropertyAccess(JSContextPtr aJSContext,
 								 JSObjectPtr aJSObject,
 								 [MarshalAs(UnmanagedType.LPStr)] String aClassName,
-								 jsid aProperty,
+								 JsId aProperty,
 								 UInt32 aAction);
 
 		/**

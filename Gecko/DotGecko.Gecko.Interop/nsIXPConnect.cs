@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using DotGecko.Gecko.Interop.JavaScript;
 using nsISupports = System.Object;
 using nsQIResult = System.Object;
 using JSContextPtr = System.IntPtr;
@@ -13,8 +14,6 @@ using nsScriptObjectTracerPtr = System.IntPtr;
 using nsCCTraversalCallbackRef = System.IntPtr;
 using nsAXPCNativeCallContextPtr = System.IntPtr;
 using nsWrapperCachePtr = System.IntPtr;
-using jsid = System.IntPtr;
-using jsval = System.IntPtr;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -44,8 +43,8 @@ namespace DotGecko.Gecko.Interop
 		 */
 
 		nsIXPConnect XPConnect { get; }
-		nsIInterfaceInfo FindInterfaceWithMember(jsid nameID);
-		nsIInterfaceInfo FindInterfaceWithName(jsid nameID);
+		nsIInterfaceInfo FindInterfaceWithMember(JsId nameID);
+		nsIInterfaceInfo FindInterfaceWithName(JsId nameID);
 
 		void DebugDump(Int16 depth);
 
@@ -324,7 +323,7 @@ namespace DotGecko.Gecko.Interop
 						  nsWrapperCachePtr aCache,
 						  [In] ref Guid aIID,
 						  Boolean aAllowWrapper,
-						  out jsval aVal,
+						  out JsVal aVal,
 						  out nsIXPConnectJSObjectHolder aHolder);
 
 		/**
@@ -469,8 +468,9 @@ namespace DotGecko.Gecko.Interop
 
 		void ReleaseJSContext(JSContextPtr aJSContext, Boolean noGC);
 
-		jsval VariantToJS(JSContextPtr ctx, JSObjectPtr scope, nsIVariant value);
-		nsIVariant JSToVariant(JSContextPtr ctx, jsval value);
+		[return: MarshalAs(UnmanagedType.LPStruct)]
+		JsVal VariantToJS(JSContextPtr ctx, JSObjectPtr scope, nsIVariant value);
+		nsIVariant JSToVariant(JSContextPtr ctx, [In] ref JsVal value);
 
 		/**
 		 * Preconfigure XPCNativeWrapper automation so that when a scripted
@@ -526,7 +526,8 @@ namespace DotGecko.Gecko.Interop
 		 *         is responsible for rooting the jsval before making a call
 		 *         to this method.
 		 */
-		jsval EvalInSandboxObject([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String source, JSContextPtr cx,
+		[return: MarshalAs(UnmanagedType.LPStruct)]
+		JsVal EvalInSandboxObject([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String source, JSContextPtr cx,
 											 nsIXPConnectJSObjectHolder sandbox,
 											 Boolean returnStringOnly);
 

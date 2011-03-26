@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using jsval = System.IntPtr;
+using DotGecko.Gecko.Interop.JavaScript;
 using nsISupports = System.Object;
 using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
@@ -92,7 +92,7 @@ namespace DotGecko.Gecko.Interop
 		Boolean MozOpaque { get; set; }
 
 		[return: MarshalAs(UnmanagedType.IUnknown)]
-		nsISupports GetContext([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contextId, [Optional] jsval contextOptions);
+		nsISupports GetContext([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contextId, [In, Optional] ref JsVal contextOptions);
 
 		// Valid calls are:
 		//  toDataURL();              -- defaults to image/png

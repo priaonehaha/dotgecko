@@ -1,9 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using DotGecko.Gecko.Interop.JavaScript;
 using JSValPtr = System.IntPtr;
 using JSContext = System.IntPtr;
-using jsval = System.IntPtr;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -27,7 +27,8 @@ namespace DotGecko.Gecko.Interop
 		void EncodeFromJSVal(JSValPtr value, JSContext cx, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] StringBuilder retval);
 
 		// Make sure you GCroot the result of this function before using it.
-		jsval DecodeToJSVal([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String str, JSContext cx);
+		[return: MarshalAs(UnmanagedType.LPStruct)]
+		JsVal DecodeToJSVal([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String str, JSContext cx);
 
 
 		/*
@@ -47,6 +48,7 @@ namespace DotGecko.Gecko.Interop
 
 		/* Identical to legacyDecode, but decode into a jsval. */
 		// Make sure you GCroot the result of this function before using it.
-		jsval LegacyDecodeToJSVal([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String str, JSContext cx);
+		[return: MarshalAs(UnmanagedType.LPStruct)]
+		JsVal LegacyDecodeToJSVal([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String str, JSContext cx);
 	}
 }

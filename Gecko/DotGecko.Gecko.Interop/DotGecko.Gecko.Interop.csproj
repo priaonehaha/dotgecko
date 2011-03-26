@@ -46,6 +46,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JavaScript\JsId.cs" />
+    <Compile Include="JavaScript\JsVal.cs" />
     <Compile Include="JavaScript\MozJS.cs" />
     <Compile Include="nsIAppShell.cs" />
     <Compile Include="nsIArray.cs" />

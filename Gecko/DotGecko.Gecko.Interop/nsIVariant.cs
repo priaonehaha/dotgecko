@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using DotGecko.Gecko.Interop.JavaScript;
 using nsISupports = System.Object;
-using jsval = System.IntPtr;
 using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
@@ -89,7 +89,8 @@ namespace DotGecko.Gecko.Interop
 		[return: MarshalAs(UnmanagedType.IUnknown)]
 		nsISupports GetAsISupports();
 
-		jsval GetAsJSVal();
+		[return: MarshalAs(UnmanagedType.LPStruct)]
+		JsVal GetAsJSVal();
 
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 0)]
 		Object GetAsInterface(out Guid iid);
@@ -147,7 +148,8 @@ namespace DotGecko.Gecko.Interop
 		new String GetAsWString();
 		[return: MarshalAs(UnmanagedType.IUnknown)]
 		new nsISupports GetAsISupports();
-		new jsval GetAsJSVal();
+		[return: MarshalAs(UnmanagedType.LPStruct)]
+		new JsVal GetAsJSVal();
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 0)]
 		new Object GetAsInterface(out Guid iid);
 		[PreserveSig]

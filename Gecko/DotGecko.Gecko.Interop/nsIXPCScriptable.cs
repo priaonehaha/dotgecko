@@ -1,12 +1,11 @@
 using System;
 using System.Runtime.InteropServices;
+using DotGecko.Gecko.Interop.JavaScript;
 using nsISupports = System.Object;
 using JSContextPtr = System.IntPtr;
 using JSTracerPtr = System.IntPtr;
 using JSObjectPtr = System.IntPtr;
 using JSValPtr = System.IntPtr;
-using jsid = System.IntPtr;
-using jsval = System.IntPtr;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -73,23 +72,23 @@ namespace DotGecko.Gecko.Interop
 						  JSContextPtr cx, JSObjectPtr obj);
 
 		Boolean AddProperty(nsIXPConnectWrappedNative wrapper,
-						   JSContextPtr cx, JSObjectPtr obj, jsid id,
+						   JSContextPtr cx, JSObjectPtr obj, JsId id,
 						   JSValPtr vp);
 
 		Boolean DelProperty(nsIXPConnectWrappedNative wrapper,
-						   JSContextPtr cx, JSObjectPtr obj, jsid id,
+						   JSContextPtr cx, JSObjectPtr obj, JsId id,
 						   JSValPtr vp);
 
 		// The returnCode should be set to NS_SUCCESS_I_DID_SOMETHING if
 		// this method does something.
 		Boolean GetProperty(nsIXPConnectWrappedNative wrapper,
-						   JSContextPtr cx, JSObjectPtr obj, jsid id,
+						   JSContextPtr cx, JSObjectPtr obj, JsId id,
 						   JSValPtr vp);
 
 		// The returnCode should be set to NS_SUCCESS_I_DID_SOMETHING if
 		// this method does something.
 		Boolean SetProperty(nsIXPConnectWrappedNative wrapper,
-						   JSContextPtr cx, JSObjectPtr obj, jsid id,
+						   JSContextPtr cx, JSObjectPtr obj, JsId id,
 						   JSValPtr vp);
 
 		Boolean Enumerate(nsIXPConnectWrappedNative wrapper,
@@ -97,10 +96,10 @@ namespace DotGecko.Gecko.Interop
 
 		Boolean NewEnumerate(nsIXPConnectWrappedNative wrapper,
 							JSContextPtr cx, JSObjectPtr obj,
-							UInt32 enum_op, JSValPtr statep, out jsid idp);
+							UInt32 enum_op, JSValPtr statep, out JsId idp);
 
 		Boolean NewResolve(nsIXPConnectWrappedNative wrapper,
-						  JSContextPtr cx, JSObjectPtr obj, jsid id,
+						  JSContextPtr cx, JSObjectPtr obj, JsId id,
 						  UInt32 flags, out JSObjectPtr objp);
 
 		Boolean Convert(nsIXPConnectWrappedNative wrapper,
@@ -111,7 +110,7 @@ namespace DotGecko.Gecko.Interop
 						JSContextPtr cx, JSObjectPtr obj);
 
 		Boolean CheckAccess(nsIXPConnectWrappedNative wrapper,
-						   JSContextPtr cx, JSObjectPtr obj, jsid id,
+						   JSContextPtr cx, JSObjectPtr obj, JsId id,
 						   UInt32 mode, JSValPtr vp);
 
 		Boolean Call(nsIXPConnectWrappedNative wrapper,
@@ -124,13 +123,13 @@ namespace DotGecko.Gecko.Interop
 
 		Boolean HasInstance(nsIXPConnectWrappedNative wrapper,
 						   JSContextPtr cx, JSObjectPtr obj,
-						   jsval val, out Boolean bp);
+						   [In] ref JsVal val, out Boolean bp);
 
 		void Trace(nsIXPConnectWrappedNative wrapper,
 				   JSTracerPtr trc, JSObjectPtr obj);
 
 		Boolean Equality(nsIXPConnectWrappedNative wrapper,
-						JSContextPtr cx, JSObjectPtr obj, jsval val);
+						JSContextPtr cx, JSObjectPtr obj, [In] ref JsVal val);
 
 		JSObjectPtr OuterObject(nsIXPConnectWrappedNative wrapper,
 								JSContextPtr cx, JSObjectPtr obj);

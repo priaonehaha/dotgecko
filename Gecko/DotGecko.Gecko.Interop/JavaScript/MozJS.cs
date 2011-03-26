@@ -9,7 +9,6 @@ using JSFunction = System.IntPtr;
 using JSArgumentFormatter = System.IntPtr;
 using JSContextCallback = System.IntPtr;
 using JSVersion = System.IntPtr;
-using jsval = System.IntPtr;
 using JSCompartmentCallback = System.IntPtr;
 using JSWrapObjectCallback = System.IntPtr;
 using JSPreWrapCallback = System.IntPtr;
@@ -30,16 +29,16 @@ namespace DotGecko.Gecko.Interop.JavaScript
 
 		/* Don't want to export data, so provide accessors for non-inline jsvals. */
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern jsval JS_GetNaNValue(JSContext cx);
+		public static extern JsVal JS_GetNaNValue(JSContext cx);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern jsval JS_GetNegativeInfinityValue(JSContext cx);
+		public static extern JsVal JS_GetNegativeInfinityValue(JSContext cx);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern jsval JS_GetPositiveInfinityValue(JSContext cx);
+		public static extern JsVal JS_GetPositiveInfinityValue(JSContext cx);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern jsval JS_GetEmptyStringValue(JSContext cx);
+		public static extern JsVal JS_GetEmptyStringValue(JSContext cx);
 
 		[DllImport(mozjs, ExactSpelling = true)]
 		public static extern JSString JS_GetEmptyString(JSRuntime rt);
@@ -77,10 +76,10 @@ namespace DotGecko.Gecko.Interop.JavaScript
 		 * unconverted arguments.
 		 */
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ConvertArguments(JSContext cx, UInt32 argc, jsval argv, [MarshalAs(UnmanagedType.LPStr)] String format /*, ...*/);
+		public static extern Boolean JS_ConvertArguments(JSContext cx, UInt32 argc, [In] ref JsVal argv, [MarshalAs(UnmanagedType.LPStr)] String format /*, ...*/);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ConvertArgumentsVA(JSContext cx, UInt32 argc, jsval argv, [MarshalAs(UnmanagedType.LPStr)] String format, IntPtr ap);
+		public static extern Boolean JS_ConvertArgumentsVA(JSContext cx, UInt32 argc, [In] ref JsVal argv, [MarshalAs(UnmanagedType.LPStr)] String format, IntPtr ap);
 
 		/*
 		 * Add and remove a format string handler for JS_{Convert,Push}Arguments{,VA}.
@@ -128,25 +127,25 @@ namespace DotGecko.Gecko.Interop.JavaScript
 		public static extern void JS_RemoveArgumentFormatter(JSContext cx, [MarshalAs(UnmanagedType.LPStr)] String format);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ConvertValue(JSContext cx, jsval v, JSType type, ref jsval vp);
+		public static extern Boolean JS_ConvertValue(JSContext cx, JsVal v, JSType type, ref JsVal vp);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ValueToObject(JSContext cx, jsval v, ref JSObject objp);
+		public static extern Boolean JS_ValueToObject(JSContext cx, JsVal v, ref JSObject objp);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern JSFunction JS_ValueToFunction(JSContext cx, jsval v);
+		public static extern JSFunction JS_ValueToFunction(JSContext cx, JsVal v);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern JSFunction JS_ValueToConstructor(JSContext cx, jsval v);
+		public static extern JSFunction JS_ValueToConstructor(JSContext cx, JsVal v);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern JSString JS_ValueToString(JSContext cx, jsval v);
+		public static extern JSString JS_ValueToString(JSContext cx, JsVal v);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern JSString JS_ValueToSource(JSContext cx, jsval v);
+		public static extern JSString JS_ValueToSource(JSContext cx, JsVal v);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ValueToNumber(JSContext cx, jsval v, ref Double dp);
+		public static extern Boolean JS_ValueToNumber(JSContext cx, JsVal v, ref Double dp);
 
 		[DllImport(mozjs, ExactSpelling = true)]
 		public static extern Boolean JS_DoubleIsInt32(Double d, ref Int32 ip);
@@ -156,14 +155,14 @@ namespace DotGecko.Gecko.Interop.JavaScript
 		 * for ToInt32.
 		 */
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ValueToECMAInt32(JSContext cx, jsval v, ref Int32 ip);
+		public static extern Boolean JS_ValueToECMAInt32(JSContext cx, JsVal v, ref Int32 ip);
 
 		/*
 		 * Convert a value to a number, then to a uint32, according to the ECMA rules
 		 * for ToUint32.
 		 */
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ValueToECMAUint32(JSContext cx, jsval v, ref UInt32 ip);
+		public static extern Boolean JS_ValueToECMAUint32(JSContext cx, JsVal v, ref UInt32 ip);
 
 		/*
 		 * Convert a value to a number, then to an int32 if it fits by rounding to
@@ -171,29 +170,29 @@ namespace DotGecko.Gecko.Interop.JavaScript
 		 * or unordered.
 		 */
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ValueToInt32(JSContext cx, jsval v, ref Int32 ip);
+		public static extern Boolean JS_ValueToInt32(JSContext cx, JsVal v, ref Int32 ip);
 
 		/*
 		 * ECMA ToUint16, for mapping a jsval to a Unicode point.
 		 */
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ValueToUint16(JSContext cx, jsval v, ref UInt16 ip);
+		public static extern Boolean JS_ValueToUint16(JSContext cx, JsVal v, ref UInt16 ip);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_ValueToBoolean(JSContext cx, jsval v, ref Boolean bp);
+		public static extern Boolean JS_ValueToBoolean(JSContext cx, JsVal v, ref Boolean bp);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern JSType JS_TypeOfValue(JSContext cx, jsval v);
+		public static extern JSType JS_TypeOfValue(JSContext cx, JsVal v);
 
 		[DllImport(mozjs, ExactSpelling = true)]
 		[return: MarshalAs(UnmanagedType.LPStr)]
 		public static extern String JS_GetTypeName(JSContext cx, JSType type);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_StrictlyEqual(JSContext cx, jsval v1, jsval v2, ref Boolean equal);
+		public static extern Boolean JS_StrictlyEqual(JSContext cx, JsVal v1, JsVal v2, ref Boolean equal);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_SameValue(JSContext cx, jsval v1, jsval v2, ref Boolean same);
+		public static extern Boolean JS_SameValue(JSContext cx, JsVal v1, JsVal v2, ref Boolean same);
 
 		/************************************************************************/
 
@@ -316,7 +315,7 @@ namespace DotGecko.Gecko.Interop.JavaScript
 		public static extern Boolean JS_WrapObject(JSContext cx, ref JSObject objp);
 
 		[DllImport(mozjs, ExactSpelling = true)]
-		public static extern Boolean JS_WrapValue(JSContext cx, jsval vp);
+		public static extern Boolean JS_WrapValue(JSContext cx, ref JsVal vp);
 
 		[DllImport(mozjs, ExactSpelling = true)]
 		public static extern JSObject JS_TransplantObject(JSContext cx, JSObject origobj, JSObject target);

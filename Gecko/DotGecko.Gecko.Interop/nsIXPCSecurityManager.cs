@@ -1,11 +1,11 @@
 using System;
 using System.Runtime.InteropServices;
+using DotGecko.Gecko.Interop.JavaScript;
 using nsISupports = System.Object;
 using JSContextPtr = System.IntPtr;
 using JSObjectPtr = System.IntPtr;
 using JSStackFramePtr = System.IntPtr;
 using nsAXPCNativeCallContextPtr = System.IntPtr;
-using jsid = System.IntPtr;
 
 namespace DotGecko.Gecko.Interop
 {
@@ -65,7 +65,7 @@ namespace DotGecko.Gecko.Interop
 					   JSObjectPtr aJSObject,
 					   [MarshalAs(UnmanagedType.IUnknown)] nsISupports aObj,
 					   nsIClassInfo aClassInfo,
-					   jsid aName,
+					   JsId aName,
 					   ref IntPtr aPolicy);
 	}
 }

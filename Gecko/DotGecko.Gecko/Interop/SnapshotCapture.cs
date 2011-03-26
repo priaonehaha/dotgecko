@@ -2,6 +2,7 @@
 
 using System;
 using System.Drawing;
+using DotGecko.Gecko.Interop.JavaScript;
 
 #if USE_IOSERVICE
 using System.Runtime.InteropServices;
@@ -42,7 +43,7 @@ namespace DotGecko.Gecko.Interop
 
 		private static void DrawWindow(nsIDOMHTMLCanvasElement canvasElement, nsIDOMWindow domWindow, Color bgColor, CaptureFlags captureFlags)
 		{
-			var context = (nsIDOMCanvasRenderingContext2D)canvasElement.GetContext("2d", IntPtr.Zero);
+			var context = (nsIDOMCanvasRenderingContext2D)canvasElement.GetContext("2d", JsVal.JSVAL_NULL);
 			String cssBgColor = String.Format(CssColorFormatInfo.CurrentInfo, "{0:rgba}", bgColor);
 			context.DrawWindow(domWindow, 0, 0, canvasElement.Width, canvasElement.Height, cssBgColor, (UInt32)captureFlags);
 		}
