@@ -46,6 +46,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="nsIntSize.cs" />
+    <Compile Include="gfxMatrix.cs" />
+    <Compile Include="gfxPoint.cs" />
+    <Compile Include="gfxRect.cs" />
+    <Compile Include="gfxSize.cs" />
     <Compile Include="JavaScript\JsId.cs" />
     <Compile Include="JavaScript\JsVal.cs" />
     <Compile Include="JavaScript\MozJS.cs" />
@@ -532,6 +537,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="nsIException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsITaskbarPreview.cs" />
+    <Compile Include="nsITaskbarPreviewButton.cs" />
+    <Compile Include="nsITaskbarPreviewController.cs" />
+    <Compile Include="nsITaskbarProgress.cs" />
+    <Compile Include="nsITaskbarTabPreview.cs" />
+    <Compile Include="nsITaskbarWindowPreview.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="imgIContainer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIWinTaskbar.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="nsIJumpListBuilder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
