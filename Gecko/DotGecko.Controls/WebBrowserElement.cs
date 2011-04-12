@@ -69,6 +69,18 @@ namespace DotGecko.Controls
 			m_WebBrowser = null;
 		}
 
+		protected override IntPtr WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, ref Boolean handled)
+		{
+			const Int32 WM_MOUSEACTIVATE = 0x0021;
+
+			if (msg == WM_MOUSEACTIVATE)
+			{
+				this.Focus();
+			}
+
+			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
+		}
+
 		protected override Boolean TabIntoCore(TraversalRequest request)
 		{
 			if (this.m_GotFocus != null)

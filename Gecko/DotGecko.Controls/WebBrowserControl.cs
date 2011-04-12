@@ -5,7 +5,7 @@ using WebBrowser = DotGecko.Gecko.WebBrowser;
 
 namespace DotGecko.Controls
 {
-	public sealed partial class GeckoWebBrowserControl : Control
+	public sealed partial class WebBrowserControl : Control
 	{
 		public String StatusText
 		{
@@ -37,6 +37,21 @@ namespace DotGecko.Controls
 			m_WebBrowser = null;
 
 			base.OnHandleDestroyed(e);
+		}
+
+		protected override void WndProc(ref Message m)
+		{
+			if (!DesignMode)
+			{
+				const Int32 WM_MOUSEACTIVATE = 0x0021;
+
+				if (m.Msg == WM_MOUSEACTIVATE)
+				{
+					this.Focus();
+				}
+			}
+
+			base.WndProc(ref m);
 		}
 
 		protected override void Dispose(Boolean disposing)

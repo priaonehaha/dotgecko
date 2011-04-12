@@ -1,16 +1,16 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Windows.Markup;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DotGecko.Controls")]
+[assembly: AssemblyTitle("DotGecko.SampleWinForms")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DotGecko.Controls")]
-[assembly: AssemblyCopyright("Copyright ©  2010")]
+[assembly: AssemblyProduct("DotGecko.SampleWinForms")]
+[assembly: AssemblyCopyright("Copyright ©  2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Windows.Markup;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("03fdcb01-bd8a-4f31-8872-aa9c315ce5d0")]
+[assembly: Guid("3696b2c1-a5ed-4858-a06b-73c32eb5b1f6")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,7 +34,3 @@ using System.Windows.Markup;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: XmlnsDefinition("http://schemas.dotgecko.org/", "DotGecko.Controls")]
-[assembly: XmlnsDefinition("http://schemas.dotgecko.org/", "DotGecko.Gecko", AssemblyName = "DotGecko.Gecko")]
-[assembly: XmlnsDefinition("http://schemas.dotgecko.org/", "DotGecko.Gecko.Dom", AssemblyName = "DotGecko.Gecko")]

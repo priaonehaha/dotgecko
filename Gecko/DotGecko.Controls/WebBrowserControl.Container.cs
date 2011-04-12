@@ -5,7 +5,7 @@ using DotGecko.Gecko;
 
 namespace DotGecko.Controls
 {
-	public sealed partial class GeckoWebBrowserControl : IWebBrowserContainer
+	public sealed partial class WebBrowserControl : IWebBrowserContainer
 	{
 		IntPtr IWebBrowserContainer.GetHandle()
 		{

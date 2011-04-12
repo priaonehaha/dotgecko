@@ -1,0 +1,12 @@
+﻿<Window x:Class="DotGecko.SampleWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:gecko="http://schemas.dotgecko.org/"
+        WindowStartupLocation="CenterScreen"
+        Title="{Binding ElementName=browserElement, Path=Title}"
+        Width="720"
+        Height="405">
+    <Grid>
+        <gecko:WebBrowserElement x:Name="browserElement"/>
+    </Grid>
+</Window>
