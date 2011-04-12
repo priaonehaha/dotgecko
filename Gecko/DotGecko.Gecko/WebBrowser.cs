@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using DotGecko.Gecko.Dom;
@@ -353,7 +354,8 @@ namespace DotGecko.Gecko
 
 			m_WebBrowser.ContainerWindow = this;
 
-			BaseWindow.InitWindow(Container.Handle, null, 0, 0, Container.Width, Container.Height);
+			Size containerSize = Container.GetInnerSize();
+			BaseWindow.InitWindow(Container.GetHandle(), null, 0, 0, containerSize.Width, containerSize.Height);
 			BaseWindow.Create();
 
 			m_WebBrowser.AddWebBrowserListener(this, typeof(nsIWebProgressListener).GUID);
@@ -382,7 +384,8 @@ namespace DotGecko.Gecko
 		{
 			if (BaseWindow != null)
 			{
-				BaseWindow.SetPositionAndSize(0, 0, Container.Width, m_Container.Height, true);
+				Size containerSize = Container.GetInnerSize();
+				BaseWindow.SetPositionAndSize(0, 0, containerSize.Width, containerSize.Height, true);
 			}
 		}
 

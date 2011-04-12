@@ -10,7 +10,7 @@ using WebBrowser = DotGecko.Gecko.WebBrowser;
 
 namespace DotGecko.Controls
 {
-	public sealed class WebBrowserElement : HwndHost, IWebBrowserContainer
+	public sealed partial class WebBrowserElement : HwndHost
 	{
 		private static readonly DependencyPropertyKey TitlePropertyKey = DependencyProperty.RegisterReadOnly(
 			"Title", typeof(String), typeof(WebBrowserElement),
@@ -104,95 +104,6 @@ namespace DotGecko.Controls
 				m_SizeChanged(this, EventArgs.Empty);
 			}
 		}
-
-		#region Implementation of IWebBrowserContainer
-
-		IntPtr IWebBrowserContainer.Handle
-		{
-			get { return (IntPtr)this.m_ParentHandle; }
-		}
-
-		Boolean IWebBrowserContainer.IsVisible
-		{
-			get { return IsVisible; }
-			set { this.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden; }
-		}
-
-		Int32 IWebBrowserContainer.Width
-		{
-			//TODO: Get value in device pixels
-			get { return (Int32)ActualWidth; }
-		}
-
-		Int32 IWebBrowserContainer.Height
-		{
-			//TODO: Get value in device pixels
-			get { return (Int32)ActualHeight; }
-		}
-
-		String IWebBrowserContainer.Title
-		{
-			get { return this.Title; }
-			set { this.Title = value; }
-		}
-
-		String IWebBrowserContainer.StatusText
-		{
-			set { this.StatusText = value; }
-		}
-
-		ChromeFlags IWebBrowserContainer.ChromeFlags
-		{
-			get { return this.ChromeFlags; }
-			set { this.ChromeFlags = value; }
-		}
-
-		void IWebBrowserContainer.EnterModalState()
-		{
-			m_ModalFrame = new DispatcherFrame();
-			System.Windows.Threading.Dispatcher.PushFrame(m_ModalFrame);
-		}
-
-		Boolean IWebBrowserContainer.IsInModalState
-		{
-			get { return m_ModalFrame != null; }
-		}
-
-		void IWebBrowserContainer.ExitModalState()
-		{
-			m_ModalFrame.Continue = false;
-			m_ModalFrame = null;
-		}
-
-		System.Drawing.Point IWebBrowserContainer.PointToScreen(System.Drawing.Point point)
-		{
-			return point;
-		}
-
-		void IWebBrowserContainer.Focus()
-		{
-			this.Focus();
-		}
-
-		event EventHandler IWebBrowserContainer.GotFocus
-		{
-			add { this.m_GotFocus += value; }
-			remove { this.m_GotFocus -= value; }
-		}
-
-		event EventHandler IWebBrowserContainer.LostFocus
-		{
-			add { this.m_LostFocus += value; }
-			remove { this.m_LostFocus -= value; }
-		}
-
-		event EventHandler IWebBrowserContainer.SizeChanged
-		{
-			add { m_SizeChanged += value; }
-			remove { m_SizeChanged -= value; }
-		}
-
-		#endregion
 
 		private HandleRef m_ParentHandle;
 		private WebBrowser m_WebBrowser;

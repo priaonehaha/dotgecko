@@ -22,7 +22,7 @@ namespace DotGecko.Gecko
 
 		void nsIWebBrowserChrome.SetStatus(UInt32 statusType, String status)
 		{
-			Container.StatusText = status;
+			Container.SetStatusText(status);
 		}
 
 		nsIWebBrowser nsIWebBrowserChrome.WebBrowser
@@ -33,8 +33,8 @@ namespace DotGecko.Gecko
 
 		UInt32 nsIWebBrowserChrome.ChromeFlags
 		{
-			get { return (UInt32)Container.ChromeFlags; }
-			set { Container.ChromeFlags = (ChromeFlags)value; }
+			get { return (UInt32)Container.GetChromeFlags(); }
+			set { Container.SetChromeFlags((ChromeFlags)value); }
 		}
 
 		void nsIWebBrowserChrome.DestroyBrowserWindow()
@@ -55,7 +55,7 @@ namespace DotGecko.Gecko
 
 		Boolean nsIWebBrowserChrome.IsWindowModal()
 		{
-			return Container.IsInModalState;
+			return Container.GetIsInModalState();
 		}
 
 		void nsIWebBrowserChrome.ExitModalEventLoop(UInt32 aStatus)
@@ -115,7 +115,7 @@ namespace DotGecko.Gecko
 
 		void nsIWebBrowserChrome2.SetStatusWithContext(UInt32 statusType, AString statusText, Object statusContext)
 		{
-			Container.StatusText = statusText.GetString();
+			Container.SetStatusText(statusText.GetString());
 		}
 
 		#endregion

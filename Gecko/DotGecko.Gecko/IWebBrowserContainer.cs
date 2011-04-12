@@ -5,29 +5,43 @@ namespace DotGecko.Gecko
 {
 	public interface IWebBrowserContainer
 	{
-		IntPtr Handle { get; }
+		IntPtr GetHandle();
 
-		Int32 Width { get; }
+		Point GetOuterPosition();
 
-		Int32 Height { get; }
+		void SetOuterPosition(Point outerPosition);
 
-		Boolean IsVisible { get; set; }
+		Size GetOuterSize();
 
-		String Title { get; set; }
+		void SetOuterSize(Size outerSize);
 
-		ChromeFlags ChromeFlags { get; set; }
+		Size GetInnerSize();
 
-		String StatusText { set; }
+		void SetInnerSize(Size innerSize);
 
-		Boolean IsInModalState { get; }
+		Boolean GetIsVisible();
+
+		void SetIsVisible(Boolean visible);
+
+		String GetTitle();
+
+		void SetTitle(String title);
+
+		ChromeFlags GetChromeFlags();
+
+		void SetChromeFlags(ChromeFlags chromeFlags);
+
+		void SetStatusText(String statusText);
 
 		void Focus();
+
+		void Blur();
 
 		void EnterModalState();
 
 		void ExitModalState();
 
-		Point PointToScreen(Point point);
+		Boolean GetIsInModalState();
 
 		event EventHandler SizeChanged;
 		

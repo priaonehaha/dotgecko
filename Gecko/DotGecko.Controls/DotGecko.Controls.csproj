@@ -52,8 +52,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebBrowserControl.Container.cs">
+      <SubType>Component</SubType>
+      <DependentUpon>WebBrowserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WebBrowserControl.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebBrowserElement.Container.cs">
+      <DependentUpon>WebBrowserElement.cs</DependentUpon>
     </Compile>
     <Compile Include="WebBrowserElement.cs" />
   </ItemGroup>

@@ -5,7 +5,7 @@ using WebBrowser = DotGecko.Gecko.WebBrowser;
 
 namespace DotGecko.Controls
 {
-	public sealed class GeckoWebBrowserControl : Control, IWebBrowserContainer
+	public sealed partial class GeckoWebBrowserControl : Control
 	{
 		public String StatusText
 		{
@@ -51,54 +51,6 @@ namespace DotGecko.Controls
 			
 			base.Dispose(disposing);
 		}
-
-		#region Implementation of IWebBrowserContainer
-
-		String IWebBrowserContainer.Title
-		{
-			get { return Text; }
-			set { Text = value; }
-		}
-
-		Boolean IWebBrowserContainer.IsVisible
-		{
-			get { return Visible; }
-			set { Visible = value; }
-		}
-
-		void IWebBrowserContainer.Focus()
-		{
-			this.Focus();
-		}
-
-		event EventHandler IWebBrowserContainer.GotFocus
-		{
-			add { this.Enter += value; }
-			remove { this.Enter -= value; }
-		}
-
-		event EventHandler IWebBrowserContainer.LostFocus
-		{
-			add { this.Leave += value; }
-			remove { this.Leave -= value; }
-		}
-
-		void IWebBrowserContainer.EnterModalState()
-		{
-			//TODO: enter modal loop
-		}
-
-		Boolean IWebBrowserContainer.IsInModalState
-		{
-			get { return false; }
-		}
-
-		void IWebBrowserContainer.ExitModalState()
-		{
-			//TODO: implement me!
-		}
-
-		#endregion
 
 		private WebBrowser m_WebBrowser;
 		private String m_StatusText;
