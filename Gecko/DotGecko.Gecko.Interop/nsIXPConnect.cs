@@ -226,7 +226,7 @@ namespace DotGecko.Gecko.Interop
 		public const UInt32 OMIT_COMPONENTS_OBJECT = 1 << 2;
 	}
 
-	[ComImport, Guid("fb780ace-dced-432b-bb82-8df7d4f919c8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("f99ffb06-4e7b-4bab-83d4-7d573235a08a"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIXPConnect //: nsISupports
 	{
 		/**
@@ -262,40 +262,40 @@ namespace DotGecko.Gecko.Interop
 					  UInt32 aFlags);
 
 		/**
-		* wrapNative will create a new JSObject or return an existing one.
-		*
-		* The JSObject is returned inside a refcounted nsIXPConnectJSObjectHolder.
-		* As long as this holder is held the JSObject will be protected from
-		* collection by JavaScript's garbage collector. It is a good idea to
-		* transfer the JSObject to some equally protected place before releasing
-		* the holder (i.e. use JS_SetProperty to make this object a property of
-		* some other JSObject).
-		*
-		* This method now correctly deals with cases where the passed in xpcom
-		* object already has an associated JSObject for the cases:
-		*  1) The xpcom object has already been wrapped for use in the same scope
-		*     as an nsIXPConnectWrappedNative.
-		*  2) The xpcom object is in fact a nsIXPConnectWrappedJS and thus already
-		*     has an underlying JSObject.
-		*  3) The xpcom object implements nsIScriptObjectOwner; i.e. is an idlc
-		*     style DOM object for which we can call GetScriptObject to get the
-		*     JSObject it uses to represent itself into JavaScript.
-		*
-		* It *might* be possible to QueryInterface the nsIXPConnectJSObjectHolder
-		* returned by the method into a nsIXPConnectWrappedNative or a
-		* nsIXPConnectWrappedJS.
-		*
-		* This method will never wrap the JSObject involved in an
-		* XPCNativeWrapper before returning.
-		*
-		* Returns:
-		*    success:
-		*       NS_OK
-		*    failure:
-		*       NS_ERROR_XPC_BAD_CONVERT_NATIVE
-		*       NS_ERROR_XPC_CANT_GET_JSOBJECT_OF_DOM_OBJECT
-		*       NS_ERROR_FAILURE
-		*/
+		 * wrapNative will create a new JSObject or return an existing one.
+		 *
+		 * The JSObject is returned inside a refcounted nsIXPConnectJSObjectHolder.
+		 * As long as this holder is held the JSObject will be protected from
+		 * collection by JavaScript's garbage collector. It is a good idea to
+		 * transfer the JSObject to some equally protected place before releasing
+		 * the holder (i.e. use JS_SetProperty to make this object a property of
+		 * some other JSObject).
+		 *
+		 * This method now correctly deals with cases where the passed in xpcom
+		 * object already has an associated JSObject for the cases:
+		 *  1) The xpcom object has already been wrapped for use in the same scope
+		 *     as an nsIXPConnectWrappedNative.
+		 *  2) The xpcom object is in fact a nsIXPConnectWrappedJS and thus already
+		 *     has an underlying JSObject.
+		 *  3) The xpcom object implements nsIScriptObjectOwner; i.e. is an idlc
+		 *     style DOM object for which we can call GetScriptObject to get the
+		 *     JSObject it uses to represent itself into JavaScript.
+		 *
+		 * It *might* be possible to QueryInterface the nsIXPConnectJSObjectHolder
+		 * returned by the method into a nsIXPConnectWrappedNative or a
+		 * nsIXPConnectWrappedJS.
+		 *
+		 * This method will never wrap the JSObject involved in an
+		 * XPCNativeWrapper before returning.
+		 *
+		 * Returns:
+		 *    success:
+		 *       NS_OK
+		 *    failure:
+		 *       NS_ERROR_XPC_BAD_CONVERT_NATIVE
+		 *       NS_ERROR_XPC_CANT_GET_JSOBJECT_OF_DOM_OBJECT
+		 *       NS_ERROR_FAILURE
+		 */
 		nsIXPConnectJSObjectHolder
 		WrapNative(JSContextPtr aJSContext,
 				   JSObjectPtr aScope,
@@ -327,28 +327,28 @@ namespace DotGecko.Gecko.Interop
 						  out nsIXPConnectJSObjectHolder aHolder);
 
 		/**
-		* wrapJS will yield a new or previously existing xpcom interface pointer
-		* to represent the JSObject passed in.
-		*
-		* This method now correctly deals with cases where the passed in JSObject
-		* already has an associated xpcom interface for the cases:
-		*  1) The JSObject has already been wrapped as a nsIXPConnectWrappedJS.
-		*  2) The JSObject is in fact a nsIXPConnectWrappedNative and thus already
-		*     has an underlying xpcom object.
-		*  3) The JSObject is of a jsclass which supports getting the nsISupports
-		*     from the JSObject directly. This is used for idlc style objects
-		*     (e.g. DOM objects).
-		*
-		* It *might* be possible to QueryInterface the resulting interface pointer
-		* to nsIXPConnectWrappedJS.
-		*
-		* Returns:
-		*   success:
-		*     NS_OK
-		*    failure:
-		*       NS_ERROR_XPC_BAD_CONVERT_JS
-		*       NS_ERROR_FAILURE
-		*/
+		 * wrapJS will yield a new or previously existing xpcom interface pointer
+		 * to represent the JSObject passed in.
+		 *
+		 * This method now correctly deals with cases where the passed in JSObject
+		 * already has an associated xpcom interface for the cases:
+		 *  1) The JSObject has already been wrapped as a nsIXPConnectWrappedJS.
+		 *  2) The JSObject is in fact a nsIXPConnectWrappedNative and thus already
+		 *     has an underlying xpcom object.
+		 *  3) The JSObject is of a jsclass which supports getting the nsISupports
+		 *     from the JSObject directly. This is used for idlc style objects
+		 *     (e.g. DOM objects).
+		 *
+		 * It *might* be possible to QueryInterface the resulting interface pointer
+		 * to nsIXPConnectWrappedJS.
+		 *
+		 * Returns:
+		 *   success:
+		 *     NS_OK
+		 *    failure:
+		 *       NS_ERROR_XPC_BAD_CONVERT_JS
+		 *       NS_ERROR_FAILURE
+		 */
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 3)]
 		nsQIResult WrapJS(JSContextPtr aJSContext, JSObjectPtr aJSObj, [In] ref Guid aIID);
 
@@ -358,9 +358,9 @@ namespace DotGecko.Gecko.Interop
 		nsIVariant JSValToVariant(JSContextPtr cx, JSValPtr aJSVal);
 
 		/**
-		* This only succeeds if the JSObject is a nsIXPConnectWrappedNative.
-		* A new wrapper is *never* constructed.
-		*/
+		 * This only succeeds if the JSObject is a nsIXPConnectWrappedNative.
+		 * A new wrapper is *never* constructed.
+		 */
 		nsIXPConnectWrappedNative GetWrappedNativeOfJSObject(JSContextPtr aJSContext, JSObjectPtr aJSObj);
 
 		[return: MarshalAs(UnmanagedType.IUnknown)]
@@ -373,9 +373,9 @@ namespace DotGecko.Gecko.Interop
 		void GetSecurityManagerForJSContext(JSContextPtr aJSContext, out nsIXPCSecurityManager aManager, out UInt16 flags);
 
 		/**
-		* The security manager to use when the current JSContext has no security
-		* manager.
-		*/
+		 * The security manager to use when the current JSContext has no security
+		 * manager.
+		 */
 		void SetDefaultSecurityManager(nsIXPCSecurityManager aManager, UInt16 flags);
 
 		void GetDefaultSecurityManager(out nsIXPCSecurityManager aManager, out UInt16 flags);
@@ -388,8 +388,9 @@ namespace DotGecko.Gecko.Interop
 								 nsIStackFrame aCaller);
 
 		/**
-		* Deprecated do-nothing function.
-		*/
+		 * Deprecated do-nothing function.
+		 */
+		[Obsolete]
 		void SyncJSContexts();
 
 		nsIStackFrame CurrentJSStack { get; }
@@ -406,28 +407,28 @@ namespace DotGecko.Gecko.Interop
 										 [MarshalAs(UnmanagedType.LPStr)] String aSourceText);
 
 		/**
-		* Set fallback JSContext to use when xpconnect can't find an appropriate
-		* context to use to execute JavaScript.
-		*
-		* NOTE: This method is DEPRECATED. 
-		*       Use nsIThreadJSContextStack::safeJSContext instead.
-		*/
+		 * Set fallback JSContext to use when xpconnect can't find an appropriate
+		 * context to use to execute JavaScript.
+		 *
+		 * @deprecated Use nsIThreadJSContextStack::safeJSContext instead.
+		 */
+		[Obsolete("Use nsIThreadJSContextStack::safeJSContext instead.")]
 		void SetSafeJSContextForCurrentThread(JSContextPtr cx);
 
 		/**
-		* wrapJSAggregatedToNative is just like wrapJS except it is used in cases
-		* where the JSObject is also aggregated to some native xpcom Object.
-		* At present XBL is the only system that might want to do this.
-		*
-		* XXX write more!
-		*
-		* Returns:
-		*   success:
-		*     NS_OK
-		*    failure:
-		*       NS_ERROR_XPC_BAD_CONVERT_JS
-		*       NS_ERROR_FAILURE
-		*/
+		 * wrapJSAggregatedToNative is just like wrapJS except it is used in cases
+		 * where the JSObject is also aggregated to some native xpcom Object.
+		 * At present XBL is the only system that might want to do this.
+		 *
+		 * XXX write more!
+		 *
+		 * Returns:
+		 *   success:
+		 *     NS_OK
+		 *    failure:
+		 *       NS_ERROR_XPC_BAD_CONVERT_JS
+		 *       NS_ERROR_FAILURE
+		 */
 		[return: MarshalAs(UnmanagedType.Interface, IidParameterIndex = 3)]
 		nsQIResult
 		WrapJSAggregatedToNative([MarshalAs(UnmanagedType.IUnknown)] nsISupports aOuter,
@@ -438,9 +439,9 @@ namespace DotGecko.Gecko.Interop
 		// Methods added since mozilla 0.6....
 
 		/**
-		* This only succeeds if the native object is already wrapped by xpconnect.
-		* A new wrapper is *never* constructed.
-		*/
+		 * This only succeeds if the native object is already wrapped by xpconnect.
+		 * A new wrapper is *never* constructed.
+		 */
 		nsIXPConnectWrappedNative
 		GetWrappedNativeOfNativeObject(JSContextPtr aJSContext,
 									   JSObjectPtr aScope,
@@ -471,21 +472,6 @@ namespace DotGecko.Gecko.Interop
 		[return: MarshalAs(UnmanagedType.LPStruct)]
 		JsVal VariantToJS(JSContextPtr ctx, JSObjectPtr scope, nsIVariant value);
 		nsIVariant JSToVariant(JSContextPtr ctx, [In] ref JsVal value);
-
-		/**
-		 * Preconfigure XPCNativeWrapper automation so that when a scripted
-		 * caller whose filename starts with filenamePrefix accesses a wrapped
-		 * native that is not flagged as "system", the wrapped native will be
-		 * automatically wrapped with an XPCNativeWrapper.
-		 *
-		 * @param aFilenamePrefix the UTF-8 filename prefix to match, which
-		 *                        should end with a slash (/) character
-		 * @param aWantNativeWrappers whether XPConnect should produce native
-		 *                            wrappers for scripts whose paths begin
-		 *                            with this prefix
-		 */
-		void FlagSystemFilenamePrefix([MarshalAs(UnmanagedType.LPStr)] String aFilenamePrefix,
-									  Boolean aWantNativeWrappers);
 
 		/**
 		 * Restore an old prototype for wrapped natives of type
@@ -528,8 +514,8 @@ namespace DotGecko.Gecko.Interop
 		 */
 		[return: MarshalAs(UnmanagedType.LPStruct)]
 		JsVal EvalInSandboxObject([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String source, JSContextPtr cx,
-											 nsIXPConnectJSObjectHolder sandbox,
-											 Boolean returnStringOnly);
+								  nsIXPConnectJSObjectHolder sandbox,
+								  Boolean returnStringOnly);
 
 		/**
 		 * Root JS objects held by aHolder.

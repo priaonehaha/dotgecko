@@ -29,6 +29,7 @@ namespace DotGecko.Gecko.Interop
 		public const UInt16 VALIDATION_ERR = 16;
 		// Introduced in DOM Level 3:
 		public const UInt16 TYPE_MISMATCH_ERR = 17;
+		public const UInt16 DATA_CLONE_ERR = 25;
 	}
 
 	/**

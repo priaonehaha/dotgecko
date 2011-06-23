@@ -118,4 +118,11 @@ namespace DotGecko.Gecko.Interop
 		 */
 		UInt32 BidiOptions { get; set; }
 	}
+
+	//[ComImport, Guid("cadfcad1-5570-4dac-b5a2-cd1ea751fe29"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	//public interface nsIMarkupDocumentViewer_MOZILLA_2_0_BRANCH : nsIMarkupDocumentViewer
+	//{
+	//    /** The minimum font size  */
+	//    Int32 MinFontSize { get; set; }
+	//}
 }

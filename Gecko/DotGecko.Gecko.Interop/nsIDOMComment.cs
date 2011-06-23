@@ -13,7 +13,7 @@ namespace DotGecko.Gecko.Interop
 	 * For more information on this interface please see 
 	 * http://www.w3.org/TR/DOM-Level-2-Core/
 	 */
-	[ComImport, Guid("a6cf9073-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("eaf04950-d409-41a0-a99d-2e4e43c1e33d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMComment : nsIDOMCharacterData
 	{
 		#region nsIDOMNode Members
@@ -40,7 +40,6 @@ namespace DotGecko.Gecko.Interop
 		new Boolean IsSupported([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String feature, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String version);
 		new void GetNamespaceURI([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 		new void GetPrefix([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
-		new void SetPrefix([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value); // raises(DOMException) on setting
 		new void GetLocalName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 		new Boolean HasAttributes();
 

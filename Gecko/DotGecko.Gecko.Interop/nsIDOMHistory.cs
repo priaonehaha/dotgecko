@@ -5,7 +5,7 @@ using DOMStringMarshaler = DotGecko.Gecko.Interop.AStringMarshaler;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("208f2af7-9f2e-497c-8a53-9e7803280898"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("d5a3006b-dd6b-4ba3-81be-6559f8889e60"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHistory //: nsISupports
 	{
 		Int32 Length { get; }
@@ -25,11 +25,7 @@ namespace DotGecko.Gecko.Interop
 		void ReplaceState(nsIVariant aData,
 			[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String aTitle,
 			[Optional, In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String aURL);
-	}
 
-	[ComImport, Guid("949fcdc1-664b-4a4b-939a-7144c94b48ac"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	public interface nsIDOMHistory_MOZILLA_2_0_BRANCH //: nsISupports
-	{
 		nsIVariant State { get; }
 	}
 }

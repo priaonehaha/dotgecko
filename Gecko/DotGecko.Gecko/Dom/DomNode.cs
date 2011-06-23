@@ -160,7 +160,6 @@ namespace DotGecko.Gecko.Dom
 		public String Prefix
 		{
 			get { return XpcomStringHelper.Get(m_DomNode.GetPrefix); }
-			set { m_DomNode.SetPrefix(value); }
 		}
 
 		public String LocalName

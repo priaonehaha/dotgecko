@@ -26,8 +26,8 @@ namespace DotGecko.Gecko.Interop
 			var domWindowInternal = (nsIDOMWindowInternal)domWindow;
 
 			nsIDOMHTMLCanvasElement canvas = GetCanvas(domWindowInternal.Document);
-			canvas.Width = domWindowInternal.InnerWidth;// + domWindowInternal.ScrollMaxX;
-			canvas.Height = domWindowInternal.InnerHeight;// + domWindowInternal.ScrollMaxY;
+			canvas.Width = (UInt32)domWindowInternal.InnerWidth;// + domWindowInternal.ScrollMaxX;
+			canvas.Height = (UInt32)domWindowInternal.InnerHeight;// + domWindowInternal.ScrollMaxY;
 
 			DrawWindow(canvas, domWindow, Color.Empty, captureFlags);
 

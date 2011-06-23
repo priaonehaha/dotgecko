@@ -52,7 +52,7 @@ namespace DotGecko.Gecko.Interop
 	/**
 	 * The nsIDocShell interface.
 	 */
-	[ComImport, Guid("98cdbcc4-2d81-4191-a63f-b6c52085edbc"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("f77271a1-0b22-4581-af6d-529125f1901d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDocShell //: nsISupports
 	{
 		/**
@@ -479,11 +479,7 @@ namespace DotGecko.Gecko.Interop
 		 * handling link clicks. Docshells are not app tabs unless told otherwise.
 		 */
 		Boolean IsAppTab { get; set; }
-	}
 
-	[ComImport, Guid("5f7a2184-31b6-4d67-9c75-0c17477766e2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	public interface nsIDocShell_MOZILLA_2_0_BRANCH //: nsISupports
-	{
 		/**
 		 * Create a new about:blank document and content viewer.
 		 * @param aPrincipal the principal to use for the new document.

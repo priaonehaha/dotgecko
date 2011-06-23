@@ -104,7 +104,7 @@ namespace DotGecko.Gecko.Tests
 					MethodInfo baseMethod = baseMethods[i];
 					MethodInfo interfaceMethod = interfaceMethods[i];
 					Boolean methodsEqual = MethodsEqual(baseMethod, interfaceMethod);
-					Assert.IsTrue(methodsEqual, "Invalid method declaration {0}.{1}", interfaceType.Name, interfaceMethod.Name);
+					Assert.IsTrue(methodsEqual, "Invalid method declaration in {0}.\n\"{1}\" is expected, but \"{2}\" found.", interfaceType.Name, baseMethod.Name, interfaceMethod.Name);
 					Assert.IsTrue(interfaceMethod.IsHideBySig, "Method {0}.{1} must hide base method", interfaceType.Name, interfaceMethod.Name);
 				}
 			}

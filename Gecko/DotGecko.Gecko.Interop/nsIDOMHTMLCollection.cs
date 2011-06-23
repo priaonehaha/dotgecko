@@ -14,7 +14,7 @@ namespace DotGecko.Gecko.Interop
 	 * with changes from the work-in-progress WHATWG HTML specification:
 	 * http://www.whatwg.org/specs/web-apps/current-work/
 	 */
-	[ComImport, Guid("a6cf9083-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("1af9e026-011d-4d0e-91db-09bcfa3e9622"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMHTMLCollection //: nsISupports
 	{
 		UInt32 Length { get; }

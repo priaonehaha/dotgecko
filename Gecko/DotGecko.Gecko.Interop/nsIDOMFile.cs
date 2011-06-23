@@ -13,12 +13,18 @@ namespace DotGecko.Gecko.Interop
 
 		nsIDOMBlob Slice(UInt64 start,
 						 UInt64 length,
-						 [Optional, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contentType);
+						 [In, Optional, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contentType);
 
 		nsIInputStream InternalStream { get; }
 		// The caller is responsible for releasing the internalUrl from the
 		// moz-filedata: protocol handler
 		void GetInternalUrl(nsIPrincipal principal, [In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder retval);
+	}
+
+	[ComImport, Guid("cb5b4191-a555-4e57-b8d2-88091184b59f"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	public interface nsIDOMBlob_MOZILLA_2_0_BRANCH //: nsISupports
+	{
+		nsIDOMBlob MozSlice(Int64 start, [Optional] Int64 end, [In, Optional, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String contentType);
 	}
 
 	[ComImport, Guid("ae1405b0-e411-481e-9606-b29ec7982687"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]

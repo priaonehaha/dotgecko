@@ -15,6 +15,8 @@ namespace DotGecko.Gecko.Interop
 		public const UInt16 MEDIA_RULE = 4;
 		public const UInt16 FONT_FACE_RULE = 5;
 		public const UInt16 PAGE_RULE = 6;
+		public const UInt16 MOZ_KEYFRAMES_RULE = 7;
+		public const UInt16 MOZ_KEYFRAME_RULE = 8;
 	}
 
 	/**
@@ -24,7 +26,7 @@ namespace DotGecko.Gecko.Interop
 	 * For more information on this interface please see
 	 * http://www.w3.org/TR/DOM-Level-2-Style
 	 */
-	[ComImport, Guid("a6cf90c1-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("2938307a-9d70-4b63-8afc-0197e82318ad"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMCSSRule //: nsISupports
 	{
 		UInt16 Type { get; }

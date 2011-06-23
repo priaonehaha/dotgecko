@@ -109,6 +109,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @deprecated Use checkLoadURIWithPrincipal instead of this function.
 		 */
+		[Obsolete("Use CheckLoadURIWithPrincipal instead of this method.")]
 		void CheckLoadURI(nsIURI from, nsIURI uri, UInt32 flags);
 
 		/**
@@ -128,6 +129,7 @@ namespace DotGecko.Gecko.Interop
 		 *
 		 * @deprecated Use checkLoadURIStrWithPrincipal instead of this function.
 		 */
+		[Obsolete("Use CheckLoadURIStrWithPrincipal instead of this method.")]
 		void CheckLoadURIStr([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String from,
 							 [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AUTF8StringMarshaler))] String uri,
 							 UInt32 flags);

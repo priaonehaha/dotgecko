@@ -28,9 +28,9 @@ namespace DotGecko.Gecko.Interop
 	 * It represents a single node in the document tree.
 	 *
 	 * For more information on this interface please see 
-	 * http://www.w3.org/TR/DOM-Level-2-Core/
+	 * http://dvcs.w3.org/hg/domcore/raw-file/tip/Overview.html
 	 */
-	[ComImport, Guid("a6cf907c-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("817dc774-2ad2-4111-9042-1787df86c015"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMNode //: nsISupports
 	{
 		void GetNodeName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
@@ -78,9 +78,8 @@ namespace DotGecko.Gecko.Interop
 		// Introduced in DOM Level 2:
 		void GetNamespaceURI([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 
-		// Introduced in DOM Level 2:
+		// Modified in DOM Core
 		void GetPrefix([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
-		void SetPrefix([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value); // raises(DOMException) on setting
 
 		// Introduced in DOM Level 2:
 		void GetLocalName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);

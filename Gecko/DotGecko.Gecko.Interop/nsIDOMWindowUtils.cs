@@ -142,7 +142,7 @@ namespace DotGecko.Gecko.Interop
 	 * necessary security checks.  Access this interface by calling
 	 * getInterface on a DOMWindow.
 	 */
-	[ComImport, Guid("85fa978a-fc91-4513-9f11-8911e671577f"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("3828e648-af61-47e1-b9bc-89ca51bc19f2"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMWindowUtils //: nsISupports
 	{
 		/**
@@ -208,33 +208,32 @@ namespace DotGecko.Gecko.Interop
 		void SetCSSViewport(Single aWidthPx, Single aHeightPx);
 
 		/**
-		 * Set the "displayport" to be <xPx, yPx, widthPx, heightPx> in
-		 * units of CSS pixels, regardless of the size of the enclosing
-		 * widget/view.  This will *not* trigger reflow.
+		 * For any scrollable element, this allows you to override the
+		 * visible region and draw more than what is visible, which is
+		 * useful for asynchronous drawing. The "displayport" will be
+		 * <xPx, yPx, widthPx, heightPx> in units of CSS pixels,
+		 * regardless of the size of the enclosing container.  This
+		 * will *not* trigger reflow.
 		 *
-		 * <x, y> is relative to the top-left of the CSS viewport.  This
-		 * means that the pixels rendered to the displayport take scrolling
-		 * into account, for example.
+		 * For the root scroll area, pass in the root document element.
+		 * For scrollable elements, pass in the container element (for
+		 * instance, the element with overflow: scroll).
 		 *
-		 * The displayport will be used as the window's visible region for
-		 * the purposes of invalidation and painting.  The displayport can
-		 * approximately be thought of as a "persistent" drawWindow()
-		 * (albeit with coordinates relative to the CSS viewport): the
-		 * bounds are remembered by the platform, and layer pixels are
-		 * retained and updated inside the viewport bounds.
+		 * <x, y> is relative to the top-left of what would normally be
+		 * the visible area of the element. This means that the pixels
+		 * rendered to the displayport take scrolling into account,
+		 * for example.
 		 *
-		 * It's legal to set a displayport that extends beyond the CSS
-		 * viewport in any direction (left/right/top/bottom).
+		 * It's legal to set a displayport that extends beyond the overflow
+		 * area in any direction (left/right/top/bottom).
 		 * 
 		 * It's also legal to set a displayport that extends beyond the
-		 * document's bounds.  The value of the pixels rendered outside the
-		 * document bounds is not yet defined.
+		 * area's bounds.  No pixels are rendered outside the area bounds.
 		 *
 		 * The caller of this method must have UniversalXPConnect
 		 * privileges.
 		 */
-		void SetDisplayPort(Single aXPx, Single aYPx,
-							Single aWidthPx, Single aHeightPx);
+		void SetDisplayPortForElement(Single aXPx, Single aYPx, Single aWidthPx, Single aHeightPx, nsIDOMElement aElement);
 
 		/**
 		 * Get/set the resolution at which rescalable web content is drawn.
@@ -732,6 +731,19 @@ namespace DotGecko.Gecko.Interop
 		void LeaveModalState();
 
 		/**
+		 * Same as enterModalState, but returns the window associated with the
+		 * current JS context.
+		 */
+		nsIDOMWindow EnterModalStateWithWindow();
+
+		/**
+		 * Same as leaveModalState, but takes a window associated with the active
+		 * context when enterModalStateWithWindow was called. The currently context
+		 * might be different at the moment (see bug 621764).
+		 */
+		void LeaveModalStateWithWindow(nsIDOMWindow aWindow);
+
+		/**
 		 * Is the window is in a modal state? [See enterModalState()]
 		 */
 		Boolean IsInModalState();
@@ -765,6 +777,32 @@ namespace DotGecko.Gecko.Interop
 							gfxContext aThebesContext);
 
 		/**
+		 * advanceTimeAndRefresh allows the caller to take over the refresh
+		 * driver timing for a window.  A call to advanceTimeAndRefresh does
+		 * three things:
+		 *  (1) It marks the refresh driver for this presentation so that it
+		 *      no longer refreshes on its own, but is instead driven entirely
+		 *      by the caller (except for the refresh that happens when a
+		 *      document comes out of the bfcache).
+		 *  (2) It advances the refresh driver's current refresh time by the
+		 *      argument given.  Negative advances are permitted.
+		 *  (3) It does a refresh (i.e., notifies refresh observers) at that
+		 *      new time.
+		 *
+		 * Note that this affects other connected docshells of the same type
+		 * in the same docshell tree, such as parent frames.
+		 *
+		 * When callers have completed their use of advanceTimeAndRefresh,
+		 * they must call restoreNormalRefresh.
+		 */
+		void AdvanceTimeAndRefresh(Int64 aMilliseconds);
+
+		/**
+		 * Undoes the effects of advanceTimeAndRefresh.
+		 */
+		void RestoreNormalRefresh();
+
+		/**
 		 * Method for testing nsStyleAnimation::ComputeDistance.
 		 *
 		 * Returns the distance between the two values as reported by
@@ -775,11 +813,7 @@ namespace DotGecko.Gecko.Interop
 										[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String property,
 										[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value1,
 										[In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(AStringMarshaler))] String value2);
-	}
 
-	[ComImport, Guid("be2e28c8-64f8-4100-906d-8a451ddd6835"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	public interface nsIDOMWindowUtils_MOZILLA_2_0_BRANCH //: nsISupports
-	{
 		/**
 		 * Get the type of the currently focused html input, if any.
 		 */
@@ -791,19 +825,6 @@ namespace DotGecko.Gecko.Interop
 		 * element of the document is returned.
 		 */
 		nsIDOMElement FindElementWithViewId(nsViewID aId);
-
-		/**
-		 * Same as enterModalState, but returns the window associated with the
-		 * current JS context.
-		 */
-		nsIDOMWindow EnterModalStateWithWindow();
-
-		/**
-		 * Same as leaveModalState, but takes a window associated with the active
-		 * context when enterModalStateWithWindow was called. The currently context
-		 * might be different at the moment (see bug 621764).
-		 */
-		void LeaveModalStateWithWindow(nsIDOMWindow aWindow);
 
 		/**
 		 * Checks the layer tree for this window and returns true

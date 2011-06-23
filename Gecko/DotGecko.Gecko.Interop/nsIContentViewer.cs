@@ -6,7 +6,7 @@ using nsIDocumentPtr = System.IntPtr;
 
 namespace DotGecko.Gecko.Interop
 {
-	[ComImport, Guid("e2e5dd7d-8140-4fc5-b2c3-3a3b4f946fc7"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("75306a89-e3ad-4a2b-9daf-ac4de06661a4"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIContentViewer //: nsISupports
 	{
 		void Init(nsIWidgetPtr aParentWidget, [In] ref nsIntRect aBounds);
@@ -122,11 +122,7 @@ namespace DotGecko.Gecko.Interop
 		 * destroyed.  Can return null
 		 */
 		nsISHEntry HistoryEntry { get; }
-	}
 
-	[ComImport, Guid("4710ef6e-6de3-47fe-88f4-e49b48c87fc9"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	public interface nsIContentViewer_MOZILLA_2_0_BRANCH //: nsISupports
-	{
 		/*
 		 * Indicates when we're in a state where content shouldn't be allowed to
 		 * trigger a tab-modal prompt (as opposed to a window-modal prompt) because

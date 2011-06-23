@@ -15,9 +15,9 @@ namespace DotGecko.Gecko.Interop
 	 * objects.
 	 *
 	 * For more information on this interface please see 
-	 * http://www.w3.org/TR/DOM-Level-2-Core/
+	 * http://dvcs.w3.org/hg/domcore/raw-file/tip/Overview.html
 	 */
-	[ComImport, Guid("a6cf9075-15b3-11d2-932e-00805f8add32"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+	[ComImport, Guid("3e7421c4-9964-4184-8c75-d291eecdba35"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 	public interface nsIDOMDocument : nsIDOMNode
 	{
 		#region nsIDOMNode Members
@@ -44,7 +44,6 @@ namespace DotGecko.Gecko.Interop
 		new Boolean IsSupported([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String feature, [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String version);
 		new void GetNamespaceURI([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 		new void GetPrefix([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
-		new void SetPrefix([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
 		new void GetLocalName([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
 		new Boolean HasAttributes();
 
@@ -88,5 +87,30 @@ namespace DotGecko.Gecko.Interop
 
 		// Introduced in DOM Level 2:
 		nsIDOMElement GetElementById([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String elementId);
+
+		// Introduced in DOM Level 3:
+		void GetInputEncoding([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		// Introduced in DOM Level 3:
+		void GetXmlEncoding([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		// Introduced in DOM Level 3:
+		Boolean XmlStandalone { get; set; } // raises(DOMException) on setting
+		// Introduced in DOM Level 3:
+		void GetXmlVersion([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		void SetXmlVersion([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value); // raises(DOMException) on setting
+		// Introduced in DOM Level 3:
+		Boolean StrictErrorChecking { get; set; }
+		// Introduced in DOM Level 3:
+		void GetDocumentURI([In, Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] StringBuilder result);
+		void SetDocumentURI([In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String value);
+		// Introduced in DOM Level 3:
+		nsIDOMNode AdoptNode(nsIDOMNode source); // raises(DOMException);
+		// Introduced in DOM Level 3:
+		nsIDOMDOMConfiguration DomConfig { get; }
+		// Introduced in DOM Level 3:
+		void NormalizeDocument();
+		// Introduced in DOM Level 3:
+		nsIDOMNode RenameNode(nsIDOMNode node,
+							  [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String namespaceURI,
+							  [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(DOMStringMarshaler))] String qualifiedName); // raises(DOMException);
 	}
 }
